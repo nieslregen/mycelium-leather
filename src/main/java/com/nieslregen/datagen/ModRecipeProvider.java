@@ -207,7 +207,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern(" S ")
                         .pattern("  I")
                         .define('I', Items.IRON_INGOT)
-                        .define('S', Items.STRING)
+                        .define('S', Items.STICK)
                         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
                         .save(output, "spade_from_stick_and_iron_ingot");

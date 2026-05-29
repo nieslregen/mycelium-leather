@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "I": "minecraft:iron_ingot",
-    "S": "minecraft:string"
+    "S": "minecraft:stick"
   },
   "pattern": [
     "   ",
