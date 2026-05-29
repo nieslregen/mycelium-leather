@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "L": "mycelium-leather:mycelium-leather"
+  },
+  "pattern": [
+    "   ",
+    " L ",
+    "LIL"
+  ],
+  "result": {
+    "id": "minecraft:saddle"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "mycelium-leather",
+  "key": {
+    "L": "mycelium-leather:mycelium-leather",
+    "S": "minecraft:string"
+  },
+  "pattern": [
+    " S ",
+    " L ",
+    "   "
+  ],
+  "result": {
+    "id": "minecraft:bundle"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_glass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:glass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_mycelium-leather": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mycelium-leather:mycelium-leather"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pink_wool": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:pink_wool"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mycelium-leather:harness_from_mycelium_leather_and_pink_wool"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mycelium-leather",
+      "has_pink_wool",
+      "has_glass"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mycelium-leather:harness_from_mycelium_leather_and_pink_wool"
+    ]
+  }
+}

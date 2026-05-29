@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": "mycelium-leather:mycelium-leather"
+  },
+  "pattern": [
+    "L L",
+    "LLL",
+    "LLL"
+  ],
+  "result": {
+    "id": "minecraft:leather_chestplate"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mycelium-patch": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mycelium-leather:mycelium-patch"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mycelium-leather:mycelium-patch-dried_from_smelting_mycelium-patch"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mycelium-patch"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mycelium-leather:mycelium-patch-dried_from_smelting_mycelium-patch"
+    ]
+  }
+}

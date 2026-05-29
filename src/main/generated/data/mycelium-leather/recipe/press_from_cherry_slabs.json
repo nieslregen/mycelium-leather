@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "mycelium-leather",
+  "key": {
+    "I": "minecraft:iron_nugget",
+    "R": "minecraft:string",
+    "S": "minecraft:cherry_slab"
+  },
+  "pattern": [
+    "SSS",
+    "IRI",
+    "SSS"
+  ],
+  "result": {
+    "id": "mycelium-leather:herbarium_press_block"
+  }
+}

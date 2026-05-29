@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.05,
+  "group": "mycelium-leather",
+  "ingredient": "mycelium-leather:mycelium-patch",
+  "result": {
+    "id": "mycelium-leather:mycelium-patch-dried"
+  }
+}

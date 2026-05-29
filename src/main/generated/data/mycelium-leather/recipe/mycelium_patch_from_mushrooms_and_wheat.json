@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "mycelium-leather",
+  "key": {
+    "B": "minecraft:brown_mushroom",
+    "R": "minecraft:red_mushroom",
+    "W": "minecraft:wheat"
+  },
+  "pattern": [
+    "   ",
+    "WB ",
+    "RW "
+  ],
+  "result": {
+    "id": "mycelium-leather:mycelium-patch"
+  }
+}

@@ -3,20 +3,20 @@
 	"id": "mycelium-leather",
 	"version": "${version}",
 	"name": "Mycelium Leather",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "This is a mod adding a new way to access leather!",
 	"authors": [
-		"Me!"
+		"Nielz (Nieslregen)"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://nieslregen.de/",
+		"sources": "https://github.com/nieslregen/mycelium-leather"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT-License",
 	"icon": "assets/mycelium-leather/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.nieslregen.MyceliumLeather"
+          "com.nieslregen.MyceliumLeatherMod"
 		],
 		"fabric-datagen": [
 			"com.nieslregen.MyceliumLeatherDataGenerator"

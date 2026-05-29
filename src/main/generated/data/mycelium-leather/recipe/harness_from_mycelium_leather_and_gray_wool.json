@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:glass",
+    "L": "mycelium-leather:mycelium-leather",
+    "W": "minecraft:gray_wool"
+  },
+  "pattern": [
+    "LLL",
+    "GWG",
+    "   "
+  ],
+  "result": {
+    "id": "minecraft:gray_harness"
+  }
+}

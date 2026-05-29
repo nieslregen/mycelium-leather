@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mycelium-leather": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mycelium-leather:mycelium-leather"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mycelium-leather:leather_horse_armor_from_mycelium_leather"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_mycelium-leather"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mycelium-leather:leather_horse_armor_from_mycelium_leather"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "top": "mycelium-leather:block/herbarium_press_block_top",
+    "side": "mycelium-leather:block/herbarium_press_block_side",
+    "bottom": "mycelium-leather:block/herbarium_press_block_bottom",
+    "particle": "mycelium-leather:block/herbarium_press_block_top"
+  },
+
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 8, 16],
+
+      "faces": {
+        "up":    { "texture": "#top" },
+        "down":  { "texture": "#bottom" },
+
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west":  { "texture": "#side" },
+        "east":  { "texture": "#side" }
+      }
+    }
+  ]
+}
