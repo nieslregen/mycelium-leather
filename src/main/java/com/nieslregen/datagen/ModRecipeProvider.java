@@ -210,6 +210,18 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('S', Items.STICK)
                         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .group("spade")
+                        .save(output, "spade_from_stick_and_iron_ingot_legacy");
+
+                shaped(RecipeCategory.TOOLS, ModItems.ITEM_SPADE)
+                        .pattern("  I")
+                        .pattern(" S ")
+                        .pattern("   ")
+                        .define('I', Items.IRON_INGOT)
+                        .define('S', Items.STICK)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .group("spade")
                         .save(output, "spade_from_stick_and_iron_ingot");
 
                 shaped(RecipeCategory.COMBAT, Items.LEATHER_BOOTS)
