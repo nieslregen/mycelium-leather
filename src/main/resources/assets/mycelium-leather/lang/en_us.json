@@ -3,7 +3,11 @@
   "item.mycelium-leather.mycelium-patch": "Mycelium Patch",
   "item.mycelium-leather.mycelium-patch-dried": "Dried Mycelium Patch",
   "item.mycelium-leather.spade": "Spade",
-  "block.mycelium-leather.herbarium_press_block": "Herbarium Press",
   "item.mycelium-leather.grass-patch": "Grass Patch",
+  "item.mycelium-leather.soot": "Soot",
+  "item.mycelium-leather.soot-ink": "Soot Ink",
+  "block.mycelium-leather.herbarium_press_block": "Herbarium Press",
+  "block.mycelium-leather.soot_trap_furnace_block": "Upgraded Furnace with Soot Trap",
+  "block.mycelium-leather.tiny_cauldron_block": "Tiny Cauldron",
   "container.herbariumpress": "Herbarium Press"
 }

@@ -1,4 +1,4 @@
-package com.nieslregen.block.herbariumpress;
+package com.nieslregen.block.custom.herbariumpress;
 
 import com.nieslregen.block.ModMenuType;
 import net.minecraft.world.Container;

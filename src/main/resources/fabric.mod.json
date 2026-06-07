@@ -11,7 +11,7 @@
 		"homepage": "https://nieslregen.de/",
 		"sources": "https://github.com/nieslregen/mycelium-leather"
 	},
-	"license": "MIT-License",
+	"license": "MIT",
 	"icon": "assets/mycelium-leather/icon.png",
 	"environment": "*",
 	"entrypoints": {

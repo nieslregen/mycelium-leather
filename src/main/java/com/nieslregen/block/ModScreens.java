@@ -1,6 +1,6 @@
 package com.nieslregen.block;
 
-import com.nieslregen.block.herbariumpress.HerbariumScreen;
+import com.nieslregen.block.custom.herbariumpress.HerbariumScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 
 public class ModScreens {

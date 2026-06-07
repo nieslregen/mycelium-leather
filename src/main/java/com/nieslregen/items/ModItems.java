@@ -25,6 +25,14 @@ public class ModItems {
     public static final Item GRASS_PATCH = registerItem("grass-patch", properties -> new GrassPatchItem(properties.stacksTo(16)));
     public static final Item ITEM_SPADE = registerItem("spade",  properties -> new SpadeItem(properties.durability(64)));
 
+    // ToDo: make soot ink form soot and honey within a cauldron. Get soot as by product form upgraded furnace
+    // ne eher kochtopf mit ganz schamelen untersetzer: wenn nichts drunter -> tinte herstellen, sonst ofen drunter und als quasi herd verwenden
+    public static final Item SOOT = registerItem("soot", Item::new);
+    public static final Item SOOT_INK = registerItem("soot-ink", Item::new);
+
+    //ToDo: upgraded book: can switch pages (in general make it easier to edit full pages), also herbarium maybe as an extension?
+
+    //ToDo: deco extends from head or look at head an copy
 
     public static Item registerItem(String name, Item item) {
         return Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name), item);
@@ -38,6 +46,8 @@ public class ModItems {
     public static void registerModItems() {
         MyceliumLeatherMod.LOGGER.info("Register Mod Items for: {}", MyceliumLeatherMod.MOD_ID);
 
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> output.accept(SOOT));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> output.accept(SOOT_INK));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> output.accept(MYCELIUM_LEATHER));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_PATCH));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_PATCH_DRIED));

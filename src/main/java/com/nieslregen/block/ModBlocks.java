@@ -1,7 +1,9 @@
 package com.nieslregen.block;
 
 import com.nieslregen.MyceliumLeatherMod;
-import com.nieslregen.block.herbariumpress.HerbariumPressBlock;
+import com.nieslregen.block.custom.herbariumpress.HerbariumPressBlock;
+import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
+import com.nieslregen.block.custom.tinycauldron.TinyCauldronBlock;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,11 +21,24 @@ import java.util.function.Function;
 
 public class ModBlocks {
 
-    public static final Block HERBARIUM_PRESS = registerBlock("herbarium_press_block", properties -> new HerbariumPressBlock(properties
-            .strength(1.5f)
-            .sound(SoundType.WOOD)
-
+    public static final Block HERBARIUM_PRESS = registerBlock("herbarium_press_block", properties -> new HerbariumPressBlock(
+            properties
+                    .strength(1.5f)
+                    .sound(SoundType.WOOD)
     ));
+
+    public static final Block CHARCOAL_PILE = registerBlock("charcoal_pile_block", properties -> new CharCoalPileBlock(
+            properties
+                    .strength(1.5f)
+                    .sound(SoundType.STONE)
+    ));
+
+    public static final Block TINY_CAULDRON = registerBlock("tiny_cauldron_block", properties -> new TinyCauldronBlock(
+            properties
+                    .strength(1.5f)
+                    .sound(SoundType.IRON)
+    ));
+
 
     private static Block registerBLock(String name, Block block) {
         return Registry.register(BuiltInRegistries.BLOCK, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name), block);
@@ -53,5 +68,7 @@ public class ModBlocks {
         MyceliumLeatherMod.LOGGER.info("Register Mod Blocks for " + MyceliumLeatherMod.MOD_ID);
 
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(HERBARIUM_PRESS));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(CHARCOAL_PILE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(TINY_CAULDRON));
     }
 }
