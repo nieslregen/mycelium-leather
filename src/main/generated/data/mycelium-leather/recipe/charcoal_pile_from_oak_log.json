@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": "minecraft:dirt",
+    "F": "minecraft:campfire",
+    "G": "mycelium-leather:grass-patch",
+    "S": "minecraft:stick",
+    "W": "minecraft:oak_log"
+  },
+  "pattern": [
+    "DGD",
+    "SWS",
+    "WFW"
+  ],
+  "result": {
+    "id": "mycelium-leather:charcoal_pile_block"
+  }
+}

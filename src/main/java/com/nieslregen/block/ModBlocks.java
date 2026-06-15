@@ -31,6 +31,7 @@ public class ModBlocks {
             properties
                     .strength(1.5f)
                     .sound(SoundType.STONE)
+                    .instabreak()
     ));
 
     public static final Block TINY_CAULDRON = registerBlock("tiny_cauldron_block", properties -> new TinyCauldronBlock(

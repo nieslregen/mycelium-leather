@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bone_meal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:bone_meal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_soot-ink": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mycelium-leather:soot-ink"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mycelium-leather:black_dye_from_soot_ink"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_soot-ink",
+      "has_bone_meal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mycelium-leather:black_dye_from_soot_ink"
+    ]
+  }
+}

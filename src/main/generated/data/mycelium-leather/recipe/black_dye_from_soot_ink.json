@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:bone_meal",
+    "mycelium-leather:soot-ink"
+  ],
+  "result": {
+    "id": "minecraft:black_dye"
+  }
+}

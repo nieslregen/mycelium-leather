@@ -6,14 +6,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class CharCoalPileEntity extends BlockEntity {
-    private static final Logger log = LoggerFactory.getLogger(CharCoalPileEntity.class); //implements ImplementedContainer
 
     private int burnProgress = 0;
-    private static final int maxBurnProgress = 100;
+    private static final int maxBurnProgress = 10000;
     private boolean ignited = false;
     private boolean finished = false;
 
@@ -26,17 +23,35 @@ public class CharCoalPileEntity extends BlockEntity {
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CharCoalPileEntity entity) {
         if (entity.ignited) {
+
+            if (!state.getValue(CharCoalPileBlock.LIT)) {
+                level.setBlockAndUpdate(pos, state.setValue(CharCoalPileBlock.LIT, true));
+            }
+
             entity.burnProgress ++;
 
-            if (entity.burnProgress >= maxBurnProgress) {
+            if ((entity.burnProgress >= maxBurnProgress / 2) && state.getValue(CharCoalPileBlock.STAGE) < 1) {
+                level.setBlockAndUpdate(
+                        pos,
+                        state.setValue(CharCoalPileBlock.STAGE, 1)
+                );
+            }
+
+            if ((!entity.finished) && (entity.burnProgress >= maxBurnProgress)) {
                 entity.ignited = false;
                 entity.finished = true;
+                level.setBlockAndUpdate(
+                        pos,
+                        state
+                                .setValue(CharCoalPileBlock.STAGE, 2)
+                                .setValue(CharCoalPileBlock.LIT, false)
+                );
             }
         }
     }
 
     public boolean ignite() {
-        if (ignited) {
+        if (ignited || finished) {
             return false;
         }
         ignited = true;

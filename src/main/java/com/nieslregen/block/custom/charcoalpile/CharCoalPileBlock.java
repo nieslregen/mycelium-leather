@@ -4,25 +4,28 @@ import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,17 @@ public class CharCoalPileBlock extends BaseEntityBlock {
 
     public CharCoalPileBlock(Properties properties) {
         super(properties);
+        registerDefaultState(
+                getStateDefinition()
+                        .any()
+                        .setValue(STAGE, 0)
+                        .setValue(LIT, false)
+        );
     }
+
+    public static final int MAX_STAGE = 2;
+    public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, MAX_STAGE);
+    public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
@@ -55,6 +68,11 @@ public class CharCoalPileBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(STAGE, LIT);
+    }
+
+    @Override
     protected List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
 
@@ -64,9 +82,10 @@ public class CharCoalPileBlock extends BaseEntityBlock {
             if (blockEntity instanceof CharCoalPileEntity) {
                 CharCoalPileEntity entity = (CharCoalPileEntity)blockEntity;
                 if (entity.isFinished()) {
-                    drops.add(new ItemStack(Items.CHARCOAL, 5));
+                    drops.add(new ItemStack(Items.CHARCOAL, 15));
                     drops.add(new ItemStack(ModItems.SOOT, 2));
                 } else if (entity.getBurnProgressRatio() > 0.5F) {
+                    drops.add(new ItemStack(Items.CHARCOAL, 10));
                     drops.add(new ItemStack(ModItems.SOOT, 1));
                 }
             }
@@ -92,25 +111,31 @@ public class CharCoalPileBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    //    @Override
-//    public void animateTick(final BlockState state, final Level level, final BlockPos pos, final RandomSource random) {
-//        if ((Boolean)state.getValue(LIT)) {
-//            double x = pos.getX() + 0.5;
-//            double y = pos.getY();
-//            double z = pos.getZ() + 0.5;
-//            if (random.nextDouble() < 0.1) {
-//                level.playLocalSound(x, y, z, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
-//            }
-//
-//            Direction direction = state.getValue(FACING);
-//            Direction.Axis axis = direction.getAxis();
-//            double r = 0.52;
-//            double ss = random.nextDouble() * 0.6 - 0.3;
-//            double dx = axis == Direction.Axis.X ? direction.getStepX() * 0.52 : ss;
-//            double dy = random.nextDouble() * 6.0 / 16.0;
-//            double dz = axis == Direction.Axis.Z ? direction.getStepZ() * 0.52 : ss;
-//            level.addParticle(ParticleTypes.SMOKE, x + dx, y + dy, z + dz, 0.0, 0.0, 0.0);
-//            level.addParticle(ParticleTypes.FLAME, x + dx, y + dy, z + dz, 0.0, 0.0, 0.0);
-//        }
-//    }
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+
+        if ((Boolean)state.getValue(LIT)) {
+            SimpleParticleType smokeParticle = ParticleTypes.CAMPFIRE_COSY_SMOKE;
+            level.addAlwaysVisibleParticle(
+                    smokeParticle,
+                    true,
+                    pos.getX() + 0.5 + random.nextDouble() / 3.0 * (random.nextBoolean() ? 1 : -1),
+                    pos.getY() + random.nextDouble() + random.nextDouble(),
+                    pos.getZ() + 0.5 + random.nextDouble() / 3.0 * (random.nextBoolean() ? 1 : -1),
+                    0.0,
+                    0.07,
+                    0.0
+            );
+            level.addParticle(
+                    ParticleTypes.SMOKE,
+                    pos.getX() + 0.5 + random.nextDouble() / 4.0 * (random.nextBoolean() ? 1 : -1),
+                    pos.getY() + 0.4,
+                    pos.getZ() + 0.5 + random.nextDouble() / 4.0 * (random.nextBoolean() ? 1 : -1),
+                    0.0,
+                    0.005,
+                    0.0
+            );
+
+        }
+    }
 }

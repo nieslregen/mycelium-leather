@@ -28,7 +28,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
     private final NonNullList<ItemStack> items = NonNullList.withSize(16, ItemStack.EMPTY);
 
     private List<TinyCauldronRecipe> recipes = List.of(
-            new TinyCauldronRecipe(List.of(Items.HONEY_BOTTLE, ModItems.SOOT), Items.INK_SAC)
+            new TinyCauldronRecipe(List.of(Items.HONEY_BOTTLE, ModItems.SOOT), ModItems.SOOT_INK)
     );
 
 

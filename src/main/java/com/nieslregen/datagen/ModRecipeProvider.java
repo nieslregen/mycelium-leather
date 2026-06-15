@@ -457,7 +457,28 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.GLASS), has(Items.GLASS))
                         .save(output, "harness_from_mycelium_leather_and_yellow_wool");
 
+                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
+                        .pattern("DGD")
+                        .pattern("SWS")
+                        .pattern("WFW")
+                        .define('D', Items.DIRT)
+                        .define('S', Items.STICK)
+                        .define('W', Items.OAK_LOG)
+                        .define('G', ModItems.GRASS_PATCH)
+                        .define('F', Items.CAMPFIRE)
+                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
+                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .unlockedBy(getHasName(Items.OAK_WOOD), has(Items.OAK_WOOD))
+                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
+                        .save(output, "charcoal_pile_from_oak_log");
 
+                shapeless(RecipeCategory.MISC, Items.BLACK_DYE)
+                        .requires(Items.BONE_MEAL)
+                        .requires(ModItems.SOOT_INK)
+                        .unlockedBy(getHasName(ModItems.SOOT_INK), has(ModItems.SOOT_INK))
+                        .unlockedBy(getHasName(Items.BONE_MEAL), has(Items.BONE_MEAL))
+                        .save(output, "black_dye_from_soot_ink");
 
             }
         };
