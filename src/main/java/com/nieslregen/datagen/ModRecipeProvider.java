@@ -28,15 +28,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 List<ItemLike> MYCELIUM_SMELTABLES = List.of(ModItems.MYCELIUM_PATCH);
                 oreSmelting(MYCELIUM_SMELTABLES, RecipeCategory.MISC, CookingBookCategory.MISC, ModItems.MYCELIUM_PATCH_DRIED, .05f, 100, "mycelium-leather");
 
-                shaped(RecipeCategory.MISC, ModItems.MYCELIUM_LEATHER)
-                        .pattern("DDD")
-                        .pattern("DDD")
-                        .pattern("DDD")
-                        .define('D', ModItems.MYCELIUM_PATCH_DRIED)
-                        .unlockedBy(getHasName(ModItems.MYCELIUM_PATCH_DRIED), has(ModItems.MYCELIUM_PATCH_DRIED))
-                        .group("mycelium-leather")
-                        .save(output, "mycelium_leather_from_dried_mycelium_leather");
-
                 shaped(RecipeCategory.MISC, Items.BOOK)
                         .pattern("   ")
                         .pattern("PP ")
