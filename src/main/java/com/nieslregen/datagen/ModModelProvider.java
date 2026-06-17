@@ -15,9 +15,9 @@ public class ModModelProvider extends FabricModelProvider {
     }
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockModelGenerators) {
-        blockModelGenerators.createTrivialCube(ModBlocks.HERBARIUM_PRESS);
-        blockModelGenerators.createTrivialCube(ModBlocks.CHARCOAL_PILE);
-        blockModelGenerators.createTrivialCube(ModBlocks.TINY_CAULDRON);
+//        blockModelGenerators.createTrivialCube(ModBlocks.HERBARIUM_PRESS);
+//        blockModelGenerators.createTrivialCube(ModBlocks.CHARCOAL_PILE);
+//        blockModelGenerators.createTrivialCube(ModBlocks.TINY_CAULDRON);
     }
 
     @Override
@@ -31,5 +31,7 @@ public class ModModelProvider extends FabricModelProvider {
 
         itemModelGenerators.generateFlatItem(ModItems.SOOT, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.SOOT_INK, ModelTemplates.FLAT_ITEM);
+
+        itemModelGenerators.generateFlatItem(ModItems.SUSPICIOUS_FLASK, ModelTemplates.FLAT_ITEM);
     }
 }

@@ -114,7 +114,7 @@ public class CharCoalPileBlock extends BaseEntityBlock {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 
-        if ((Boolean)state.getValue(LIT)) {
+        if (state.getValue(LIT)) {
             SimpleParticleType smokeParticle = ParticleTypes.CAMPFIRE_COSY_SMOKE;
             level.addAlwaysVisibleParticle(
                     smokeParticle,

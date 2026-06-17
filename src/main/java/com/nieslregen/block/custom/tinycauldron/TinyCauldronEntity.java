@@ -1,6 +1,7 @@
 package com.nieslregen.block.custom.tinycauldron;
 
 import com.nieslregen.block.container.ImplementedContainer;
+import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -10,22 +11,24 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.nieslregen.block.ModBlockEntities.TINY_CAULDRON_ENTITY;
 
 public class TinyCauldronEntity extends BlockEntity implements ImplementedContainer {
 
     private final NonNullList<ItemStack> items = NonNullList.withSize(16, ItemStack.EMPTY);
+
+    private ItemStack brewingResult = ItemStack.EMPTY;
+    private int brewTime = 100;
+    private int currentBrewTime = 0;
 
     private List<TinyCauldronRecipe> recipes = List.of(
             new TinyCauldronRecipe(List.of(Items.HONEY_BOTTLE, ModItems.SOOT), ModItems.SOOT_INK)
@@ -41,8 +44,33 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         return items;
     }
 
-    // For reference: CampfireBlockEntity
-    public boolean placeIngredient(final ServerLevel level, final LivingEntity entity, final ItemStack itemStack) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, TinyCauldronEntity entity) {
+        if (entity.brewingResult != ItemStack.EMPTY) {
+
+            if (!state.getValue(TinyCauldronBlock.BREWING)) {
+                level.setBlockAndUpdate(pos, state.setValue(TinyCauldronBlock.BREWING, true));
+            }
+
+            if (entity.currentBrewTime < entity.brewTime) {
+                entity.currentBrewTime = entity.currentBrewTime + 1;
+            } else {
+                Containers.dropItemStack(
+                        level,
+                        entity.getBlockPos().getX(),
+                        entity.getBlockPos().getY(),
+                        entity.getBlockPos().getZ(),
+                        entity.brewingResult
+                );
+
+                entity.currentBrewTime = 0;
+                entity.brewingResult = ItemStack.EMPTY;
+                level.setBlockAndUpdate(pos, state.setValue(TinyCauldronBlock.BREWING, false));
+            }
+        }
+    }
+
+    public boolean placeIngredient(final ServerLevel level, final LivingEntity entity, final ItemStack itemStack, final BlockPos pos) {
+
         for (int slot = 0; slot < items.size(); slot++) {
             ItemStack stack = items.get(slot);
             if (stack.isEmpty()) {
@@ -60,7 +88,12 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                         level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(), GameEvent.Context.of(entity, this.getBlockState()));
                         level.sendBlockUpdated(entity.getOnPos(), this.getBlockState(), this.getBlockState(), 3);
                     }
-                    Containers.dropItemStack(level, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(result.get()));
+                    BlockEntity blockEntity = level.getBlockEntity(pos);
+                    if (blockEntity instanceof TinyCauldronEntity) {
+                        TinyCauldronEntity tinyCauldron = (TinyCauldronEntity) blockEntity;
+                        tinyCauldron.brewingResult = new ItemStack(result.get());
+                    }
+//                    Containers.dropItemStack(level, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(result.get()));
                 }
 
                 return true;
@@ -74,16 +107,23 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         for (int slot = 0; slot < items.size(); slot++) {
             ItemStack stackOfSlot = items.get(slot);
             if (!stackOfSlot.isEmpty()) {
-                currentIngredients.add(stackOfSlot.getItem());
+                for (int i = 0; i < stackOfSlot.count(); i++) {
+                    currentIngredients.add(stackOfSlot.getItem());
+                }
             }
         }
 
         for (TinyCauldronRecipe recipe : recipes) {
-            if (new HashSet<>(recipe.recipeComponents()).equals(new HashSet<>(currentIngredients))) {
-                return Optional.of(recipe.resultItem());
+            if (equalCounts(recipe.recipeComponents(), currentIngredients)) {
+
+                if (equalCounts(currentIngredients, recipe.recipeComponents())) {
+                    return Optional.of(recipe.resultItem());
+                } else {
+                    return Optional.empty();
+                }
             }
         }
-        return Optional.empty();
+        return Optional.of(ModItems.SUSPICIOUS_FLASK);
     }
 
 
@@ -92,6 +132,18 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
 
+    private boolean equalCounts(List<Item> source, List<Item> toBeValidated) {
+        List<Item> sourceTmp = new ArrayList<>(source);
+        List<Item> toBeValidatedTmp = new ArrayList<>(toBeValidated);
 
+        for (Item item : toBeValidatedTmp) {
+            if (sourceTmp.contains(item)) {
+                sourceTmp.remove(item);
+            } else {
+                return  false;
+            }
+        }
+        return true;
+    }
 }
 
