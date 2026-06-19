@@ -2,6 +2,8 @@ package com.nieslregen.items;
 
 
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.effect.ModEffects;
+import com.nieslregen.items.customitems.AbstractMobEffectArrow;
 import com.nieslregen.items.customitems.GrassPatchItem;
 import com.nieslregen.items.customitems.MyceliumPatchItem;
 import com.nieslregen.items.customitems.SpadeItem;
@@ -30,6 +32,8 @@ public class ModItems {
 
     public static final Item SUSPICIOUS_FLASK = registerItem("suspicious-flask", Item::new);
 
+    public static final Item ARROW_OF_ILLNESS = registerItem("arrow-of-illness", properties -> new AbstractMobEffectArrow(properties, ModEffects.ILLNESS));
+
     private static Item registerItem(String name, Function<Item.Properties, Item> function) {
         return Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name),
                 function.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name)))));
@@ -45,7 +49,10 @@ public class ModItems {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_PATCH));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_PATCH_DRIED));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(GRASS_PATCH));
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES). register(output -> output.accept(ITEM_SPADE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(ITEM_SPADE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(ARROW_OF_ILLNESS));
 
     }
+
+
 }

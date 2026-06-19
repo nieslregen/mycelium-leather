@@ -6,6 +6,7 @@ import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -15,6 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,14 +32,27 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
     private ItemStack brewingResult = ItemStack.EMPTY;
     private int brewTime = 100;
     private int currentBrewTime = 0;
+    private final String CURRENT_BREW_TIME_IDENTIFIER = "current_brew_time";
 
-    private List<TinyCauldronRecipe> recipes = List.of(
-            new TinyCauldronRecipe(List.of(Items.HONEY_BOTTLE, ModItems.SOOT), ModItems.SOOT_INK)
+    private final List<TinyCauldronRecipe> recipes = List.of(
+            new TinyCauldronRecipe(
+                    List.of(new ItemStack(Items.HONEY_BOTTLE), new ItemStack(ModItems.SOOT)),
+                    new ItemStack(ModItems.SOOT_INK)
+            ),
+            new TinyCauldronRecipe(
+                    List.of(new ItemStack(Items.RED_MUSHROOM, 2), new ItemStack(Items.ROTTEN_FLESH, 3), new ItemStack(Items.ARROW), new ItemStack(ModItems.SUSPICIOUS_FLASK)),
+                    new ItemStack(ModItems.ARROW_OF_ILLNESS)
+            )
     );
+
+    private final List<List<Item>> recipesAsItemList = new ArrayList<>();
 
 
     public TinyCauldronEntity(BlockPos worldPosition, BlockState blockState) {
         super(TINY_CAULDRON_ENTITY, worldPosition, blockState);
+        recipes.forEach(recipe -> {
+            recipesAsItemList.add(convertItemStackListToItemList(recipe.recipeComponents()));
+        });
     }
 
     @Override
@@ -81,7 +97,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                 level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(), GameEvent.Context.of(entity, this.getBlockState()));
                 this.markUpdated();
 
-                Optional<Item> result = checkRecipe();
+                Optional<ItemStack> result = checkRecipe();
                 if (result.isPresent()) {
                     for (int i = 0; i < items.size(); i++) {
                         items.get(i).shrink(1);
@@ -91,39 +107,31 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TinyCauldronEntity) {
                         TinyCauldronEntity tinyCauldron = (TinyCauldronEntity) blockEntity;
-                        tinyCauldron.brewingResult = new ItemStack(result.get());
+                        tinyCauldron.brewingResult = result.get();
                     }
-//                    Containers.dropItemStack(level, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(result.get()));
                 }
-
                 return true;
             }
         }
         return false;
     }
 
-    private Optional<Item> checkRecipe() {
-        List<Item> currentIngredients = new ArrayList<>();
-        for (int slot = 0; slot < items.size(); slot++) {
-            ItemStack stackOfSlot = items.get(slot);
-            if (!stackOfSlot.isEmpty()) {
-                for (int i = 0; i < stackOfSlot.count(); i++) {
-                    currentIngredients.add(stackOfSlot.getItem());
-                }
-            }
-        }
+    private Optional<ItemStack> checkRecipe() {
+        List<Item> currentIngredients = convertItemStackListToItemList(items);
 
+        int index = 0;
         for (TinyCauldronRecipe recipe : recipes) {
-            if (equalCounts(recipe.recipeComponents(), currentIngredients)) {
+            if (isSubset(recipesAsItemList.get(index), currentIngredients)) {
 
-                if (equalCounts(currentIngredients, recipe.recipeComponents())) {
+                if (isSubset(currentIngredients, recipesAsItemList.get(index))) {
                     return Optional.of(recipe.resultItem());
                 } else {
                     return Optional.empty();
                 }
             }
+            index ++;
         }
-        return Optional.of(ModItems.SUSPICIOUS_FLASK);
+        return Optional.of(new ItemStack(ModItems.SUSPICIOUS_FLASK, currentIngredients.size()));
     }
 
 
@@ -132,7 +140,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
 
-    private boolean equalCounts(List<Item> source, List<Item> toBeValidated) {
+    private boolean isSubset(List<Item> source, List<Item> toBeValidated) {
         List<Item> sourceTmp = new ArrayList<>(source);
         List<Item> toBeValidatedTmp = new ArrayList<>(toBeValidated);
 
@@ -144,6 +152,40 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
             }
         }
         return true;
+    }
+
+    private List<Item> convertItemStackListToItemList(List<ItemStack> stacks) {
+        List<Item> items = new ArrayList<>();
+        for (int slot = 0; slot < stacks.size(); slot++) {
+            ItemStack stack = stacks.get(slot);
+            if (!stack.isEmpty()) {
+                for (int i = 0; i < stack.count(); i++) {
+                    items.add(stack.getItem());
+                }
+            }
+        }
+        return items;
+    }
+
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        ContainerHelper.loadAllItems(input, this.items);
+        input.getInt(CURRENT_BREW_TIME_IDENTIFIER).ifPresent(value -> {
+            if (value > 0) {
+                this.brewTime = value;
+                // trace back brewingResult
+                checkRecipe().ifPresent(result -> brewingResult = result);
+            }
+        });
+
+    }
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        ContainerHelper.saveAllItems(output, this.items);
+        output.putInt(CURRENT_BREW_TIME_IDENTIFIER, currentBrewTime);
+        super.saveAdditional(output);
     }
 }
 

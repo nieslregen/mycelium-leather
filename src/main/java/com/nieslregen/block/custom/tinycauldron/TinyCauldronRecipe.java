@@ -1,10 +1,10 @@
 package com.nieslregen.block.custom.tinycauldron;
 
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
 public record TinyCauldronRecipe(
-        List<Item> recipeComponents,
-        Item resultItem
+        List<ItemStack> recipeComponents,
+        ItemStack resultItem
 ) {}

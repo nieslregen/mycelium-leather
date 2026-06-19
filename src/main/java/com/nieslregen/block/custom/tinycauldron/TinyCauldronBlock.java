@@ -40,9 +40,16 @@ public class TinyCauldronBlock extends BaseEntityBlock {
 
     private static final VoxelShape SHAPE;
 
-    private static final List<Item> INGREDIENTS = List.of(Items.HONEY_BOTTLE, ModItems.SOOT);
+    private static final List<Item> INGREDIENTS = List.of(
+            Items.HONEY_BOTTLE,
+            ModItems.SOOT,
+            ModItems.SUSPICIOUS_FLASK,
+            Items.ROTTEN_FLESH,
+            Items.ARROW,
+            Items.RED_MUSHROOM
+    );
 
-    public static final BooleanProperty BREWING  = BooleanProperty.create("brewing");
+    public static final BooleanProperty BREWING = BooleanProperty.create("brewing");
 
     public TinyCauldronBlock(Properties properties) {
         super(properties);
@@ -77,7 +84,7 @@ public class TinyCauldronBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof TinyCauldronEntity) {
             entity = (TinyCauldronEntity)level.getBlockEntity(pos);
 
-            if (!item.isEmpty()) {
+            if (!item.isEmpty() && !state.getValue(BREWING)) {
                 if (isValidIngredient(item.getItem())) {
                     entity.placeIngredient((ServerLevel) level, player, item, pos);
                 }
