@@ -1,5 +1,6 @@
 package com.nieslregen.block.custom.tinycauldron;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.container.ImplementedContainer;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
 import com.nieslregen.items.ModItems;
@@ -30,16 +31,20 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
     private final NonNullList<ItemStack> items = NonNullList.withSize(16, ItemStack.EMPTY);
 
     private ItemStack brewingResult = ItemStack.EMPTY;
-    private int brewTime = 100;
     private int currentBrewTime = 0;
+    private final int brewTime = 200;
     private final String CURRENT_BREW_TIME_IDENTIFIER = "current_brew_time";
+    private final String BREWING_RESULT_IDENTIFIER = "brewing_result";
+    private final String BREWING_RESULT_AMOUNT_IDENTIFIER = "brewing_result_amount";
 
     private final List<TinyCauldronRecipe> recipes = List.of(
             new TinyCauldronRecipe(
+                    1,
                     List.of(new ItemStack(Items.HONEY_BOTTLE), new ItemStack(ModItems.SOOT)),
                     new ItemStack(ModItems.SOOT_INK)
             ),
             new TinyCauldronRecipe(
+                    2,
                     List.of(new ItemStack(Items.RED_MUSHROOM, 2), new ItemStack(Items.ROTTEN_FLESH, 3), new ItemStack(Items.ARROW), new ItemStack(ModItems.SUSPICIOUS_FLASK)),
                     new ItemStack(ModItems.ARROW_OF_ILLNESS)
             )
@@ -167,25 +172,48 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         return items;
     }
 
+    private Optional<TinyCauldronRecipe> getRecipeByIdentifier(int identifier) {
+        return recipes.stream()
+                .filter(r -> r.identifier() == identifier)
+                .findFirst();
+    }
+
+    private Optional<Integer> findRecipeByBrewingResult(ItemStack itemStack) {
+        return recipes.stream()
+                .peek(x -> MyceliumLeatherMod.LOGGER.info("equation: {} eqauls {}", x.resultItem().getItem(), itemStack.getItem()))
+                .filter(r -> r.resultItem().getItem() == itemStack.getItem())
+                .findFirst()
+                .map(TinyCauldronRecipe::identifier);
+    }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         ContainerHelper.loadAllItems(input, this.items);
-        input.getInt(CURRENT_BREW_TIME_IDENTIFIER).ifPresent(value -> {
-            if (value > 0) {
-                this.brewTime = value;
-                // trace back brewingResult
-                checkRecipe().ifPresent(result -> brewingResult = result);
-            }
-        });
 
+        currentBrewTime = input.getIntOr(CURRENT_BREW_TIME_IDENTIFIER, 0);
+
+        if (currentBrewTime == 0) { return; }
+
+        int amount = input.getIntOr(BREWING_RESULT_AMOUNT_IDENTIFIER, 0);
+        Optional<Integer> identifier = input.getInt(BREWING_RESULT_IDENTIFIER);
+
+        Item b = ModItems.SUSPICIOUS_FLASK;
+        identifier.flatMap(this::getRecipeByIdentifier).ifPresent(recipe -> recipe.resultItem().getItem());
+
+        brewingResult = new ItemStack(b, amount);
     }
     @Override
     protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
         ContainerHelper.saveAllItems(output, this.items);
         output.putInt(CURRENT_BREW_TIME_IDENTIFIER, currentBrewTime);
-        super.saveAdditional(output);
+
+        if (brewingResult != ItemStack.EMPTY) {
+            findRecipeByBrewingResult(brewingResult).ifPresent(identifier -> output.putInt(BREWING_RESULT_IDENTIFIER, identifier));
+            output.putInt(BREWING_RESULT_AMOUNT_IDENTIFIER, brewingResult.getCount());
+        }
+
     }
 }
 

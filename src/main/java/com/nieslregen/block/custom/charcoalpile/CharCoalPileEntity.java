@@ -1,21 +1,27 @@
 package com.nieslregen.block.custom.charcoalpile;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class CharCoalPileEntity extends BlockEntity {
 
     private int burnProgress = 0;
-    private static final int maxBurnProgress = 10000;
+    private static final int maxBurnProgress = 1500;
     private boolean ignited = false;
     private boolean finished = false;
 
+    private final String IGNITED_IDENTIFIER = "ignited";
+    private final String BURN_PROGRESS_IDENTIFIER = "burn_progress";
+    private final String FINISHED_IDENTIFIER = "finished";
+
     private static final Component DEFAULT_NAME = Component.translatable("container.soot_trap_furnace");
-//    private final NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
 
     public CharCoalPileEntity(BlockPos worldPosition, BlockState blockState) {
         super(ModBlockEntities.CHARCOAL_PILE_ENTITY, worldPosition, blockState);
@@ -58,10 +64,6 @@ public class CharCoalPileEntity extends BlockEntity {
         return true;
     }
 
-    public boolean isIgnited() {
-        return ignited;
-    }
-
     public boolean isFinished() {
         return finished;
     }
@@ -70,4 +72,20 @@ public class CharCoalPileEntity extends BlockEntity {
         return (float) burnProgress / (float) maxBurnProgress;
     }
 
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        ignited = input.getBooleanOr(IGNITED_IDENTIFIER, false);
+        burnProgress = input.getIntOr(BURN_PROGRESS_IDENTIFIER, 0);
+        finished = input.getBooleanOr(FINISHED_IDENTIFIER, false);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putBoolean(IGNITED_IDENTIFIER, ignited);
+        output.putInt(BURN_PROGRESS_IDENTIFIER, burnProgress);
+        output.putBoolean(FINISHED_IDENTIFIER, finished);
+    }
 }
