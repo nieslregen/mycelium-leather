@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "minecraft:book",
+    "F": "minecraft:feather",
+    "I": "mycelium-leather:soot-ink"
+  },
+  "pattern": [
+    "   ",
+    "BI ",
+    " F "
+  ],
+  "result": {
+    "id": "minecraft:writable_book"
+  }
+}

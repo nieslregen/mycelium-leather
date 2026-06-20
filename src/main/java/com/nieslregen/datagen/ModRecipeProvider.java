@@ -471,6 +471,17 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.BONE_MEAL), has(Items.BONE_MEAL))
                         .save(output, "black_dye_from_soot_ink");
 
+                shaped(RecipeCategory.MISC, Items.WRITABLE_BOOK)
+                        .pattern("   ")
+                        .pattern("BI ")
+                        .pattern(" F ")
+                        .define('B', Items.BOOK)
+                        .define('I', ModItems.SOOT_INK)
+                        .define('F', Items.FEATHER)
+                        .unlockedBy(getHasName(Items.BOOK), has(Items.BOOK))
+                        .unlockedBy(getHasName(ModItems.SOOT_INK), has(ModItems.SOOT_INK))
+                        .unlockedBy(getHasName(Items.FEATHER), has(Items.FEATHER))
+                        .save(output, "writable_book_from_soot_ink");
             }
         };
     }
