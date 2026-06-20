@@ -13,7 +13,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public class CharCoalPileEntity extends BlockEntity {
 
     private int burnProgress = 0;
-    private static final int maxBurnProgress = 1500;
+    private static final int maxBurnProgress = 15000;
     private boolean ignited = false;
     private boolean finished = false;
 
