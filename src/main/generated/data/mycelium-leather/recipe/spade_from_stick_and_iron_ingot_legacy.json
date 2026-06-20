@@ -7,9 +7,9 @@
     "S": "minecraft:stick"
   },
   "pattern": [
-    "  I",
+    "   ",
     " S ",
-    "   "
+    "  I"
   ],
   "result": {
     "id": "mycelium-leather:spade"
