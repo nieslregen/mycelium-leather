@@ -193,16 +193,20 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
 
         currentBrewTime = input.getIntOr(CURRENT_BREW_TIME_IDENTIFIER, 0);
 
-        if (currentBrewTime == 0) { return; }
-
         int amount = input.getIntOr(BREWING_RESULT_AMOUNT_IDENTIFIER, 0);
         Optional<Integer> identifier = input.getInt(BREWING_RESULT_IDENTIFIER);
 
         Item b = ModItems.SUSPICIOUS_FLASK;
-        identifier.flatMap(this::getRecipeByIdentifier).ifPresent(recipe -> recipe.resultItem().getItem());
 
+        if (identifier.isPresent()) {
+            Optional<TinyCauldronRecipe> optRecipe = getRecipeByIdentifier(identifier.get());
+            if  (optRecipe.isPresent()) {
+                b = optRecipe.get().resultItem().getItem();
+            }
+        }
         brewingResult = new ItemStack(b, amount);
     }
+
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
