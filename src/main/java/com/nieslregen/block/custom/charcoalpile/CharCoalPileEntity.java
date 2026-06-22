@@ -1,6 +1,5 @@
 package com.nieslregen.block.custom.charcoalpile;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

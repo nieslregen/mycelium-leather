@@ -1,8 +1,8 @@
 package com.nieslregen.block;
 
 import com.nieslregen.MyceliumLeatherMod;
-import com.nieslregen.block.custom.herbariumpress.HerbariumPressEntity;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileEntity;
+import com.nieslregen.block.custom.herbariumpress.HerbariumPressEntity;
 import com.nieslregen.block.custom.tinycauldron.TinyCauldronEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;

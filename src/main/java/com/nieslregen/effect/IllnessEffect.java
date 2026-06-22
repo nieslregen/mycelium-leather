@@ -1,20 +1,14 @@
 package com.nieslregen.effect;
 
 
-import com.nieslregen.MyceliumLeatherMod;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
-
-import java.util.Random;
 
 public class IllnessEffect extends MobEffect {
     private final RandomSource random;
