@@ -2,7 +2,6 @@ package com.nieslregen.block.custom.tinycauldron;
 
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.container.ImplementedContainer;
-import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -19,10 +18,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static com.nieslregen.block.ModBlockEntities.TINY_CAULDRON_ENTITY;
 
@@ -193,16 +192,20 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
 
         currentBrewTime = input.getIntOr(CURRENT_BREW_TIME_IDENTIFIER, 0);
 
-        if (currentBrewTime == 0) { return; }
-
         int amount = input.getIntOr(BREWING_RESULT_AMOUNT_IDENTIFIER, 0);
         Optional<Integer> identifier = input.getInt(BREWING_RESULT_IDENTIFIER);
 
         Item b = ModItems.SUSPICIOUS_FLASK;
-        identifier.flatMap(this::getRecipeByIdentifier).ifPresent(recipe -> recipe.resultItem().getItem());
 
+        if (identifier.isPresent()) {
+            Optional<TinyCauldronRecipe> optRecipe = getRecipeByIdentifier(identifier.get());
+            if  (optRecipe.isPresent()) {
+                b = optRecipe.get().resultItem().getItem();
+            }
+        }
         brewingResult = new ItemStack(b, amount);
     }
+
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
