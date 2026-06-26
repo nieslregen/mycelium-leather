@@ -20,6 +20,7 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
     @Override
     public void generate() {
         dropSelf(ModBlocks.HERBARIUM_PRESS);
+        dropSelf(ModBlocks.TINY_CAULDRON);
     }
 
     @Override

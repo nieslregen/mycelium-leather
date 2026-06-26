@@ -1,4 +1,4 @@
-package com.nieslregen.block.herbariumpress;
+package com.nieslregen.block.custom.herbariumpress;
 
 import com.nieslregen.MyceliumLeatherMod;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

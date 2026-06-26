@@ -1,6 +1,5 @@
 package com.nieslregen.datagen;
 
-import com.nieslregen.block.ModBlocks;
 import com.nieslregen.items.ModItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -15,8 +14,9 @@ public class ModModelProvider extends FabricModelProvider {
     }
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockModelGenerators) {
-
-        blockModelGenerators.createTrivialCube(ModBlocks.HERBARIUM_PRESS);
+//        blockModelGenerators.createTrivialCube(ModBlocks.HERBARIUM_PRESS);
+//        blockModelGenerators.createTrivialCube(ModBlocks.CHARCOAL_PILE);
+//        blockModelGenerators.createTrivialCube(ModBlocks.TINY_CAULDRON);
     }
 
     @Override
@@ -27,5 +27,10 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.ITEM_SPADE, ModelTemplates.FLAT_HANDHELD_ITEM);
 
         itemModelGenerators.generateFlatItem(ModItems.GRASS_PATCH, ModelTemplates.FLAT_ITEM);
+
+        itemModelGenerators.generateFlatItem(ModItems.SOOT, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.SOOT_INK, ModelTemplates.FLAT_ITEM);
+
+        itemModelGenerators.generateFlatItem(ModItems.SUSPICIOUS_FLASK, ModelTemplates.FLAT_ITEM);
     }
 }

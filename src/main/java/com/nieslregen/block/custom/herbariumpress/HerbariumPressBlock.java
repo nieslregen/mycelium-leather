@@ -1,4 +1,4 @@
-package com.nieslregen.block.herbariumpress;
+package com.nieslregen.block.custom.herbariumpress;
 
 import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mycelium-leather:item/arrow-of-illness"
+  }
+}

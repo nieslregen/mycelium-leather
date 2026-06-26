@@ -17,6 +17,7 @@ public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModRecipeProvider::new);
 		pack.addProvider(ModLootTableProvider::new);
 		pack.addProvider(ModBlockTagsProvider::new);
+		pack.addProvider(ModItemTagsProvider::new);
 
 	}
 }

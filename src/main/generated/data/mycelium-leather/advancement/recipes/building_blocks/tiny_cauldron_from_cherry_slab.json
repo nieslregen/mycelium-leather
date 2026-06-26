@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cherry_slab": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:cherry_slab"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_iron_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:iron_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mycelium-leather:tiny_cauldron_from_cherry_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_iron_ingot",
+      "has_cherry_slab"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mycelium-leather:tiny_cauldron_from_cherry_slab"
+    ]
+  }
+}

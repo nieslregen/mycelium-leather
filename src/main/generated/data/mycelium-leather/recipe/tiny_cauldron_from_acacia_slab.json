@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tiny_cauldron",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "S": "minecraft:acacia_slab"
+  },
+  "pattern": [
+    "I I",
+    "III",
+    "SSS"
+  ],
+  "result": {
+    "id": "mycelium-leather:tiny_cauldron_block"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "stage=0": { "model": "mycelium-leather:block/charcoalpile/charcoal_pile_0" },
+    "stage=1": { "model": "mycelium-leather:block/charcoalpile/charcoal_pile_1" },
+    "stage=2": { "model": "mycelium-leather:block/charcoalpile/charcoal_pile_2" }
+  }
+}
