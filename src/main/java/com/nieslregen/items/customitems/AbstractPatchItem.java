@@ -8,10 +8,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 
-public class GrassPatchItem extends Item {
+public class AbstractPatchItem extends Item {
 
-    public GrassPatchItem(Properties properties) {
+    private final Block block;
+
+    public AbstractPatchItem(Properties properties, Block convertInto) {
         super(properties);
+        block = convertInto;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class GrassPatchItem extends Item {
         Block clickedBlock =  level.getBlockState(context.getClickedPos()).getBlock();
 
         if (!level.isClientSide() && Blocks.DIRT.equals(clickedBlock)) {
-            level.setBlockAndUpdate(context.getClickedPos(), Blocks.GRASS_BLOCK.defaultBlockState());
+            level.setBlockAndUpdate(context.getClickedPos(), block.defaultBlockState());
             context.getItemInHand().consume(1, context.getPlayer());
             return InteractionResult.SUCCESS;
         }

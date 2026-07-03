@@ -4,8 +4,7 @@ package com.nieslregen.items;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.customitems.AbstractMobEffectArrow;
-import com.nieslregen.items.customitems.GrassPatchItem;
-import com.nieslregen.items.customitems.MyceliumPatchItem;
+import com.nieslregen.items.customitems.AbstractPatchItem;
 import com.nieslregen.items.customitems.SpadeItem;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
@@ -15,16 +14,17 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Function;
 
 public class ModItems {
 
     public static final Item MYCELIUM_LEATHER = registerItem("mycelium-leather", Item::new);
-    public static final Item MYCELIUM_PATCH = registerItem("mycelium-patch", properties -> new MyceliumPatchItem(properties.stacksTo(64)));
+    public static final Item MYCELIUM_PATCH = registerItem("mycelium-patch", properties -> new AbstractPatchItem(properties.stacksTo(16), Blocks.MYCELIUM));
     public static final Item MYCELIUM_PATCH_DRIED = registerItem("mycelium-patch-dried", Item::new);
 
-    public static final Item GRASS_PATCH = registerItem("grass-patch", properties -> new GrassPatchItem(properties.stacksTo(16)));
+    public static final Item GRASS_PATCH = registerItem("grass-patch", properties -> new AbstractPatchItem(properties.stacksTo(16), Blocks.GRASS_BLOCK));
     public static final Item ITEM_SPADE = registerItem("spade",  properties -> new SpadeItem(properties.durability(64)));
 
     public static final Item SOOT = registerItem("soot", Item::new);

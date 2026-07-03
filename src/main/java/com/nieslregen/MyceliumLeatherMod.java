@@ -6,6 +6,7 @@ import com.nieslregen.block.ModMenuType;
 import com.nieslregen.block.ModScreens;
 import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.ModItems;
+import com.nieslregen.mob.ModEntityTypes;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public class MyceliumLeatherMod implements ModInitializer {
 		ModMenuType.initialize();
 		ModScreens.initialize();
 		ModEffects.registerEffects();
+		ModEntityTypes.registerModEntityTypes();
 
 	}
 }
