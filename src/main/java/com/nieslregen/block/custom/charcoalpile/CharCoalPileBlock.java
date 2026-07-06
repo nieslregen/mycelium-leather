@@ -111,6 +111,7 @@ public class CharCoalPileBlock extends BaseEntityBlock {
 
             if (Items.FLINT_AND_STEEL.equals(itemInHand.getItem())) {
                 entity.ignite();
+                itemInHand.hurtAndBreak(1, player, hand);
             }
         }
         return InteractionResult.SUCCESS;
