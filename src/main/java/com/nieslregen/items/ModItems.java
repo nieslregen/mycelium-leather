@@ -25,7 +25,7 @@ public class ModItems {
     public static final Item MYCELIUM_PATCH_DRIED = registerItem("mycelium-patch-dried", Item::new);
 
     public static final Item GRASS_PATCH = registerItem("grass-patch", properties -> new GrassPatchItem(properties.stacksTo(16)));
-    public static final Item ITEM_SPADE = registerItem("spade",  properties -> new SpadeItem(properties.durability(64)));
+    public static final Item SPADE = registerItem("spade", properties -> new SpadeItem(properties.durability(64)));
 
     public static final Item SOOT = registerItem("soot", Item::new);
     public static final Item SOOT_INK = registerItem("soot-ink", Item::new);
@@ -49,7 +49,7 @@ public class ModItems {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_PATCH));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_PATCH_DRIED));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(GRASS_PATCH));
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(ITEM_SPADE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(SPADE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(ARROW_OF_ILLNESS));
 
     }

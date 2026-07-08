@@ -24,7 +24,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_LEATHER, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_PATCH, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_PATCH_DRIED, ModelTemplates.FLAT_ITEM);
-        itemModelGenerators.generateFlatItem(ModItems.ITEM_SPADE, ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.SPADE, ModelTemplates.FLAT_HANDHELD_ITEM);
 
         itemModelGenerators.generateFlatItem(ModItems.GRASS_PATCH, ModelTemplates.FLAT_ITEM);
 
