@@ -37,5 +37,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.SOOT_INK, ModelTemplates.FLAT_ITEM);
 
         itemModelGenerators.generateFlatItem(ModItems.SUSPICIOUS_FLASK, ModelTemplates.FLAT_ITEM);
+
+        itemModelGenerators.generateFlatItem(ModItems.MUSHROOM_PASTE, ModelTemplates.FLAT_ITEM);
     }
 }

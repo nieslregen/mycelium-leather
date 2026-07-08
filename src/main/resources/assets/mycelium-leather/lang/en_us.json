@@ -7,11 +7,14 @@
   "item.mycelium-leather.soot": "Soot",
   "item.mycelium-leather.soot-ink": "Soot Ink",
   "item.mycelium-leather.suspicious-flask": "Suspicious Flask",
+  "item.mycelium-leather.mushroom_paste": "Mushroom Paste",
   "item.mycelium-leather.arrow-of-illness": "Arrow of Illness",
   "block.mycelium-leather.herbarium_press_block": "Herbarium Press",
   "block.mycelium-leather.soot_trap_furnace_block": "Upgraded Furnace with Soot Trap",
   "block.mycelium-leather.tiny_cauldron_block": "Tiny Cauldron",
   "block.mycelium-leather.charcoal_pile_block": "Charcoal Pile",
+  "block.mycelium-leather.scratched_mushroom_stem": "Scratched Mushroom Stem",
+  "block.mycelium-leather.mushroom_stem_hollow": "Hollow Mushroom Stem",
   "effect.mycelium-leather.illness": "Illness",
   "container.herbariumpress": "Herbarium Press"
 }
