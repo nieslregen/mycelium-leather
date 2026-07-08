@@ -1,10 +1,8 @@
-package com.nieslregen.mob;
+package com.nieslregen.mob.myceliumchicken;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -14,11 +12,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
-public class MyceliumChickenEntity extends Animal {
+public class MyceliumChicken extends Animal implements NeutralMob {
 
     // take a look into sniffer for laying eggs
 
-    protected MyceliumChickenEntity(EntityType<? extends Animal> type, Level level) {
+    public MyceliumChicken(EntityType<? extends Animal> type, Level level) {
         super(type, level);
     }
 
@@ -51,5 +49,33 @@ public class MyceliumChickenEntity extends Animal {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, (double)1.0F));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+    }
+
+    //ToDo
+    private void dropFeathers() { }
+
+    @Override
+    public long getPersistentAngerEndTime() {
+        return 0;
+    }
+
+    @Override
+    public void setPersistentAngerEndTime(long endTime) {
+
+    }
+
+    @Override
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
+        return null;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> persistentAngerTarget) {
+
+    }
+
+    @Override
+    public void startPersistentAngerTimer() {
+
     }
 }

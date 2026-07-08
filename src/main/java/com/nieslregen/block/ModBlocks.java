@@ -3,6 +3,8 @@ package com.nieslregen.block;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
 import com.nieslregen.block.custom.herbariumpress.HerbariumPressBlock;
+import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowBlock;
+import com.nieslregen.block.custom.mushroomstem.ScratchedMushroomStemBlock;
 import com.nieslregen.block.custom.tinycauldron.TinyCauldronBlock;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
@@ -40,10 +42,13 @@ public class ModBlocks {
                     .sound(SoundType.IRON)
     ));
 
+    public static final Block SCRATCHED_MUSHROOM_STEM = registerBlock("scratched_mushroom_stem", properties -> new ScratchedMushroomStemBlock(
+            properties
+                    .randomTicks()
+    ));
 
-    private static Block registerBLock(String name, Block block) {
-        return Registry.register(BuiltInRegistries.BLOCK, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name), block);
-    }
+    public static final Block MUSHROOM_STEM_HOLLOW = registerBlock("mushroom_stem_hollow", MushroomStemHollowBlock::new);
+
 
     private static Block registerBlock(String name, Function<BlockBehaviour.Properties, Block> function) {
         Block toRegister = function.apply(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name))));
@@ -71,5 +76,7 @@ public class ModBlocks {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(HERBARIUM_PRESS));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(CHARCOAL_PILE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(TINY_CAULDRON));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(SCRATCHED_MUSHROOM_STEM));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MUSHROOM_STEM_HOLLOW));
     }
 }

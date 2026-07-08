@@ -6,6 +6,7 @@ import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.customitems.AbstractMobEffectArrow;
 import com.nieslregen.items.customitems.AbstractPatchItem;
 import com.nieslregen.items.customitems.SpadeItem;
+import com.nieslregen.mob.myceliumchicken.SuspiciousEggItem;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,6 +34,11 @@ public class ModItems {
     public static final Item SUSPICIOUS_FLASK = registerItem("suspicious-flask", Item::new);
 
     public static final Item ARROW_OF_ILLNESS = registerItem("arrow-of-illness", properties -> new AbstractMobEffectArrow(properties, ModEffects.ILLNESS));
+
+    // Squirrel dig for truffles
+    public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
+    public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", Item::new);
+    public static final Item TRUFFLE = registerItem("truffle", Item::new);
 
     private static Item registerItem(String name, Function<Item.Properties, Item> function) {
         return Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name),

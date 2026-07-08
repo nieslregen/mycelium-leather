@@ -1,6 +1,7 @@
 package com.nieslregen.mob;
 
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,9 +14,9 @@ import net.minecraft.world.entity.MobCategory;
 
 public class ModEntityTypes {
 
-    public static final EntityType<MyceliumChickenEntity> MYCELIUM_CHICKEN = register(
+    public static final EntityType<MyceliumChicken> MYCELIUM_CHICKEN = register(
             "mycelium_chicken",
-            EntityType.Builder.<MyceliumChickenEntity>of(MyceliumChickenEntity::new, MobCategory.MISC)
+            EntityType.Builder.<MyceliumChicken>of(MyceliumChicken::new, MobCategory.MISC)
                     .sized(0.75f, 1.75f)
     );
 
@@ -29,6 +30,6 @@ public class ModEntityTypes {
     }
 
     public static void registerAttributes() {
-        FabricDefaultAttributeRegistry.register(MYCELIUM_CHICKEN, MyceliumChickenEntity.createCubeAttributes());
+        FabricDefaultAttributeRegistry.register(MYCELIUM_CHICKEN, MyceliumChicken.createCubeAttributes());
     }
 }
