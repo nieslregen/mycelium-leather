@@ -7,7 +7,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.context.ContextKeySet;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -36,10 +35,5 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
                  .withPool(LootPool.lootPool()
                          .add(LootItem.lootTableItem(Items.FEATHER)
                                  .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))));
-
-        output.accept(BuiltInLootTables.CHICKEN_LAY, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.FEATHER)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))));
     }
 }

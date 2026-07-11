@@ -6,6 +6,7 @@ import com.nieslregen.block.custom.herbariumpress.HerbariumPressBlock;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowBlock;
 import com.nieslregen.block.custom.mushroomstem.ScratchedMushroomStemBlock;
 import com.nieslregen.block.custom.tinycauldron.TinyCauldronBlock;
+import com.nieslregen.mob.myceliumchicken.MyceliumChickenNest;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -41,6 +42,8 @@ public class ModBlocks {
                     .strength(1.5f)
                     .sound(SoundType.IRON)
     ));
+
+    public static final Block MYCELIUM_CHICKEN_NEST = registerBlock("mycelium_chicken_nest_block", MyceliumChickenNest::new);
 
     public static final Block SCRATCHED_MUSHROOM_STEM = registerBlock("scratched_mushroom_stem", properties -> new ScratchedMushroomStemBlock(
             properties

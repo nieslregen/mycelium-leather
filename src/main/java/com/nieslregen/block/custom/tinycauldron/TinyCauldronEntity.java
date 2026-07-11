@@ -13,6 +13,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -40,12 +43,20 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
             new TinyCauldronRecipe(
                     1,
                     List.of(new ItemStack(Items.HONEY_BOTTLE), new ItemStack(ModItems.SOOT)),
-                    new ItemStack(ModItems.SOOT_INK)
+                    new ItemStack(ModItems.SOOT_INK),
+                    false
             ),
             new TinyCauldronRecipe(
                     2,
                     List.of(new ItemStack(Items.RED_MUSHROOM, 2), new ItemStack(Items.ROTTEN_FLESH, 3), new ItemStack(Items.ARROW), new ItemStack(ModItems.SUSPICIOUS_FLASK)),
-                    new ItemStack(ModItems.ARROW_OF_ILLNESS)
+                    new ItemStack(ModItems.ARROW_OF_ILLNESS),
+                    false
+            ),
+            new TinyCauldronRecipe(
+                    3,
+                    List.of(new ItemStack(ModItems.TRUFFLE)),
+                    new ItemStack(Items.APPLE),
+                    true
             )
     );
 
@@ -91,6 +102,14 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
 
     public boolean placeIngredient(final ServerLevel level, final LivingEntity entity, final ItemStack itemStack, final BlockPos pos) {
 
+        boolean isLit = false;
+        BlockState blockState = level.getBlockState(pos.below());
+
+        if (blockState.getBlock().equals(Blocks.CAMPFIRE)) {
+            blockState.getValue(CampfireBlock.LIT);
+            isLit = true;
+        }
+
         for (int slot = 0; slot < items.size(); slot++) {
             ItemStack stack = items.get(slot);
             if (stack.isEmpty()) {
@@ -101,7 +120,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                 level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(), GameEvent.Context.of(entity, this.getBlockState()));
                 this.markUpdated();
 
-                Optional<ItemStack> result = checkRecipe();
+                Optional<ItemStack> result = checkRecipe(isLit);
                 if (result.isPresent()) {
                     for (int i = 0; i < items.size(); i++) {
                         items.get(i).shrink(1);
@@ -120,17 +139,19 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         return false;
     }
 
-    private Optional<ItemStack> checkRecipe() {
+    private Optional<ItemStack> checkRecipe(boolean litStatus) {
         List<Item> currentIngredients = convertItemStackListToItemList(items);
 
         int index = 0;
         for (TinyCauldronRecipe recipe : recipes) {
-            if (isSubset(recipesAsItemList.get(index), currentIngredients)) {
 
-                if (isSubset(currentIngredients, recipesAsItemList.get(index))) {
-                    return Optional.of(recipe.resultItem());
-                } else {
-                    return Optional.empty();
+            if (litStatus == recipe.needsFire()) {
+                if (isSubset(recipesAsItemList.get(index), currentIngredients)) {
+                    if (isSubset(currentIngredients, recipesAsItemList.get(index))) {
+                        return Optional.of(recipe.resultItem());
+                    } else {
+                        return Optional.empty();
+                    }
                 }
             }
             index ++;

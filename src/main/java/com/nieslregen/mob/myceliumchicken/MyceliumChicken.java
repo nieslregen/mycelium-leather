@@ -1,17 +1,37 @@
 package com.nieslregen.mob.myceliumchicken;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.nieslregen.block.ModBlocks;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.fox.Fox;
+import net.minecraft.world.entity.animal.polarbear.PolarBear;
+import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.TurtleEggBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.gamerules.GameRules;
 import org.jspecify.annotations.Nullable;
 
 import static com.nieslregen.datagen.ModEntityLootTableProvider.MYCELIUM_CHICKEN_DROP;
@@ -24,10 +44,10 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     public final AnimationState sitUpAnimationState = new AnimationState();
     public final AnimationState idleAnimationState = new AnimationState();
 
+    private boolean hasEgg = false;
     private int idleAnimationTimeout = 0;
     private int featherTime;
 
-    // take a look into sniffer for laying eggs
 
     public MyceliumChicken(EntityType<? extends Animal> type, Level level) {
         super(type, level);
@@ -50,6 +70,9 @@ public class MyceliumChicken extends Animal implements NeutralMob {
                 .add(Attributes.MAX_HEALTH, 5)
                 .add(Attributes.TEMPT_RANGE, 10)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.ATTACK_DAMAGE, 3)
+                .add(Attributes.FOLLOW_RANGE, 25)
+                .add(Attributes.ATTACK_SPEED, .5)
                 .add(Attributes.SCALE, 1.25);
 
     }
@@ -57,17 +80,32 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.4));
-        this.goalSelector.addGoal(2, new BreedGoal(this, (double)1.0F));
-        this.goalSelector.addGoal(3, new TemptGoal(this, (double)1.0F, (i) -> i.is(ItemTags.CHICKEN_FOOD), false));
-        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, (double)1.0F));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        // They fear water
+        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, (double)1.0F));
+        this.goalSelector.addGoal(2, new MyceliumChicken.DefendEggGoal());
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 2.5D, false));
+        this.goalSelector.addGoal(4, new MyceliumChickenBreedGoal(this, (double)1.0F));
+        this.goalSelector.addGoal(4, new MyceliumChicken.LayEggGoal(this, 1f));
+        this.goalSelector.addGoal(5, new TemptGoal(this, (double)1.0F, (i) -> i.is(ItemTags.CHICKEN_FOOD), false));
+        this.goalSelector.addGoal(6, new FollowParentGoal(this, 1.1));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+
+        this.targetSelector.addGoal(1, new MyceliumChicken.EggThiefGoal(this));
+//        this.targetSelector.addGoal(2, new MyceliumChicken.ChickenHurtByTargetGoal(this));
+//        this.targetSelector.addGoal(3, new MyceliumChicken.ChickenAttackPlayersGoal(this));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, 10, true, false, this::isAngryAt));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Animal.class, 10, true, true, (target, level) -> this.isAngryAt(target, level) &&!this.isBaby()));
+        this.targetSelector.addGoal(4, new ResetUniversalAngerTargetGoal(this, false));
     }
 
-    //ToDo
-    private void dropFeathers() { }
+    public boolean hasEgg() {
+       return hasEgg;
+    }
+
+    private void setHasEgg(boolean hasEgg) {
+        this.hasEgg = hasEgg;
+    }
 
     @Override
     public long getPersistentAngerEndTime() {
@@ -164,4 +202,97 @@ public class MyceliumChicken extends Animal implements NeutralMob {
 //    public long getPoseTime() {
 //        return this.level().getGameTime() - Math.abs((Long)this.entityData.get(LAST_POSE_CHANGE_TICK));
 //    }
+
+    private static class MyceliumChickenBreedGoal extends BreedGoal {
+        private final MyceliumChicken thisEntity;
+
+        public MyceliumChickenBreedGoal(final MyceliumChicken chicken, double speedModifier) {
+            super(chicken, speedModifier);
+            this.thisEntity = chicken;
+        }
+
+        @Override
+        public boolean canUse() {
+            return super.canUse() && !this.thisEntity.hasEgg();
+        }
+
+        @Override
+        protected void breed() {
+            ServerPlayer loveCause = this.animal.getLoveCause();
+            if (loveCause == null && this.partner.getLoveCause() != null) {
+                loveCause = this.partner.getLoveCause();
+            }
+
+            if (loveCause != null) {
+                loveCause.awardStat(Stats.ANIMALS_BRED);
+                CriteriaTriggers.BRED_ANIMALS.trigger(loveCause, this.animal, this.partner, (AgeableMob)null);
+            }
+            this.thisEntity.setHasEgg(true);
+            this.animal.setAge(6000);
+            this.partner.setAge(6000);
+            this.animal.resetLove();
+            this.partner.resetLove();
+            RandomSource random = this.animal.getRandom();
+            if ((Boolean)getServerLevel(this.level).getGameRules().get(GameRules.MOB_DROPS)) {
+                this.level.addFreshEntity(new ExperienceOrb(this.level, this.animal.getX(), this.animal.getY(), this.animal.getZ(), random.nextInt(7) + 1));
+            }
+
+        }
+    }
+
+    private class DefendEggGoal extends Goal {
+
+        @Override
+        public boolean canUse() {
+            return false;
+        }
+    }
+
+    private class LayEggGoal extends MoveToBlockGoal {
+        private final MyceliumChicken chicken;
+
+        public LayEggGoal(final MyceliumChicken chicken, double speedModifier) {
+            super(chicken, speedModifier, 16);
+            this.chicken = chicken;
+        }
+
+        @Override
+        public boolean canUse() {
+            return this.chicken.hasEgg(); // ToDo
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return super.canContinueToUse(); // ToDo
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            BlockPos chickenPos = this.chicken.blockPosition();
+            if (this.isReachedTarget()) {
+                Level level = this.chicken.level();
+                level.playSound((Entity) null, chickenPos, SoundEvents.CHICKEN_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.getRandom().nextFloat() * 0.2F);
+
+                BlockPos eggPos = this.blockPos.above();
+//                BlockState eggState = (BlockState) ModBlocks.MYCELIUM_CHICKEN_NEST.defaultBlockState().setValue(MyceliumChickenNest.EGGS, this.chicken.random.nextInt(4) + 1);
+
+                this.chicken.setHasEgg(false);
+//                this.chicken.setLayingEgg(false);
+                this.chicken.setInLoveTime(600);
+            }
+        }
+
+        @Override
+        protected boolean isValidTarget(LevelReader level, BlockPos pos) {
+            return level.isEmptyBlock(pos.above()) && MyceliumChickenNest.isMycelium(level, pos);
+        }
+    }
+
+    private class EggThiefGoal extends HurtByTargetGoal {
+
+        public EggThiefGoal(PathfinderMob mob, Class<?>... ignoreDamageFromTheseTypes) {
+            super(mob, ignoreDamageFromTheseTypes);
+        }
+    }
 }

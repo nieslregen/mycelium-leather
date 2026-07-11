@@ -7,5 +7,6 @@ import java.util.List;
 public record TinyCauldronRecipe(
         int identifier,
         List<ItemStack> recipeComponents,
-        ItemStack resultItem
+        ItemStack resultItem,
+        boolean needsFire
 ) {}

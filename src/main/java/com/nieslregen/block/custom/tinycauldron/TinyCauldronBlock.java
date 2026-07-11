@@ -41,7 +41,8 @@ public class TinyCauldronBlock extends BaseEntityBlock {
             ModItems.SUSPICIOUS_FLASK,
             Items.ROTTEN_FLESH,
             Items.ARROW,
-            Items.RED_MUSHROOM
+            Items.RED_MUSHROOM,
+            ModItems.TRUFFLE
     );
 
     public static final BooleanProperty BREWING = BooleanProperty.create("brewing");

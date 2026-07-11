@@ -6,6 +6,7 @@ import com.nieslregen.block.custom.herbariumpress.HerbariumPressEntity;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
 import com.nieslregen.block.custom.mushroomstem.ScratchedMushroomStemEntity;
 import com.nieslregen.block.custom.tinycauldron.TinyCauldronEntity;
+import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,8 +22,11 @@ public class ModBlockEntities {
     public static final BlockEntityType<TinyCauldronEntity> TINY_CAULDRON_ENTITY = register("tiny_cauldron", TinyCauldronEntity::new,  ModBlocks.TINY_CAULDRON);
     public static final BlockEntityType<CharCoalPileEntity> CHARCOAL_PILE_ENTITY = register("soot_trap_furnace", CharCoalPileEntity::new, ModBlocks.CHARCOAL_PILE);
 
+    // ToDo: Check if both EntityTyoes can be removed
     public static final BlockEntityType<MushroomStemHollowEntity> MUSHROOM_STEM_HOLLOW_ENTITY = register("mushroom_stem_hollow", MushroomStemHollowEntity::new, ModBlocks.MUSHROOM_STEM_HOLLOW);
     public static final BlockEntityType<ScratchedMushroomStemEntity> SCRATCHED_MUSHROOM_STEM_ENTITY = register("scratched_mushroom_stem", ScratchedMushroomStemEntity::new, ModBlocks.SCRATCHED_MUSHROOM_STEM);
+
+    public static final BlockEntityType<MyceliumChickenNestEntity> MYCELIUM_CHICKEN_NEST_ENTITY  = register("mycelium_chicken_nest", MyceliumChickenNestEntity::new, ModBlocks.MYCELIUM_CHICKEN_NEST)
 
     private static <T extends BlockEntity> BlockEntityType<T> register(
             String name,

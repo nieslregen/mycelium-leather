@@ -43,6 +43,7 @@ public class ModItems {
     );
     // Squirrel dig for truffles
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
+    public static final Item MYCELIUM_CHICKEN_EGG = registerItem("suspicious_egg", Item::new);
     public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", Item::new);
     public static final Item TRUFFLE = registerItem("truffle", Item::new);
 
@@ -67,6 +68,10 @@ public class ModItems {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(ARROW_OF_ILLNESS));
 
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(MUSHROOM_PASTE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(SUSPICIOUS_EGG));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(TRUFFLE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.SPAWN_EGGS).register(output -> output.accept(MYCELIUM_CHICKEN_SPAWN_EGG));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_EGG));
 
     }
 
