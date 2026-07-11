@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.model.ModelTemplates;
 
 
@@ -18,10 +17,6 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockModelGenerators blockModelGenerators) {
         blockModelGenerators.createTrivialCube(ModBlocks.SCRATCHED_MUSHROOM_STEM);
         blockModelGenerators.createTrivialCube(ModBlocks.MUSHROOM_STEM_HOLLOW);
-
-//        blockModelGenerators.createTrivialCube(ModBlocks.HERBARIUM_PRESS);
-//        blockModelGenerators.createTrivialCube(ModBlocks.CHARCOAL_PILE);
-//        blockModelGenerators.createTrivialCube(ModBlocks.TINY_CAULDRON);
     }
 
     @Override

@@ -1,9 +1,10 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "outside": "mycelium-leather:block/scratched_mushroom_stem_0",
+    "scratched": "mycelium-leather:block/scratched_mushroom_stem_0",
+    "outside": "mycelium-leather:block/mushroom_stem",
     "inside": "mycelium-leather:block/mushroom_block_inside",
-    "particle": "mycelium-leather:block/scratched_mushroom_stem_0"
+    "particle": "mycelium-leather:block/mushroom_stem"
   },
 
   "elements": [
@@ -15,7 +16,7 @@
         "up":    { "texture": "#inside" },
         "down":  { "texture": "#inside" },
 
-        "north": { "texture": "#outside" },
+        "north": { "texture": "#scratched" },
         "south": { "texture": "#outside" },
         "west":  { "texture": "#outside" },
         "east":  { "texture": "#outside" }

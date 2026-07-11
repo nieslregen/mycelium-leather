@@ -28,8 +28,4 @@ public class ModEntityTypes {
     public static void registerModEntityTypes() {
         MyceliumLeatherMod.LOGGER.info("Registering EntityTypes for " + MyceliumLeatherMod.MOD_ID);
     }
-
-    public static void registerAttributes() {
-        FabricDefaultAttributeRegistry.register(MYCELIUM_CHICKEN, MyceliumChicken.createCubeAttributes());
-    }
 }

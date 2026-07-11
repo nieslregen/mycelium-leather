@@ -7,6 +7,7 @@ import com.nieslregen.block.ModScreens;
 import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModEntityTypes;
+import com.nieslregen.tab.ModCreativeTabs;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ public class MyceliumLeatherMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+		ModCreativeTabs.registerModCreativeTabs();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.initialize();
@@ -25,6 +26,5 @@ public class MyceliumLeatherMod implements ModInitializer {
 		ModScreens.initialize();
 		ModEffects.registerEffects();
 		ModEntityTypes.registerModEntityTypes();
-
 	}
 }

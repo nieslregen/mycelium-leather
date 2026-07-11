@@ -6,6 +6,7 @@ import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.customitems.AbstractMobEffectArrow;
 import com.nieslregen.items.customitems.AbstractPatchItem;
 import com.nieslregen.items.customitems.SpadeItem;
+import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.myceliumchicken.SuspiciousEggItem;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
@@ -15,6 +16,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Function;
@@ -35,6 +37,10 @@ public class ModItems {
 
     public static final Item ARROW_OF_ILLNESS = registerItem("arrow-of-illness", properties -> new AbstractMobEffectArrow(properties, ModEffects.ILLNESS));
 
+    public static final Item MYCELIUM_CHICKEN_SPAWN_EGG = registerItem(
+            "mycelium_chicken_spawn_egg",
+            properties -> new SpawnEggItem(properties.spawnEgg(ModEntityTypes.MYCELIUM_CHICKEN))
+    );
     // Squirrel dig for truffles
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
     public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", Item::new);
@@ -44,6 +50,8 @@ public class ModItems {
         return Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name),
                 function.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name)))));
     }
+
+
 
     public static void registerModItems() {
         MyceliumLeatherMod.LOGGER.info("Register Mod Items for: {}", MyceliumLeatherMod.MOD_ID);

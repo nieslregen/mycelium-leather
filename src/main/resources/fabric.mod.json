@@ -18,6 +18,9 @@
 		"main": [
           "com.nieslregen.MyceliumLeatherMod"
 		],
+		"client": [
+			"com.nieslregen.mob.client.ModCustomEntityClient"
+		],
 		"fabric-datagen": [
 			"com.nieslregen.MyceliumLeatherDataGenerator"
 		]
