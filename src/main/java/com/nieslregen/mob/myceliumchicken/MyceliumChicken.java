@@ -1,10 +1,7 @@
 package com.nieslregen.mob.myceliumchicken;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.nieslregen.datagen.ModLootTableProvider;
-import com.nieslregen.mob.ModEntityTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -15,10 +12,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import org.jspecify.annotations.Nullable;
 
-import static com.nieslregen.datagen.ModSimpleLootTableProvider.MYCELIUM_CHICKEN_DROP;
+import static com.nieslregen.datagen.ModEntityLootTableProvider.MYCELIUM_CHICKEN_DROP;
 import static net.minecraft.world.entity.animal.camel.Camel.LAST_POSE_CHANGE_TICK;
 
 public class MyceliumChicken extends Animal implements NeutralMob {

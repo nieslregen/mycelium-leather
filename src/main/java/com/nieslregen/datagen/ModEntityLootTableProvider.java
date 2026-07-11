@@ -1,7 +1,6 @@
 package com.nieslregen.datagen;
 
 import com.nieslregen.MyceliumLeatherMod;
-import com.nieslregen.items.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableSubProvider;
 import net.minecraft.core.HolderLookup;
@@ -15,19 +14,20 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public class ModSimpleLootTableProvider extends SimpleFabricLootTableSubProvider {
+public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider {
 
 
     public static ResourceKey<LootTable> MYCELIUM_CHICKEN_DROP = ResourceKey
             .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "mycelium_chicken/feather_drop"));
 
-    public ModSimpleLootTableProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture, ContextKeySet contextParamSet) {
-        super(output, registryLookupFuture, contextParamSet);
+    public ModEntityLootTableProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
+        super(output, registryLookupFuture, LootContextParamSets.ENTITY);
     }
 
     @Override

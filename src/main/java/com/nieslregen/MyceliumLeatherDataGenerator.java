@@ -1,9 +1,6 @@
 package com.nieslregen;
 
-import com.nieslregen.datagen.ModBlockTagsProvider;
-import com.nieslregen.datagen.ModLootTableProvider;
-import com.nieslregen.datagen.ModModelProvider;
-import com.nieslregen.datagen.ModRecipeProvider;
+import com.nieslregen.datagen.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -18,6 +15,6 @@ public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModLootTableProvider::new);
 		pack.addProvider(ModBlockTagsProvider::new);
 		pack.addProvider(ModItemTagsProvider::new);
-
+		pack.addProvider(ModEntityLootTableProvider::new);
 	}
 }

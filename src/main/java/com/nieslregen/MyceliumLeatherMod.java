@@ -9,6 +9,11 @@ import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.tab.ModCreativeTabs;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,5 +31,18 @@ public class MyceliumLeatherMod implements ModInitializer {
 		ModScreens.initialize();
 		ModEffects.registerEffects();
 		ModEntityTypes.registerModEntityTypes();
+
+		modifyLootTables();
+	}
+
+	private void modifyLootTables() {
+		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
+			if (key.equals(BuiltInLootTables.CHICKEN_LAY)) {
+				tableBuilder.withPool(
+						LootPool.lootPool()
+								.add(LootItem.lootTableItem(Items.FEATHER))
+				);
+			}
+		});
 	}
 }
