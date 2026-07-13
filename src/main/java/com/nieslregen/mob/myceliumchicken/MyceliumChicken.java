@@ -1,7 +1,9 @@
 package com.nieslregen.mob.myceliumchicken;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.block.ModBlocks;
+import com.nieslregen.mob.ModEntityTypes;
 import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -27,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.TurtleEggBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -55,14 +58,17 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     }
 
     @Override
-    public boolean isFood(ItemStack itemStack) {
-        return false;
+    public boolean isFood(final ItemStack itemStack) {
+        return itemStack.is(ItemTags.CHICKEN_FOOD);
     }
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob partner) {
-        return null;
-//        return ModEntityTypes.MYCELIUM_CHICKEN.create();
+        return (AgeableMob) ModEntityTypes.MYCELIUM_CHICKEN.create(level, EntitySpawnReason.BREEDING);
+    }
+
+    public boolean canFallInLove() {
+        return super.canFallInLove() && !this.hasEgg();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -81,7 +87,7 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         // They fear water
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, (double)1.0F));
+//        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, (double)1.0F));
         this.goalSelector.addGoal(2, new MyceliumChicken.DefendEggGoal());
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 2.5D, false));
         this.goalSelector.addGoal(4, new MyceliumChickenBreedGoal(this, (double)1.0F));
@@ -258,7 +264,7 @@ public class MyceliumChicken extends Animal implements NeutralMob {
 
         @Override
         public boolean canUse() {
-            return this.chicken.hasEgg(); // ToDo
+            return this.chicken.hasEgg() && super.canUse(); // ToDo
         }
 
         @Override
@@ -275,10 +281,11 @@ public class MyceliumChicken extends Animal implements NeutralMob {
                 level.playSound((Entity) null, chickenPos, SoundEvents.CHICKEN_EGG, SoundSource.BLOCKS, 0.3F, 0.9F + level.getRandom().nextFloat() * 0.2F);
 
                 BlockPos eggPos = this.blockPos.above();
-//                BlockState eggState = (BlockState) ModBlocks.MYCELIUM_CHICKEN_NEST.defaultBlockState().setValue(MyceliumChickenNest.EGGS, this.chicken.random.nextInt(4) + 1);
+                BlockState eggState = (BlockState) ModBlocks.MYCELIUM_CHICKEN_NEST.defaultBlockState();//.setValue(MyceliumChickenNest.EGGS, this.chicken.random.nextInt(4) + 1);
+                level.setBlock(eggPos, eggState, Block.UPDATE_ALL);
+                level.gameEvent(GameEvent.BLOCK_PLACE, eggPos, GameEvent.Context.of(this.chicken, eggState));
 
                 this.chicken.setHasEgg(false);
-//                this.chicken.setLayingEgg(false);
                 this.chicken.setInLoveTime(600);
             }
         }

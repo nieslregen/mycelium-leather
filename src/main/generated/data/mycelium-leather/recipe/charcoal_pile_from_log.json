@@ -1,13 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "charcoal_pile",
   "key": {
     "D": "minecraft:dirt",
     "F": "minecraft:campfire",
     "G": "mycelium-leather:grass-patch",
     "S": "minecraft:stick",
-    "W": "minecraft:mangrove_log"
+    "W": "#minecraft:logs_that_burn"
   },
   "pattern": [
     "DGD",

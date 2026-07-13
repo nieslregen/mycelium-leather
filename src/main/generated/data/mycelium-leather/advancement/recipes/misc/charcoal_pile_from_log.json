@@ -1,31 +1,41 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_ingot": {
+    "has_campfire": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:iron_ingot"
+            "items": "minecraft:campfire"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_oak_slab": {
+    "has_dirt": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:oak_slab"
+            "items": "minecraft:dirt"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_string": {
+    "has_grass-patch": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:string"
+            "items": "mycelium-leather:grass-patch"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_stick": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:stick"
           }
         ]
       },
@@ -33,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:press_from_oak_slabs"
+        "recipe": "mycelium-leather:charcoal_pile_from_log"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -41,14 +51,15 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_oak_slab",
-      "has_iron_ingot",
-      "has_string"
+      "has_grass-patch",
+      "has_dirt",
+      "has_stick",
+      "has_campfire"
     ]
   ],
   "rewards": {
     "recipes": [
-      "mycelium-leather:press_from_oak_slabs"
+      "mycelium-leather:charcoal_pile_from_log"
     ]
   }
 }

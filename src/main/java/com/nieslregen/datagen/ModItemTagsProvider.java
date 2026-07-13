@@ -1,9 +1,12 @@
-package com.nieslregen;
+package com.nieslregen.datagen;
 
 
+import com.nieslregen.items.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.references.ItemIds;
+import net.minecraft.tags.ItemTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,8 +18,8 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-//        ToDo: readd later:
-//        valueLookupBuilder(ItemTags.ARROWS).add(ModItems.ARROW_OF_ILLNESS);
+
+        tag(ItemTags.ARROWS).add(ModItems.getResourceKey(ModItems.ARROW_OF_ILLNESS));
     }
 }
 

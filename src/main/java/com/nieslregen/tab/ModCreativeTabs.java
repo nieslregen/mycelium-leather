@@ -40,6 +40,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.MYCELIUM_CHICKEN_EGG);
                         output.accept(ModItems.SUSPICIOUS_EGG);
                         output.accept(ModItems.MYCELIUM_CHICKEN_SPAWN_EGG);
+                        output.accept(ModBlocks.MYCELIUM_CHICKEN_NEST);
                         output.accept(ModBlocks.MUSHROOM_STEM_HOLLOW);
                         output.accept(ModBlocks.SCRATCHED_MUSHROOM_STEM);
                     })

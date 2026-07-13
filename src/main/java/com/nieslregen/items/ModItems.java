@@ -43,7 +43,7 @@ public class ModItems {
     );
     // Squirrel dig for truffles
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
-    public static final Item MYCELIUM_CHICKEN_EGG = registerItem("suspicious_egg", Item::new);
+    public static final Item MYCELIUM_CHICKEN_EGG = registerItem("mycelium_chicken_egg", Item::new);
     public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", Item::new);
     public static final Item TRUFFLE = registerItem("truffle", Item::new);
 
@@ -52,7 +52,9 @@ public class ModItems {
                 function.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name)))));
     }
 
-
+    public static ResourceKey<Item> getResourceKey(Item item) {
+        return BuiltInRegistries.ITEM.getResourceKey(item).get();
+    }
 
     public static void registerModItems() {
         MyceliumLeatherMod.LOGGER.info("Register Mod Items for: {}", MyceliumLeatherMod.MOD_ID);

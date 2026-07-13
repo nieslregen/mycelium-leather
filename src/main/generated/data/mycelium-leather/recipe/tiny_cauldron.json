@@ -4,7 +4,7 @@
   "group": "tiny_cauldron",
   "key": {
     "I": "minecraft:iron_ingot",
-    "S": "minecraft:crimson_slab"
+    "S": "#minecraft:wooden_slabs"
   },
   "pattern": [
     "I I",

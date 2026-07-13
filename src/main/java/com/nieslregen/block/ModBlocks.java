@@ -52,6 +52,9 @@ public class ModBlocks {
 
     public static final Block MUSHROOM_STEM_HOLLOW = registerBlock("mushroom_stem_hollow", MushroomStemHollowBlock::new);
 
+    public static ResourceKey<Block> getResourceKey(Block block) {
+        return BuiltInRegistries.BLOCK.getResourceKey(block).get();
+    }
 
     private static Block registerBlock(String name, Function<BlockBehaviour.Properties, Block> function) {
         Block toRegister = function.apply(BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name))));
@@ -81,5 +84,6 @@ public class ModBlocks {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(TINY_CAULDRON));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(SCRATCHED_MUSHROOM_STEM));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MUSHROOM_STEM_HOLLOW));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_NEST));
     }
 }

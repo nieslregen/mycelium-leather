@@ -5,7 +5,7 @@
   "key": {
     "I": "minecraft:iron_nugget",
     "R": "minecraft:string",
-    "S": "minecraft:spruce_slab"
+    "S": "#minecraft:wooden_slabs"
   },
   "pattern": [
     "SSS",

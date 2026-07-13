@@ -1,16 +1,6 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_crimson_slab": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:crimson_slab"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_iron_ingot": {
       "conditions": {
         "items": [
@@ -23,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:tiny_cauldron_from_crimson_slab"
+        "recipe": "mycelium-leather:tiny_cauldron"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_ingot",
-      "has_crimson_slab"
+      "has_iron_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "mycelium-leather:tiny_cauldron_from_crimson_slab"
+      "mycelium-leather:tiny_cauldron"
     ]
   }
 }

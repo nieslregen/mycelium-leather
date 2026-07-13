@@ -20,9 +20,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
 public class MyceliumChickenNest extends BaseEntityBlock {
+
+    private static final VoxelShape SHAPE;
 
     public MyceliumChickenNest(Properties properties) {
         super(properties);
@@ -85,5 +89,18 @@ public class MyceliumChickenNest extends BaseEntityBlock {
     }
 
 
+    @Override
+    protected VoxelShape getShape(final BlockState state, final BlockGetter level, final BlockPos pos, final CollisionContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    protected boolean useShapeForLightOcclusion(final BlockState state) {
+        return true;
+    }
+
+    static {
+        SHAPE = Block.column((double)12.0F, (double)0.0F, (double)0.1F);
+    }
 
 }

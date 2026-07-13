@@ -17,6 +17,7 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockModelGenerators blockModelGenerators) {
         blockModelGenerators.createTrivialCube(ModBlocks.SCRATCHED_MUSHROOM_STEM);
         blockModelGenerators.createTrivialCube(ModBlocks.MUSHROOM_STEM_HOLLOW);
+        blockModelGenerators.createTrivialCube(ModBlocks.MYCELIUM_CHICKEN_NEST);
     }
 
     @Override
@@ -25,13 +26,12 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_PATCH, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_PATCH_DRIED, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.ITEM_SPADE, ModelTemplates.FLAT_HANDHELD_ITEM);
-
         itemModelGenerators.generateFlatItem(ModItems.GRASS_PATCH, ModelTemplates.FLAT_ITEM);
 
         itemModelGenerators.generateFlatItem(ModItems.SOOT, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.SOOT_INK, ModelTemplates.FLAT_ITEM);
-
         itemModelGenerators.generateFlatItem(ModItems.SUSPICIOUS_FLASK, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.ARROW_OF_ILLNESS, ModelTemplates.FLAT_ITEM);
 
         itemModelGenerators.generateFlatItem(ModItems.TRUFFLE, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MUSHROOM_PASTE, ModelTemplates.FLAT_ITEM);
