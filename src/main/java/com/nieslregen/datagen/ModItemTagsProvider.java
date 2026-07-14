@@ -12,6 +12,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 
+
     public ModItemTagsProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }

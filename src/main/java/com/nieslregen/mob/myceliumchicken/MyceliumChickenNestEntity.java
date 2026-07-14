@@ -1,74 +1,134 @@
 package com.nieslregen.mob.myceliumchicken;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.mob.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
+
 public class MyceliumChickenNestEntity extends BlockEntity {
 
     private final int MAX_EGG_AGE = 120 * 20;
-    private final int MAX_TEMPERATURE = 100;
+    private final int MAX_TEMPERATURE = 500;
     private int eggAgeInTicks = 0;
-    private int currentTemperature = 0;
-    private boolean hasEgg = false;
+    private int currentTemperature;
+    private int emptyNestAge = 0;
 
-    private MyceliumChicken parent;
+    private Optional<LivingEntity> thief = Optional.empty();
 
-    public boolean layEgg() {
-        if (hasEgg) {
-            return false;
-        }
-        hasEgg = true;
+
+    public boolean layEgg(BlockState state) {
+        boolean hasEgg = state.getValue(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock.HAS_EGG);
+
+        if (hasEgg) { return false; }
+
+        state.setValue(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock.HAS_EGG, true);
         currentTemperature = MAX_TEMPERATURE;
         return true;
     }
 
-    public void breakEgg() {
-        removeEgg();
+    public boolean hasEgg(BlockState state) {
+        return state.getValue(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock.HAS_EGG);
     }
 
-    public void removeEgg() {
-        hasEgg = false;
-        currentTemperature = 0;
-        eggAgeInTicks = 0;
-    }
-
-    public boolean isIncubating() {
-        if (parent != null) {
-            // ToDo: when sitting on egg -> incubating
-            return true;
-        }
-        return false;
-    }
+//    public boolean takeEgg() {
+//        boolean hadEgg = hasEgg();
+//        removeEgg();
+//        return hadEgg;
+//    }
+//
+//    public void breakEgg() {
+//        removeEgg();
+//    }
+//
+//    public void removeEgg() {
+//
+//        currentTemperature = 0;
+//        eggAgeInTicks = 0;
+//    }
 
     public MyceliumChickenNestEntity(BlockPos worldPosition, BlockState blockState) {
         super(ModBlockEntities.MYCELIUM_CHICKEN_NEST_ENTITY, worldPosition, blockState);
+
+        if (blockState.getValue(MyceliumChickenNestBlock.HAS_EGG)) {
+            currentTemperature = MAX_TEMPERATURE;
+            emptyNestAge = 0;
+        }
     }
 
     public static void serverTick(final Level level, final BlockPos blockPos, final BlockState blockState, final MyceliumChickenNestEntity entity) {
+
         if (level.isClientSide()) { return; }
 
-        if (entity.hasEgg) {
-            boolean isEggAlive = entity.regulateEggTemperature(entity.isIncubating());
+        if (entity.hasEgg(blockState)) {
+            MyceliumLeatherMod.LOGGER.info("Age: {}", entity.eggAgeInTicks);
+            boolean isEggAlive = entity.regulateEggTemperature(
+                    blockState.getValue(MyceliumChickenNestBlock.IS_INCUBATING)
+            );
 
             if (isEggAlive && (entity.eggAgeInTicks >= entity.MAX_EGG_AGE)) {
-                entity.hatchEgg(blockPos);
+                entity.hatchEgg(blockState, blockPos);
+                entity.takeEgg(level, blockPos);
+                entity.breakNest(level, blockPos, blockState, entity);
             }
 
             if (isEggAlive) {
                 entity.eggAgeInTicks = entity.eggAgeInTicks + 1;
+                entity.emptyNestAge = 0;
+            } else {
+                entity.takeEgg(level, blockPos);
+                entity.breakNest(level, blockPos, blockState, entity);
+            }
+        } else {
+            if (entity.emptyNestAge >= entity.MAX_EGG_AGE / 2) {
+                entity.takeEgg(level, blockPos);
+                entity.breakNest(level, blockPos, blockState, entity);
+            } else {
+                entity.emptyNestAge = entity.emptyNestAge + 1;
             }
         }
+        entity.setChanged();
     }
 
-    public void hatchEgg(BlockPos pos) {
-        removeEgg();
+    public Optional<LivingEntity> getThief() {
+        if (thief.isPresent()) {
+            if (thief.get().isAlive()) {
+                return thief;
+            }
+
+            thief = Optional.empty();
+            return thief;
+        }
+        return Optional.empty();
+    }
+
+    public void stealEgg(final Level level, final BlockPos blockPos, final LivingEntity livingEntity) {
+        thief = Optional.of(livingEntity);
+        takeEgg(level, blockPos);
+    }
+
+    public void takeEgg(final Level level, final BlockPos blockPos) {
+        BlockState state = level.getBlockState(blockPos)
+                .setValue(MyceliumChickenNestBlock.IS_INCUBATING, false)
+                .setValue(MyceliumChickenNestBlock.HAS_EGG, false);
+        level.setBlockAndUpdate(blockPos, state);
+    }
+
+    public void breakNest(final Level level, final BlockPos blockPos, final BlockState blockState, final MyceliumChickenNestEntity entity) {
+        entity.currentTemperature = 0;
+        entity.eggAgeInTicks = 0;
+        level.destroyBlock(blockPos, false);
+    }
+
+    public void hatchEgg(BlockState state, BlockPos pos) {
         MyceliumChicken chicken = (MyceliumChicken) ModEntityTypes.MYCELIUM_CHICKEN.create(level, EntitySpawnReason.BREEDING);
-        if (chicken != null) {
+        if (chicken != null) {;
             chicken.setAge(-24000);
             chicken.snapTo(pos.getX(), pos.getY(), pos.getZ(), 0.0F, 0.0F);
             level.addFreshEntity(chicken);
@@ -77,7 +137,6 @@ public class MyceliumChickenNestEntity extends BlockEntity {
 
     public boolean regulateEggTemperature(boolean isIncubating) {
         if (currentTemperature <= 0) {
-            breakEgg();
             return false;
         }
 

@@ -1,7 +1,6 @@
 {
   "variants": {
-    "": {
-      "model": "mycelium-leather:block/mycelium_chicken_nest_block"
-    }
+    "has_egg=false": { "model": "mycelium-leather:block/myceliumchickennest/mycelium_chicken_nest_block_empty" },
+    "has_egg=true": { "model": "mycelium-leather:block/myceliumchickennest/mycelium_chicken_nest_block_with_egg" }
   }
 }

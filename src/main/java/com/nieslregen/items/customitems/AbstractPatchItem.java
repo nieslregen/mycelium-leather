@@ -21,7 +21,7 @@ public class AbstractPatchItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
 
         Level level = context.getLevel();
-        Block clickedBlock =  level.getBlockState(context.getClickedPos()).getBlock();
+        Block clickedBlock = level.getBlockState(context.getClickedPos()).getBlock();
 
         if (!level.isClientSide() && Blocks.DIRT.equals(clickedBlock)) {
             level.setBlockAndUpdate(context.getClickedPos(), block.defaultBlockState());

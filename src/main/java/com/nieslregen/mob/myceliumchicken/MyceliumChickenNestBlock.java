@@ -1,13 +1,14 @@
 package com.nieslregen.mob.myceliumchicken;
 
 import com.mojang.serialization.MapCodec;
-import com.nieslregen.block.custom.herbariumpress.HerbariumPressEntity;
+import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -16,25 +17,39 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
-public class MyceliumChickenNest extends BaseEntityBlock {
+public class MyceliumChickenNestBlock extends BaseEntityBlock {
 
     private static final VoxelShape SHAPE;
 
-    public MyceliumChickenNest(Properties properties) {
+    public static final BooleanProperty HAS_EGG = BooleanProperty.create("has_egg");
+    public static final BooleanProperty IS_INCUBATING = BooleanProperty.create("incubating");
+
+    public MyceliumChickenNestBlock(Properties properties) {
         super(properties);
+        registerDefaultState(this.stateDefinition.any()
+                .setValue(HAS_EGG, false)
+                .setValue(IS_INCUBATING, false)
+        );
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(HAS_EGG,  IS_INCUBATING);
     }
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(MyceliumChickenNest::new);
+        return simpleCodec(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock::new);
     }
 
     @Override
@@ -50,35 +65,38 @@ public class MyceliumChickenNest extends BaseEntityBlock {
         }
     }
 
-//    @Override
-//    public void stepOn(Level level, BlockPos pos, BlockState onState, Entity entity) {
-//        super.stepOn(level, pos, onState, entity);
-//    }
-    public ItemStack takeEgg() {
-//        if (hasEgg()) {
+    public ItemStack takeEgg(MyceliumChickenNestEntity entity, BlockState state, LivingEntity player) {
+        if (state.getValue(HAS_EGG)) {
+            entity.stealEgg(entity.getLevel(), entity.getBlockPos(),player);
             return new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG);
-//        }
-//        return ItemStack.EMPTY;
+        }
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+        return createTickerHelper(
+                type,
+                ModBlockEntities.MYCELIUM_CHICKEN_NEST_ENTITY,
+                MyceliumChickenNestEntity::serverTick
+        );
     }
 
     @Override
     protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (player.getItemInHand(hand).isEmpty()) {
-            ItemStack result = takeEgg();
-            player.setItemInHand(hand, result);
+            if (level.getBlockEntity(pos) instanceof MyceliumChickenNestEntity entity) {
+                ItemStack result = takeEgg(entity, state, player);
+                player.setItemInHand(hand, result);
+            }
         }
     return InteractionResult.SUCCESS;
     }
 
-    // implement hetching, if chicken is too long not hatching then it breaks
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.randomTick(state, level, pos, random);
     }
-
-//    public boolean hasEgg() {
-//
-//    }
 
     public static boolean isOnMycelium(final BlockGetter level, final BlockPos pos) {
         return isMycelium(level, pos.below());

@@ -51,12 +51,6 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                     List.of(new ItemStack(Items.RED_MUSHROOM, 2), new ItemStack(Items.ROTTEN_FLESH, 3), new ItemStack(Items.ARROW), new ItemStack(ModItems.SUSPICIOUS_FLASK)),
                     new ItemStack(ModItems.ARROW_OF_ILLNESS),
                     false
-            ),
-            new TinyCauldronRecipe(
-                    3,
-                    List.of(new ItemStack(ModItems.TRUFFLE)),
-                    new ItemStack(Items.APPLE),
-                    true
             )
     );
 
