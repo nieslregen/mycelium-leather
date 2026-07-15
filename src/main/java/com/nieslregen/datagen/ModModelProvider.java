@@ -38,5 +38,15 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.SUSPICIOUS_EGG, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_CHICKEN_EGG, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_CHICKEN_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.FEATHER_VARIANT_MUSHROOM, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.FEATHER_VARIANT_COLD, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.FEATHER_VARIANT_HOT, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.COPPER_DAGGER, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.IRON_DAGGER, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.GOLDEN_DAGGER_CLASSIC, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.GOLDEN_DAGGER_HOT, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.GOLDEN_DAGGER_COLD, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.GOLDEN_DAGGER_MUSHROOM, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.DIAMOND_DAGGER, ModelTemplates.FLAT_ITEM);
     }
 }

@@ -2,6 +2,7 @@ package com.nieslregen.datagen;
 
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.items.ModItems;
+import com.nieslregen.tags.ModTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
@@ -395,6 +396,87 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
                         .group("charcoal_pile")
                         .save(output, "charcoal_pile_from_log");
+
+                shaped(RecipeCategory.TOOLS, ModItems.COPPER_DAGGER)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.COPPER_INGOT)
+                        .define('S', Items.STICK)
+                        .define('F', ModTags.Items.FEATHERS)
+                        .unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .save(output, "copper_dagger");
+
+                shaped(RecipeCategory.TOOLS, ModItems.IRON_DAGGER)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.IRON_INGOT)
+                        .define('S', Items.STICK)
+                        .define('F', ModTags.Items.FEATHERS)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .save(output, "iron_dagger");
+
+                shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_DAGGER)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.DIAMOND)
+                        .define('S', Items.STICK)
+                        .define('F', ModTags.Items.FEATHERS)
+                        .unlockedBy(getHasName(Items.DIAMOND), has(Items.DIAMOND))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .save(output, "diamond_dagger");
+
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_CLASSIC)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
+                        .define('S', Items.STICK)
+                        .define('F', Items.FEATHER)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .unlockedBy(getHasName(Items.FEATHER), has(Items.FEATHER))
+                        .save(output, "golden_dagger_with_classic_feather");
+
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_HOT)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
+                        .define('S', Items.STICK)
+                        .define('F', ModItems.FEATHER_VARIANT_HOT)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_HOT), has(ModItems.FEATHER_VARIANT_HOT))
+                        .save(output, "golden_dagger_with_hot_variant_feather");
+
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_COLD)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
+                        .define('S', Items.STICK)
+                        .define('F', ModItems.FEATHER_VARIANT_COLD)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_COLD), has(ModItems.FEATHER_VARIANT_COLD))
+                        .save(output, "golden_dagger_with_cold_variant_feather");
+
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_MUSHROOM)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
+                        .define('S', Items.STICK)
+                        .define('F', ModItems.FEATHER_VARIANT_MUSHROOM)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_MUSHROOM), has(ModItems.FEATHER_VARIANT_MUSHROOM))
+                        .save(output, "golden_dagger_with_mushroom_variant_feather");
 
             }
         };

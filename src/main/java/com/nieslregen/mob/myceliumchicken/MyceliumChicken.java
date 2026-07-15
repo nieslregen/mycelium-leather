@@ -5,6 +5,7 @@ import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModEntityTypes;
+import com.nieslregen.tags.ModTags;
 import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -90,6 +91,10 @@ public class MyceliumChicken extends Animal implements NeutralMob {
                 .add(Attributes.SCALE, 1.25);
     }
     // ToDo: Meal of Mushroom Isles gives you effects: Mining Speed increase, ... and SuspicouseEggEffect(dropping Susipicous eggs from time to time) for 10 Minutes,
+    // ToDo: sitting animation
+    // ToDo: trolling
+    // ToDo: different feather drops
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -100,7 +105,7 @@ public class MyceliumChicken extends Animal implements NeutralMob {
         this.goalSelector.addGoal(5, new IncubateGoal(this));
         this.goalSelector.addGoal(6, new MyceliumChickenBreedGoal(this, (double)1.0F));
         this.goalSelector.addGoal(7, new MyceliumChicken.LayEggGoal(this, 1f));
-        this.goalSelector.addGoal(8, new TemptGoal(this, (double)1.0F, (i) -> i.is(ItemTags.CHICKEN_FOOD), false));
+        this.goalSelector.addGoal(8, new TemptGoal(this, (double)1.0F, (i) -> i.is(ModTags.Items.MYCELIUM_CHICKEN_FOOD), false));
         this.goalSelector.addGoal(9, new MeleeAttackGoal(this, 1.0D, false));
         this.goalSelector.addGoal(10, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(11, new TrollGoal(this));

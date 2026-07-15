@@ -5,6 +5,7 @@ import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.customitems.AbstractMobEffectArrow;
 import com.nieslregen.items.customitems.AbstractPatchItem;
+import com.nieslregen.items.customitems.Dagger;
 import com.nieslregen.items.customitems.SpadeItem;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.myceliumchicken.SuspiciousEggItem;
@@ -14,14 +15,21 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Function;
 
 public class ModItems {
+
+    public static final float BASE_DMG_DAGGER = 2;
+    public static final float BASE_AS_DAGGER = -1.2f;
 
     public static final Item MYCELIUM_LEATHER = registerItem("mycelium-leather", Item::new);
     public static final Item MYCELIUM_PATCH = registerItem("mycelium-patch", properties -> new AbstractPatchItem(properties.stacksTo(16), Blocks.MYCELIUM));
@@ -41,11 +49,29 @@ public class ModItems {
             "mycelium_chicken_spawn_egg",
             properties -> new SpawnEggItem(properties.spawnEgg(ModEntityTypes.MYCELIUM_CHICKEN))
     );
-    // Squirrel dig for truffles
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
     public static final Item MYCELIUM_CHICKEN_EGG = registerItem("mycelium_chicken_egg", Item::new);
     public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", Item::new);
-    public static final Item TRUFFLE = registerItem("truffle", Item::new);
+    public static final Item FEATHER_VARIANT_HOT = registerItem("feather_hot", Item::new);
+    public static final Item FEATHER_VARIANT_MUSHROOM = registerItem("feather_mushroom", Item::new);
+    public static final Item FEATHER_VARIANT_COLD = registerItem("feather_cold", Item::new);
+    public static final Item TRUFFLE = registerItem("truffle",
+            properties -> new Item(properties.food(new FoodProperties(1,1,true))));
+
+    public static final Item COPPER_DAGGER = registerItem("copper_dagger",
+            properties -> new Dagger(properties.sword(ToolMaterial.COPPER, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
+    public static final Item IRON_DAGGER = registerItem("iron_dagger",
+            properties -> new Dagger(properties.sword(ToolMaterial.IRON, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
+    public static final Item GOLDEN_DAGGER_CLASSIC = registerItem("golden_dagger",
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
+    public static final Item GOLDEN_DAGGER_HOT = registerItem("golden_dagger_hot",
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
+    public static final Item GOLDEN_DAGGER_COLD = registerItem("golden_dagger_cold",
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
+    public static final Item GOLDEN_DAGGER_MUSHROOM = registerItem("golden_dagger_mushroom",
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), MobEffects.POISON.value(), true));
+    public static final Item DIAMOND_DAGGER = registerItem("diamond_dagger",
+            properties -> new Dagger(properties.sword(ToolMaterial.DIAMOND, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
 
     private static Item registerItem(String name, Function<Item.Properties, Item> function) {
         return Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name),
@@ -74,6 +100,17 @@ public class ModItems {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(TRUFFLE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.SPAWN_EGGS).register(output -> output.accept(MYCELIUM_CHICKEN_SPAWN_EGG));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_EGG));
+
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(FEATHER_VARIANT_COLD));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(FEATHER_VARIANT_HOT));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(FEATHER_VARIANT_MUSHROOM));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(COPPER_DAGGER));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(IRON_DAGGER));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_CLASSIC));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_COLD));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_HOT));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_MUSHROOM));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(DIAMOND_DAGGER));
 
     }
 

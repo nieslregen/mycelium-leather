@@ -17,6 +17,14 @@ public class ModEffects {
             )
     );
 
+    public static final MobEffect BLEEDING = registerMobEffect(
+            "bleeding",
+            new BleedingEffect(
+                    MobEffectCategory.HARMFUL,
+                    0x23234a
+            )
+    );
+
     private static MobEffect registerMobEffect(String name, MobEffect effect) {
         return Registry.register(
                 BuiltInRegistries.MOB_EFFECT,
