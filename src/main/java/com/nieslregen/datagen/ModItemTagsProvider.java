@@ -24,7 +24,7 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
         tag(ItemTags.ARROWS).add(ModItems.getResourceKey(ModItems.ARROW_OF_ILLNESS));
         tag(ModTags.Items.MYCELIUM_CHICKEN_FOOD).add(ModItems.getResourceKey(ModItems.TRUFFLE));
         tag(ModTags.Items.FEATHERS)
-                .add(ModItems.getResourceKey(ModItems.FEATHER_VARIANT_HOT))
+                .add(ModItems.getResourceKey(ModItems.FEATHER_VARIANT_WARM))
                 .add(ModItems.getResourceKey(ModItems.FEATHER_VARIANT_COLD))
                 .add(ModItems.getResourceKey(ModItems.FEATHER_VARIANT_MUSHROOM))
                 .add(ItemIds.FEATHER);

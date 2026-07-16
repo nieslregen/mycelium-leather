@@ -36,13 +36,13 @@ public class MyceliumLeatherMod implements ModInitializer {
 	}
 
 	private void modifyLootTables() {
-		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-			if (key.equals(BuiltInLootTables.CHICKEN_LAY)) {
-				tableBuilder.withPool(
-						LootPool.lootPool()
-								.add(LootItem.lootTableItem(Items.FEATHER))
-				);
-			}
-		});
+//		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
+//			if (key.equals(BuiltInLootTables.CHICKEN_LAY)) {
+//				tableBuilder.withPool(
+//						LootPool.lootPool()
+//								.add(LootItem.lootTableItem(Items.FEATHER))
+//				);
+//			}
+//		});
 	}
 }

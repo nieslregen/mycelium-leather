@@ -6,6 +6,8 @@ import com.nieslregen.effect.ModEffects;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -37,7 +39,6 @@ public class Dagger extends Item {
 
     @Override
     public void hurtEnemy(ItemStack itemStack, LivingEntity mob, LivingEntity attacker) {
-        MyceliumLeatherMod.LOGGER.info("Hurt enemy");
         super.hurtEnemy(itemStack, mob, attacker);
         if (!this.bleedingEnabled && effect != null) {
             mob.addEffect(new MobEffectInstance(BuiltInRegistries
@@ -48,10 +49,18 @@ public class Dagger extends Item {
 
         // Backstab
         if (attacker.getDirection() == mob.getDirection()) {
+            attacker.level().playSound(
+                    null,
+                    attacker.blockPosition(),
+                    SoundEvents.PIGLIN_DEATH,
+                    SoundSource.PLAYERS,
+                    1.0F,
+                    1.0F
+            );
             mob.hurtServer(
                     (ServerLevel) attacker.level(),
                     attacker.damageSources().playerAttack((Player)attacker),
-                    1f);
+                    8f);
         }
     }
 }

@@ -15,7 +15,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -52,7 +51,7 @@ public class ModItems {
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
     public static final Item MYCELIUM_CHICKEN_EGG = registerItem("mycelium_chicken_egg", Item::new);
     public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", Item::new);
-    public static final Item FEATHER_VARIANT_HOT = registerItem("feather_hot", Item::new);
+    public static final Item FEATHER_VARIANT_WARM = registerItem("feather_warm", Item::new);
     public static final Item FEATHER_VARIANT_MUSHROOM = registerItem("feather_mushroom", Item::new);
     public static final Item FEATHER_VARIANT_COLD = registerItem("feather_cold", Item::new);
     public static final Item TRUFFLE = registerItem("truffle",
@@ -64,7 +63,7 @@ public class ModItems {
             properties -> new Dagger(properties.sword(ToolMaterial.IRON, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
     public static final Item GOLDEN_DAGGER_CLASSIC = registerItem("golden_dagger",
             properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
-    public static final Item GOLDEN_DAGGER_HOT = registerItem("golden_dagger_hot",
+    public static final Item GOLDEN_DAGGER_WARM = registerItem("golden_dagger_warm",
             properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
     public static final Item GOLDEN_DAGGER_COLD = registerItem("golden_dagger_cold",
             properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
@@ -102,13 +101,13 @@ public class ModItems {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_EGG));
 
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(FEATHER_VARIANT_COLD));
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(FEATHER_VARIANT_HOT));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(FEATHER_VARIANT_WARM));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(FEATHER_VARIANT_MUSHROOM));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(COPPER_DAGGER));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(IRON_DAGGER));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_CLASSIC));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_COLD));
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_HOT));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_WARM));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(GOLDEN_DAGGER_MUSHROOM));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(DIAMOND_DAGGER));
 

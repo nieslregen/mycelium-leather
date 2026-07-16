@@ -45,14 +45,14 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.SCRATCHED_MUSHROOM_STEM);
 
                         output.accept(ModItems.FEATHER_VARIANT_MUSHROOM);
-                        output.accept(ModItems.FEATHER_VARIANT_HOT);
+                        output.accept(ModItems.FEATHER_VARIANT_WARM);
                         output.accept(ModItems.FEATHER_VARIANT_COLD);
 
                         output.accept(ModItems.COPPER_DAGGER);
                         output.accept(ModItems.IRON_DAGGER);
                         output.accept(ModItems.GOLDEN_DAGGER_CLASSIC);
                         output.accept(ModItems.GOLDEN_DAGGER_COLD);
-                        output.accept(ModItems.GOLDEN_DAGGER_HOT);
+                        output.accept(ModItems.GOLDEN_DAGGER_WARM);
                         output.accept(ModItems.GOLDEN_DAGGER_MUSHROOM);
                         output.accept(ModItems.DIAMOND_DAGGER);
                     })

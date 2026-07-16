@@ -442,16 +442,16 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.FEATHER), has(Items.FEATHER))
                         .save(output, "golden_dagger_with_classic_feather");
 
-                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_HOT)
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_WARM)
                         .pattern("I")
                         .pattern("S")
                         .pattern("F")
                         .define('I', Items.GOLD_INGOT)
                         .define('S', Items.STICK)
-                        .define('F', ModItems.FEATHER_VARIANT_HOT)
+                        .define('F', ModItems.FEATHER_VARIANT_WARM)
                         .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_HOT), has(ModItems.FEATHER_VARIANT_HOT))
+                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_WARM), has(ModItems.FEATHER_VARIANT_WARM))
                         .save(output, "golden_dagger_with_hot_variant_feather");
 
                 shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_COLD)

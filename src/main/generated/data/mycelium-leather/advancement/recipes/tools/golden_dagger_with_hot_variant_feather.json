@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_feather_hot": {
+    "has_feather_warm": {
       "conditions": {
         "items": [
           {
-            "items": "mycelium-leather:feather_hot"
+            "items": "mycelium-leather:feather_warm"
           }
         ]
       },
@@ -43,7 +43,7 @@
       "has_the_recipe",
       "has_gold_ingot",
       "has_stick",
-      "has_feather_hot"
+      "has_feather_warm"
     ]
   ],
   "rewards": {
