@@ -8,6 +8,7 @@ import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.tab.ModCreativeTabs;
+import com.nieslregen.worldgen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.world.item.Items;
@@ -31,6 +32,7 @@ public class MyceliumLeatherMod implements ModInitializer {
 		ModScreens.initialize();
 		ModEffects.registerEffects();
 		ModEntityTypes.registerModEntityTypes();
+		ModWorldGeneration.init();
 
 		modifyLootTables();
 	}

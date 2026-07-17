@@ -15,7 +15,7 @@ public class ModEntityTypes {
 
     public static final EntityType<MyceliumChicken> MYCELIUM_CHICKEN = register(
             "mycelium_chicken",
-            EntityType.Builder.<MyceliumChicken>of(MyceliumChicken::new, MobCategory.MISC)
+            EntityType.Builder.<MyceliumChicken>of(MyceliumChicken::new, MobCategory.CREATURE)
                     .sized(0.75f, 1.75f)
     );
 

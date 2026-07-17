@@ -1,11 +1,13 @@
 package com.nieslregen.block;
 
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.block.custom.FeastOfTheMushroomFields;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
+import com.nieslregen.block.custom.cooking.tinycauldron.FryingPanBlock;
 import com.nieslregen.block.custom.herbariumpress.HerbariumPressBlock;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowBlock;
 import com.nieslregen.block.custom.mushroomstem.ScratchedMushroomStemBlock;
-import com.nieslregen.block.custom.tinycauldron.TinyCauldronBlock;
+import com.nieslregen.block.custom.cooking.tinycauldron.TinyCauldronBlock;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
@@ -43,6 +45,12 @@ public class ModBlocks {
                     .sound(SoundType.IRON)
     ));
 
+    public static final Block FRYING_PAN = registerBlock("frying_pan_block", properties -> new FryingPanBlock(
+            properties
+                    .strength(1.5f)
+                    .sound(SoundType.IRON)
+    ));
+
     public static final Block MYCELIUM_CHICKEN_NEST = registerBlock("mycelium_chicken_nest_block", MyceliumChickenNestBlock::new);
 
     public static final Block SCRATCHED_MUSHROOM_STEM = registerBlock("scratched_mushroom_stem", properties -> new ScratchedMushroomStemBlock(
@@ -51,6 +59,7 @@ public class ModBlocks {
     ));
 
     public static final Block MUSHROOM_STEM_HOLLOW = registerBlock("mushroom_stem_hollow", MushroomStemHollowBlock::new);
+    public static final Block FEAST_OF_THE_MUSHROOM_FIELDS = registerBlock("feast_of_the_mushroom_fields", FeastOfTheMushroomFields::new);
 
     public static ResourceKey<Block> getResourceKey(Block block) {
         return BuiltInRegistries.BLOCK.getResourceKey(block).get();
@@ -82,8 +91,10 @@ public class ModBlocks {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(HERBARIUM_PRESS));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(CHARCOAL_PILE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(TINY_CAULDRON));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(FRYING_PAN));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(SCRATCHED_MUSHROOM_STEM));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MUSHROOM_STEM_HOLLOW));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_NEST));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(FEAST_OF_THE_MUSHROOM_FIELDS));
     }
 }

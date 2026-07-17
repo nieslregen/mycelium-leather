@@ -1,7 +1,10 @@
-package com.nieslregen.block.custom.tinycauldron;
+package com.nieslregen.block.custom.cooking;
 
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.block.ModBlocks;
 import com.nieslregen.block.container.ImplementedContainer;
+import com.nieslregen.block.custom.cooking.tinycauldron.FryingPanEntity;
+import com.nieslregen.block.custom.cooking.tinycauldron.TinyCauldronEntity;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -13,10 +16,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
@@ -26,9 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nieslregen.block.ModBlockEntities.TINY_CAULDRON_ENTITY;
-
-public class TinyCauldronEntity extends BlockEntity implements ImplementedContainer {
+public class AbstractCookingUtilEntity extends BlockEntity implements ImplementedContainer {
 
     private final NonNullList<ItemStack> items = NonNullList.withSize(16, ItemStack.EMPTY);
 
@@ -39,26 +40,46 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
     private final String BREWING_RESULT_IDENTIFIER = "brewing_result";
     private final String BREWING_RESULT_AMOUNT_IDENTIFIER = "brewing_result_amount";
 
-    private final List<TinyCauldronRecipe> recipes = List.of(
-            new TinyCauldronRecipe(
+    private final List<CookingRecipe> recipes = List.of(
+            new CookingRecipe(
                     1,
                     List.of(new ItemStack(Items.HONEY_BOTTLE), new ItemStack(ModItems.SOOT)),
                     new ItemStack(ModItems.SOOT_INK),
-                    false
+                    false,
+                    CookingRecipe.UtilType.TinyCauldron
             ),
-            new TinyCauldronRecipe(
+            new CookingRecipe(
                     2,
-                    List.of(new ItemStack(Items.RED_MUSHROOM, 2), new ItemStack(Items.ROTTEN_FLESH, 3), new ItemStack(Items.ARROW), new ItemStack(ModItems.SUSPICIOUS_FLASK)),
+                    List.of(
+                            new ItemStack(Items.RED_MUSHROOM, 2),
+                            new ItemStack(Items.ROTTEN_FLESH, 3),
+                            new ItemStack(Items.ARROW),
+                            new ItemStack(ModItems.SUSPICIOUS_FLASK)
+                    ),
                     new ItemStack(ModItems.ARROW_OF_ILLNESS),
-                    false
+                    false,
+                    CookingRecipe.UtilType.TinyCauldron
+            ),
+            new CookingRecipe(
+                    3,
+                    List.of(
+                            new ItemStack(Items.BROWN_MUSHROOM, 3),
+                            new ItemStack(Items.RED_MUSHROOM, 3),
+                            new ItemStack(ModItems.TRUFFLE, 2),
+                            new ItemStack(Items.MUSHROOM_STEW),
+                            new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG)
+                    ),
+                    new ItemStack(ModBlocks.FEAST_OF_THE_MUSHROOM_FIELDS),
+                    false,
+                    CookingRecipe.UtilType.FryingPan
             )
     );
 
     private final List<List<Item>> recipesAsItemList = new ArrayList<>();
 
 
-    public TinyCauldronEntity(BlockPos worldPosition, BlockState blockState) {
-        super(TINY_CAULDRON_ENTITY, worldPosition, blockState);
+    public AbstractCookingUtilEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
+        super(type, worldPosition, blockState);
         recipes.forEach(recipe -> {
             recipesAsItemList.add(convertItemStackListToItemList(recipe.recipeComponents()));
         });
@@ -69,11 +90,11 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         return items;
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, TinyCauldronEntity entity) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, AbstractCookingUtilEntity entity) {
         if (entity.brewingResult != ItemStack.EMPTY) {
 
-            if (!state.getValue(TinyCauldronBlock.BREWING)) {
-                level.setBlockAndUpdate(pos, state.setValue(TinyCauldronBlock.BREWING, true));
+            if (!state.getValue(AbstractCookingUtilBlock.BREWING)) {
+                level.setBlockAndUpdate(pos, state.setValue(AbstractCookingUtilBlock.BREWING, true));
             }
 
             if (entity.currentBrewTime < entity.brewTime) {
@@ -89,7 +110,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
 
                 entity.currentBrewTime = 0;
                 entity.brewingResult = ItemStack.EMPTY;
-                level.setBlockAndUpdate(pos, state.setValue(TinyCauldronBlock.BREWING, false));
+                level.setBlockAndUpdate(pos, state.setValue(AbstractCookingUtilBlock.BREWING, false));
             }
         }
     }
@@ -114,7 +135,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                 level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(), GameEvent.Context.of(entity, this.getBlockState()));
                 this.markUpdated();
 
-                Optional<ItemStack> result = checkRecipe(isLit);
+                Optional<ItemStack> result = checkRecipe(isLit, level.getBlockEntity(pos));
                 if (result.isPresent()) {
                     for (int i = 0; i < items.size(); i++) {
                         items.get(i).shrink(1);
@@ -122,9 +143,8 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                         level.sendBlockUpdated(entity.getOnPos(), this.getBlockState(), this.getBlockState(), 3);
                     }
                     BlockEntity blockEntity = level.getBlockEntity(pos);
-                    if (blockEntity instanceof TinyCauldronEntity) {
-                        TinyCauldronEntity tinyCauldron = (TinyCauldronEntity) blockEntity;
-                        tinyCauldron.brewingResult = result.get();
+                    if (blockEntity instanceof AbstractCookingUtilEntity util) {
+                        util.brewingResult = result.get();
                     }
                 }
                 return true;
@@ -133,13 +153,13 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         return false;
     }
 
-    private Optional<ItemStack> checkRecipe(boolean litStatus) {
+    private Optional<ItemStack> checkRecipe(boolean litStatus, BlockEntity blockEntity) {
         List<Item> currentIngredients = convertItemStackListToItemList(items);
 
         int index = 0;
-        for (TinyCauldronRecipe recipe : recipes) {
+        for (CookingRecipe recipe : recipes) {
 
-            if (litStatus == recipe.needsFire()) {
+            if (litStatus == recipe.needsFire() && recipe.type().equals(getEntityUtilType(blockEntity))) {
                 if (isSubset(recipesAsItemList.get(index), currentIngredients)) {
                     if (isSubset(currentIngredients, recipesAsItemList.get(index))) {
                         return Optional.of(recipe.resultItem());
@@ -186,7 +206,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         return items;
     }
 
-    private Optional<TinyCauldronRecipe> getRecipeByIdentifier(int identifier) {
+    private Optional<CookingRecipe> getRecipeByIdentifier(int identifier) {
         return recipes.stream()
                 .filter(r -> r.identifier() == identifier)
                 .findFirst();
@@ -197,7 +217,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
                 .peek(x -> MyceliumLeatherMod.LOGGER.info("equation: {} eqauls {}", x.resultItem().getItem(), itemStack.getItem()))
                 .filter(r -> r.resultItem().getItem() == itemStack.getItem())
                 .findFirst()
-                .map(TinyCauldronRecipe::identifier);
+                .map(CookingRecipe::identifier);
     }
 
     @Override
@@ -213,7 +233,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         Item b = ModItems.SUSPICIOUS_FLASK;
 
         if (identifier.isPresent()) {
-            Optional<TinyCauldronRecipe> optRecipe = getRecipeByIdentifier(identifier.get());
+            Optional<CookingRecipe> optRecipe = getRecipeByIdentifier(identifier.get());
             if  (optRecipe.isPresent()) {
                 b = optRecipe.get().resultItem().getItem();
             }
@@ -233,5 +253,15 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
         }
 
     }
-}
 
+    private CookingRecipe.UtilType getEntityUtilType(BlockEntity entity) {
+        if (entity instanceof TinyCauldronEntity) {
+            return CookingRecipe.UtilType.TinyCauldron;
+        }
+
+        if (entity instanceof FryingPanEntity) {
+            return CookingRecipe.UtilType.FryingPan;
+        }
+        return CookingRecipe.UtilType.None;
+    }
+}

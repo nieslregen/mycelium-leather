@@ -1,7 +1,6 @@
-package com.nieslregen.block.custom.tinycauldron;
+package com.nieslregen.block.custom.cooking;
 
 import com.mojang.serialization.MapCodec;
-import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -31,7 +30,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-public class TinyCauldronBlock extends BaseEntityBlock {
+public abstract class AbstractCookingUtilBlock extends BaseEntityBlock {
 
     private static final VoxelShape SHAPE;
 
@@ -42,12 +41,16 @@ public class TinyCauldronBlock extends BaseEntityBlock {
             Items.ROTTEN_FLESH,
             Items.ARROW,
             Items.RED_MUSHROOM,
-            ModItems.TRUFFLE
+            Items.BROWN_MUSHROOM,
+            ModItems.TRUFFLE,
+            ModItems.MUSHROOM_PASTE,
+            Items.MUSHROOM_STEW,
+            ModItems.MYCELIUM_CHICKEN_EGG
     );
 
     public static final BooleanProperty BREWING = BooleanProperty.create("brewing");
 
-    public TinyCauldronBlock(Properties properties) {
+    public AbstractCookingUtilBlock(Properties properties) {
         super(properties);
         registerDefaultState(
                 getStateDefinition()
@@ -57,14 +60,14 @@ public class TinyCauldronBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(TinyCauldronBlock::new);
-    }
+    protected abstract MapCodec<? extends BaseEntityBlock> codec();
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        return new TinyCauldronEntity(worldPosition, blockState);
-    }
+    public abstract @Nullable BlockEntity newBlockEntity(BlockPos worldPosition, BlockState blockState);
+
+    @Override
+    public abstract @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type);
+
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -73,12 +76,14 @@ public class TinyCauldronBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.isClientSide()) {return InteractionResult.SUCCESS;}
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
         ItemStack item = player.getItemInHand(hand);
-        TinyCauldronEntity entity;
+        AbstractCookingUtilEntity entity;
 
-        if (level.getBlockEntity(pos) instanceof TinyCauldronEntity) {
-            entity = (TinyCauldronEntity)level.getBlockEntity(pos);
+        if (level.getBlockEntity(pos) instanceof AbstractCookingUtilEntity) {
+            entity = (AbstractCookingUtilEntity) level.getBlockEntity(pos);
 
             if (!item.isEmpty() && !state.getValue(BREWING)) {
                 if (isValidIngredient(item.getItem())) {
@@ -89,14 +94,6 @@ public class TinyCauldronBlock extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-        return createTickerHelper(
-                type,
-                ModBlockEntities.TINY_CAULDRON_ENTITY,
-                TinyCauldronEntity::serverTick
-        );
-    }
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
@@ -139,7 +136,6 @@ public class TinyCauldronBlock extends BaseEntityBlock {
     }
 
     static {
-        SHAPE = Block.column((double)12.0F, (double)0.0F, (double)6.0F);
+        SHAPE = Block.column((double) 12.0F, (double) 0.0F, (double) 6.0F);
     }
-
 }

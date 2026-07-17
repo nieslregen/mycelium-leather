@@ -3,10 +3,7 @@ package com.nieslregen.items;
 
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.effect.ModEffects;
-import com.nieslregen.items.customitems.AbstractMobEffectArrow;
-import com.nieslregen.items.customitems.AbstractPatchItem;
-import com.nieslregen.items.customitems.Dagger;
-import com.nieslregen.items.customitems.SpadeItem;
+import com.nieslregen.items.customitems.*;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.myceliumchicken.SuspiciousEggItem;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
@@ -50,7 +47,8 @@ public class ModItems {
     );
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
     public static final Item MYCELIUM_CHICKEN_EGG = registerItem("mycelium_chicken_egg", Item::new);
-    public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", Item::new);
+    public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", properties ->
+            new MushroomPaste(properties.food(new FoodProperties(1,1, false)).stacksTo(4)));
     public static final Item FEATHER_VARIANT_WARM = registerItem("feather_warm", Item::new);
     public static final Item FEATHER_VARIANT_MUSHROOM = registerItem("feather_mushroom", Item::new);
     public static final Item FEATHER_VARIANT_COLD = registerItem("feather_cold", Item::new);
@@ -62,13 +60,13 @@ public class ModItems {
     public static final Item IRON_DAGGER = registerItem("iron_dagger",
             properties -> new Dagger(properties.sword(ToolMaterial.IRON, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
     public static final Item GOLDEN_DAGGER_CLASSIC = registerItem("golden_dagger",
-            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), Dagger.EffectType.TEMPERATE, true));
     public static final Item GOLDEN_DAGGER_WARM = registerItem("golden_dagger_warm",
-            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), Dagger.EffectType.WARM, true));
     public static final Item GOLDEN_DAGGER_COLD = registerItem("golden_dagger_cold",
-            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), ModEffects.BLEEDING, true));
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), Dagger.EffectType.COLD, true));
     public static final Item GOLDEN_DAGGER_MUSHROOM = registerItem("golden_dagger_mushroom",
-            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), MobEffects.POISON.value(), true));
+            properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), Dagger.EffectType.MUSHROOM, true));
     public static final Item DIAMOND_DAGGER = registerItem("diamond_dagger",
             properties -> new Dagger(properties.sword(ToolMaterial.DIAMOND, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
 

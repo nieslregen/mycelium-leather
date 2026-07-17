@@ -23,7 +23,11 @@ import net.minecraft.world.item.ItemStack;
 
 public class Dagger extends Item {
     private final boolean bleedingEnabled;
-    private final MobEffect effect;
+    private final EffectType effect;
+
+    public enum EffectType {
+        TEMPERATE, WARM, COLD, MUSHROOM
+    }
 
     public Dagger(Properties properties) {
         super(properties);
@@ -31,7 +35,7 @@ public class Dagger extends Item {
         this.effect = null;
     }
 
-    public Dagger(Properties properties, MobEffect effect, boolean bleedingEnabled) {
+    public Dagger(Properties properties, EffectType effect, boolean bleedingEnabled) {
         super(properties);
         this.bleedingEnabled = bleedingEnabled;
         this.effect = effect;
@@ -40,11 +44,17 @@ public class Dagger extends Item {
     @Override
     public void hurtEnemy(ItemStack itemStack, LivingEntity mob, LivingEntity attacker) {
         super.hurtEnemy(itemStack, mob, attacker);
-        if (!this.bleedingEnabled && effect != null) {
-            mob.addEffect(new MobEffectInstance(BuiltInRegistries
-                    .MOB_EFFECT
-                    .wrapAsHolder(effect),
-                    20));
+        if (this.bleedingEnabled && effect != null) {
+
+            switch (this.effect) {
+                case TEMPERATE -> applyEffect(mob, ModEffects.BLEEDING, 20 * 3);
+                case WARM -> attacker.heal(2);
+                case COLD -> applyEffect(mob, MobEffects.SLOWNESS.value(), 20 * 2);
+                case MUSHROOM -> {
+                    applyEffect(mob, MobEffects.POISON.value(), 20 * 3);
+                    applyEffect(mob, MobEffects.NAUSEA.value(), 20 * 5);
+                }
+            }
         }
 
         // Backstab
@@ -62,5 +72,13 @@ public class Dagger extends Item {
                     attacker.damageSources().playerAttack((Player)attacker),
                     8f);
         }
+    }
+
+    private void applyEffect(LivingEntity entity, MobEffect effect, int duration) {
+        entity.addEffect(
+                new MobEffectInstance(BuiltInRegistries
+                        .MOB_EFFECT
+                        .wrapAsHolder(effect),
+                duration));
     }
 }

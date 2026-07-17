@@ -32,12 +32,6 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
 
     public static ResourceKey<LootTable> MYCELIUM_CHICKEN_DROP = ResourceKey
             .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "mycelium_chicken/feather_drop"));
-    public static ResourceKey<LootTable> CLASSIC_CHICKEN_DROP = ResourceKey
-            .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "classic_chicken/feather_drop"));
-    public static ResourceKey<LootTable> HOT_CHICKEN_DROP = ResourceKey
-            .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "hot_chicken/feather_drop"));
-    public static ResourceKey<LootTable> COLD_CHICKEN_DROP = ResourceKey
-            .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "cold_chicken/feather_drop"));
 
     public ModEntityLootTableProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
         super(output, registryLookupFuture, LootContextParamSets.ENTITY);
