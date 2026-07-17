@@ -13,6 +13,9 @@ public class MyceliumChickenRenderState extends LivingEntityRenderState {
     public final AnimationState sitUpAnimationState;
     public final AnimationState idleAnimationState;
 
+    public float flap;
+    public float flapSpeed;
+
     public MyceliumChickenRenderState() {
         this.sitAnimationState = new AnimationState();
         this.sitPoseAnimationState = new AnimationState();

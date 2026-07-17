@@ -371,7 +371,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.FEATHER), has(Items.FEATHER))
                         .save(output, "writable_book_from_soot_ink");
 
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
+                shaped(RecipeCategory.FOOD, ModBlocks.TINY_CAULDRON)
                         .pattern("I I")
                         .pattern("III")
                         .pattern("SSS")
@@ -380,6 +380,15 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                         .group("tiny_cauldron")
                         .save(output, "tiny_cauldron");
+
+                shaped(RecipeCategory.FOOD, ModBlocks.FRYING_PAN)
+                        .pattern("IIS")
+                        .define('I', Items.IRON_INGOT)
+                        .define('S', Items.STICK)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .group("frying_pan")
+                        .save(output, "frying_pan");
 
                 shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
                         .pattern("DGD")

@@ -10,6 +10,8 @@ import net.minecraft.util.Mth;
 public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState> {
     private final ModelPart root;
     private final ModelPart head;
+    private final ModelPart rightWing;
+    private final ModelPart leftWing;
 
     private final KeyframeAnimation walkAnimation;
     private final KeyframeAnimation sitAnimation;
@@ -19,15 +21,11 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
 
     public MyceliumChickenModel(ModelPart root) {
         super(root);
-        System.out.println(root);
-        System.out.println(root.hasChild("root"));
-        System.out.println(root.getChild("root").hasChild("torso"));
-        System.out.println(root.getChild("root").getChild("torso").hasChild("head"));
         this.root = root.getChild("root");
         this.head = root.getChild("root").getChild("torso").getChild("head");
 //        this.body = root.getChild("body");
-//        this.left_wing = root.getChild("left_wing");
-//        this.right_wing = root.getChild("right_wing");
+        this.leftWing = root.getChild("root").getChild("torso").getChild("body").getChild("left_wing");
+        this.rightWing = root.getChild("root").getChild("torso").getChild("body").getChild("right_wing");
 //        this.mushrooms = root.getChild("mushrooms");
 //        this.feet = root.getChild("feet");
 //        this.left_leg = root.getChild("left_leg");
@@ -161,6 +159,10 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
         this.sitPoseAnimation.apply(state.sitPoseAnimationState, state.ageInTicks);
         this.standupAnimation.apply(state.sitUpAnimationState, state.ageInTicks);
         this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks);
+
+        float flapAngle = (Mth.sin((double)state.flap) + 1.0F) * state.flapSpeed;
+        this.rightWing.zRot = flapAngle;
+        this.leftWing.zRot = -flapAngle;
     }
 
     private void applyHeadRotation(final MyceliumChickenRenderState state, float yRot, float xRot) {

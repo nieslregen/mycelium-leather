@@ -6,7 +6,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.animal.chicken.Chicken;
+import net.minecraft.world.entity.animal.chicken.ChickenVariant;
 
 @Environment(EnvType.CLIENT)
 public class MyceliumChickenRenderer extends MobRenderer<MyceliumChicken, MyceliumChickenRenderState, MyceliumChickenModel> {
@@ -25,5 +29,12 @@ public class MyceliumChickenRenderer extends MobRenderer<MyceliumChicken, Myceli
     @Override
     public Identifier getTextureLocation(MyceliumChickenRenderState state) {
         return TEXTURE;
+    }
+
+    @Override
+    public void extractRenderState(MyceliumChicken entity, MyceliumChickenRenderState state, float partialTicks) {
+        super.extractRenderState(entity, state, partialTicks);
+        state.flap = Mth.lerp(partialTicks, entity.oFlap, entity.flap);
+        state.flapSpeed = Mth.lerp(partialTicks, entity.oFlapSpeed, entity.flapSpeed);
     }
 }

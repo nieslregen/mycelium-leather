@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -39,6 +40,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collections;
@@ -57,6 +59,13 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
 
     public Optional<BlockPos> nestPos = Optional.empty();
+
+    public float flap;
+    public float flapSpeed;
+    public float oFlapSpeed;
+    public float oFlap;
+    public float flapping = 1.0F;
+    private float nextFlap = 1.0F;
 
     private boolean carriesEgg = false;
     private boolean carriesStolenEgg = false;
@@ -176,7 +185,21 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     @Override
     public void aiStep() {
         super.aiStep();
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed += (this.onGround() ? -1.0F : 4.0F) * 0.3F;
+        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
+        if (!this.onGround() && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
 
+        this.flapping *= 0.9F;
+        Vec3 movement = this.getDeltaMovement();
+        if (!this.onGround() && movement.y < (double)0.0F) {
+            this.setDeltaMovement(movement.multiply((double)1.0F, 0.6, (double)1.0F));
+        }
+
+        this.flap += this.flapping * 2.0F;
         Level var3 = this.level();
         if (var3 instanceof ServerLevel level) {
             if (this.isAlive() && !this.isBaby() && --this.featherTime <= 0) {
@@ -190,6 +213,15 @@ public class MyceliumChicken extends Animal implements NeutralMob {
             }
         }
     }
+
+    protected boolean isFlapping() {
+        return this.flyDist > this.nextFlap;
+    }
+
+    protected void onFlap() {
+        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+    }
+
 
     @Override
     public void tick() {

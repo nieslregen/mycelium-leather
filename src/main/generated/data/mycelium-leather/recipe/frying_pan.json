@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "frying_pan",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "IIS"
+  ],
+  "result": {
+    "id": "mycelium-leather:frying_pan_block"
+  }
+}

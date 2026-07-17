@@ -19,6 +19,7 @@ public class ModModelProvider extends FabricModelProvider {
         blockModelGenerators.createTrivialCube(ModBlocks.MUSHROOM_STEM_HOLLOW);
         blockModelGenerators.createTrivialCube(ModBlocks.MYCELIUM_CHICKEN_NEST);
         blockModelGenerators.createTrivialCube(ModBlocks.FRYING_PAN);
+        blockModelGenerators.createTrivialCube(ModBlocks.FEAST_OF_THE_MUSHROOM_FIELDS);
     }
 
     @Override
