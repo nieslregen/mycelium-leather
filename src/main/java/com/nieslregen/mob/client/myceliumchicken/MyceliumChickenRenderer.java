@@ -1,16 +1,14 @@
-package com.nieslregen.mob.client;
+package com.nieslregen.mob.client.myceliumchicken;
 
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.mob.client.ModEntityModelLayers;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.state.ChickenRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.chicken.Chicken;
-import net.minecraft.world.entity.animal.chicken.ChickenVariant;
 
 @Environment(EnvType.CLIENT)
 public class MyceliumChickenRenderer extends MobRenderer<MyceliumChicken, MyceliumChickenRenderState, MyceliumChickenModel> {

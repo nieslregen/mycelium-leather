@@ -1,4 +1,4 @@
-package com.nieslregen.mob.client;
+package com.nieslregen.mob.client.myceliumchicken;
 
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
@@ -23,15 +23,8 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
         super(root);
         this.root = root.getChild("root");
         this.head = root.getChild("root").getChild("torso").getChild("head");
-//        this.body = root.getChild("body");
         this.leftWing = root.getChild("root").getChild("torso").getChild("body").getChild("left_wing");
         this.rightWing = root.getChild("root").getChild("torso").getChild("body").getChild("right_wing");
-//        this.mushrooms = root.getChild("mushrooms");
-//        this.feet = root.getChild("feet");
-//        this.left_leg = root.getChild("left_leg");
-//        this.left_foot = root.getChild("left_foot");
-//        this.right_leg = root.getChild("right_leg");
-//        this.right_foot = root.getChild("right_foot");
 
         this.walkAnimation = MyceliumChickenAnimation.walking.bake(this.root);
         this.sitAnimation = MyceliumChickenAnimation.take_a_seat.bake(this.root);

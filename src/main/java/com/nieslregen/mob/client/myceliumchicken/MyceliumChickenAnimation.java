@@ -1,4 +1,4 @@
-package com.nieslregen.mob.client;
+package com.nieslregen.mob.client.myceliumchicken;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;

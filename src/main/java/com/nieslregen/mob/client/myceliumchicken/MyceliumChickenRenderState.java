@@ -1,4 +1,4 @@
-package com.nieslregen.mob.client;
+package com.nieslregen.mob.client.myceliumchicken;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

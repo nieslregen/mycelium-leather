@@ -177,7 +177,8 @@ public class AbstractCookingUtilEntity extends BlockEntity implements Implemente
             if (litStatus == recipe.needsFire() && recipe.type().equals(getEntityUtilType(blockEntity))) {
                 if (isSubset(recipesAsItemList.get(index), currentIngredients)) {
                     if (isSubset(currentIngredients, recipesAsItemList.get(index))) {
-                        return Optional.of(recipe.resultItem());
+                        // ToDo: rework cauldron recipe resultItem because it touches the data directly
+                        return Optional.of(recipe.resultItem().copy());
                     } else {
                         return Optional.empty();
                     }
