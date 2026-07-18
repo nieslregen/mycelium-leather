@@ -17,6 +17,6 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        valueLookupBuilder(ItemTags.ARROWS).add(ModItems.ARROW_OF_ILLNESS);
+//        valueLookupBuilder(ItemTags.ARROWS).add(ModItems.ARROW_OF_ILLNESS);
     }
 }

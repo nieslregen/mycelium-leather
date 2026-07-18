@@ -1,8 +1,6 @@
 package com.nieslregen.block.custom.tinycauldron;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.container.ImplementedContainer;
-import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -19,8 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -129,7 +125,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
             if (isSubset(recipesAsItemList.get(index), currentIngredients)) {
 
                 if (isSubset(currentIngredients, recipesAsItemList.get(index))) {
-                    return Optional.of(recipe.resultItem());
+                    return Optional.of(recipe.resultItem().copy());
                 } else {
                     return Optional.empty();
                 }
@@ -180,7 +176,6 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
 
     private Optional<Integer> findRecipeByBrewingResult(ItemStack itemStack) {
         return recipes.stream()
-                .peek(x -> MyceliumLeatherMod.LOGGER.info("equation: {} eqauls {}", x.resultItem().getItem(), itemStack.getItem()))
                 .filter(r -> r.resultItem().getItem() == itemStack.getItem())
                 .findFirst()
                 .map(TinyCauldronRecipe::identifier);

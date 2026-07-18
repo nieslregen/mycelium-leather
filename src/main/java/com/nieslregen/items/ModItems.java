@@ -25,7 +25,7 @@ public class ModItems {
     public static final Item MYCELIUM_PATCH_DRIED = registerItem("mycelium-patch-dried", Item::new);
 
     public static final Item GRASS_PATCH = registerItem("grass-patch", properties -> new GrassPatchItem(properties.stacksTo(16)));
-    public static final Item ITEM_SPADE = registerItem("spade",  properties -> new SpadeItem(properties.durability(64)));
+    public static final Item ITEM_SPADE = registerItem("spade",  properties -> new SpadeItem(properties.durability(250)));
 
     public static final Item SOOT = registerItem("soot", Item::new);
     public static final Item SOOT_INK = registerItem("soot-ink", Item::new);
