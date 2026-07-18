@@ -1,4 +1,4 @@
-package com.nieslregen.block.custom.cooking.tinycauldron;
+package com.nieslregen.block.custom.cooking.fryingpan;
 
 import com.nieslregen.block.custom.cooking.AbstractCookingUtilEntity;
 import net.minecraft.core.BlockPos;

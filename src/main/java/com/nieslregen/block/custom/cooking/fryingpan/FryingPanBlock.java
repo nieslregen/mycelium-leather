@@ -1,8 +1,9 @@
-package com.nieslregen.block.custom.cooking.tinycauldron;
+package com.nieslregen.block.custom.cooking.fryingpan;
 
 import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.block.custom.cooking.AbstractCookingUtilBlock;
+import com.nieslregen.block.custom.cooking.tinycauldron.TinyCauldronEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;

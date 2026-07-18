@@ -3,7 +3,7 @@ package com.nieslregen.block;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.custom.FeastOfTheMushroomFields;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
-import com.nieslregen.block.custom.cooking.tinycauldron.FryingPanBlock;
+import com.nieslregen.block.custom.cooking.fryingpan.FryingPanBlock;
 import com.nieslregen.block.custom.herbariumpress.HerbariumPressBlock;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowBlock;
 import com.nieslregen.block.custom.mushroomstem.ScratchedMushroomStemBlock;

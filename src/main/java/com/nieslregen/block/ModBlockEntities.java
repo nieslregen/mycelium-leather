@@ -2,7 +2,7 @@ package com.nieslregen.block;
 
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileEntity;
-import com.nieslregen.block.custom.cooking.tinycauldron.FryingPanEntity;
+import com.nieslregen.block.custom.cooking.fryingpan.FryingPanEntity;
 import com.nieslregen.block.custom.herbariumpress.HerbariumPressEntity;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
 import com.nieslregen.block.custom.mushroomstem.ScratchedMushroomStemEntity;
