@@ -128,7 +128,7 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
             if (isSubset(recipesAsItemList.get(index), currentIngredients)) {
 
                 if (isSubset(currentIngredients, recipesAsItemList.get(index))) {
-                    return Optional.of(recipe.resultItem());
+                    return Optional.of(recipe.resultItem().copy());
                 } else {
                     return Optional.empty();
                 }
@@ -179,7 +179,6 @@ public class TinyCauldronEntity extends BlockEntity implements ImplementedContai
 
     private Optional<Integer> findRecipeByBrewingResult(ItemStack itemStack) {
         return recipes.stream()
-                .peek(x -> MyceliumLeatherMod.LOGGER.info("equation: {} eqauls {}", x.resultItem().getItem(), itemStack.getItem()))
                 .filter(r -> r.resultItem().getItem() == itemStack.getItem())
                 .findFirst()
                 .map(TinyCauldronRecipe::identifier);
