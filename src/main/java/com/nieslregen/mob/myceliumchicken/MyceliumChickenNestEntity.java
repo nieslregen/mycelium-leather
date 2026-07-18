@@ -37,22 +37,6 @@ public class MyceliumChickenNestEntity extends BlockEntity {
         return state.getValue(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock.HAS_EGG);
     }
 
-//    public boolean takeEgg() {
-//        boolean hadEgg = hasEgg();
-//        removeEgg();
-//        return hadEgg;
-//    }
-//
-//    public void breakEgg() {
-//        removeEgg();
-//    }
-//
-//    public void removeEgg() {
-//
-//        currentTemperature = 0;
-//        eggAgeInTicks = 0;
-//    }
-
     public MyceliumChickenNestEntity(BlockPos worldPosition, BlockState blockState) {
         super(ModBlockEntities.MYCELIUM_CHICKEN_NEST_ENTITY, worldPosition, blockState);
 

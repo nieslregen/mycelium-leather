@@ -29,6 +29,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
             public void buildRecipes() {
                 List<ItemLike> MYCELIUM_SMELTABLES = List.of(ModItems.MYCELIUM_PATCH);
                 oreSmelting(MYCELIUM_SMELTABLES, RecipeCategory.MISC, CookingBookCategory.MISC, ModItems.MYCELIUM_PATCH_DRIED, .05f, 100, "mycelium-leather");
+                oreSmelting(List.of(Items.BREAD), RecipeCategory.FOOD, CookingBookCategory.FOOD, ModItems.TOASTED_BREAD, .05f, 200, "mycelium_leather_food");
 
                 shaped(RecipeCategory.MISC, Items.BOOK)
                         .pattern("   ")

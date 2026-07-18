@@ -38,6 +38,9 @@ public class ModCreativeTabs {
 
                         output.accept(ModItems.TRUFFLE);
                         output.accept(ModItems.MUSHROOM_PASTE);
+                        output.accept(ModItems.TOASTED_BREAD);
+                        output.accept(ModItems.SCRAMBLED_EGGS);
+                        output.accept(ModItems.PAN_FRIED_POTATOES);
                         output.accept(ModBlocks.FEAST_OF_THE_MUSHROOM_FIELDS);
                         output.accept(ModItems.MYCELIUM_CHICKEN_EGG);
                         output.accept(ModItems.SUSPICIOUS_EGG);

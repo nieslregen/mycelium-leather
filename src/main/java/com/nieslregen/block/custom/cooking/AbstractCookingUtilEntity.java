@@ -9,6 +9,7 @@ import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,6 +33,8 @@ import java.util.Optional;
 public class AbstractCookingUtilEntity extends BlockEntity implements ImplementedContainer {
 
     private final NonNullList<ItemStack> items = NonNullList.withSize(16, ItemStack.EMPTY);
+
+    // ToDo: rework the filtering for the correct recipe, because this approach might be very resource hungry
 
     private ItemStack brewingResult = ItemStack.EMPTY;
     private int currentBrewTime = 0;
@@ -70,9 +73,22 @@ public class AbstractCookingUtilEntity extends BlockEntity implements Implemente
                             new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG)
                     ),
                     new ItemStack(ModBlocks.FEAST_OF_THE_MUSHROOM_FIELDS),
-                    false,
+                    true,
                     CookingRecipe.UtilType.FryingPan
-            )
+            ),
+            new CookingRecipe(4, List.of(new ItemStack(Items.EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(5, List.of(new ItemStack(Items.BROWN_EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(6, List.of(new ItemStack(Items.BLUE_EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(7, List.of(new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(8, List.of(new ItemStack(Items.POTATO, 2)), new ItemStack(ModItems.PAN_FRIED_POTATOES), true, CookingRecipe.UtilType.FryingPan),
+
+            new CookingRecipe(9, List.of(new ItemStack(Items.CHICKEN)), new ItemStack(Items.COOKED_CHICKEN), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(10, List.of(new ItemStack(Items.MUTTON)), new ItemStack(Items.COOKED_MUTTON), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(11, List.of(new ItemStack(Items.BEEF)), new ItemStack(Items.COOKED_BEEF), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(12, List.of(new ItemStack(Items.PORKCHOP)), new ItemStack(Items.COOKED_PORKCHOP), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(13, List.of(new ItemStack(Items.RABBIT)), new ItemStack(Items.COOKED_RABBIT), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(14, List.of(new ItemStack(Items.COD)), new ItemStack(Items.COOKED_COD), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(15, List.of(new ItemStack(Items.SALMON)), new ItemStack(Items.COOKED_SALMON), true, CookingRecipe.UtilType.FryingPan)
     );
 
     private final List<List<Item>> recipesAsItemList = new ArrayList<>();

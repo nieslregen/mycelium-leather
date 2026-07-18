@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +23,10 @@ public class FeastOfTheMushroomFields extends Block {
     protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
 
-        player.addEffect(new MobEffectInstance(MobEffects.SPEED));
+
+        player.addEffect(new MobEffectInstance(MobEffects.SPEED, 20 * 60), player);
+        state.getBlock().popResource(level, pos, new ItemStack(Items.BOWL));
+        level.destroyBlock(pos, false);
         return InteractionResult.SUCCESS;
     }
 }

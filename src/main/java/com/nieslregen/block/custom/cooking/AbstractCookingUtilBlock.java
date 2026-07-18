@@ -37,15 +37,31 @@ public abstract class AbstractCookingUtilBlock extends BaseEntityBlock {
     private static final List<Item> INGREDIENTS = List.of(
             Items.HONEY_BOTTLE,
             ModItems.SOOT,
+
             ModItems.SUSPICIOUS_FLASK,
             Items.ROTTEN_FLESH,
             Items.ARROW,
             Items.RED_MUSHROOM,
             Items.BROWN_MUSHROOM,
+
             ModItems.TRUFFLE,
             ModItems.MUSHROOM_PASTE,
             Items.MUSHROOM_STEW,
-            ModItems.MYCELIUM_CHICKEN_EGG
+            ModItems.MYCELIUM_CHICKEN_EGG,
+
+            Items.EGG,
+            Items.BROWN_EGG,
+            Items.BLUE_EGG,
+
+            Items.POTATO,
+
+            Items.CHICKEN,
+            Items.COD,
+            Items.MUTTON,
+            Items.PORKCHOP,
+            Items.RABBIT,
+            Items.SALMON,
+            Items.BEEF
     );
 
     public static final BooleanProperty BREWING = BooleanProperty.create("brewing");
