@@ -77,6 +77,14 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .group("mycelium-leather")
                         .save(output, "mycelium_patch_from_mushrooms_and_wheat");
 
+                shaped(RecipeCategory.DECORATIONS, Items.MOSS_BLOCK, 2)
+                        .pattern("C")
+                        .pattern("C")
+                        .pattern("C")
+                        .define('C', Items.MOSS_CARPET)
+                        .unlockedBy(getHasName(Items.MOSS_CARPET), has(Items.MOSS_CARPET))
+                        .save(output, "moss_block_from_moss_carpets");
+
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
                         .pattern("SSS")
                         .pattern("IRI")
@@ -487,7 +495,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
                         .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_MUSHROOM), has(ModItems.FEATHER_VARIANT_MUSHROOM))
                         .save(output, "golden_dagger_with_mushroom_variant_feather");
-
             }
         };
     }
