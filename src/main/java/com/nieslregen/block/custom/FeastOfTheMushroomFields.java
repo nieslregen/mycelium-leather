@@ -8,12 +8,18 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FeastOfTheMushroomFields extends Block {
+
+    private static final VoxelShape SHAPE;
+
     public FeastOfTheMushroomFields(Properties properties) {
         super(properties);
     }
@@ -28,5 +34,19 @@ public class FeastOfTheMushroomFields extends Block {
         state.getBlock().popResource(level, pos, new ItemStack(Items.BOWL));
         level.destroyBlock(pos, false);
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    protected VoxelShape getShape(final BlockState state, final BlockGetter level, final BlockPos pos, final CollisionContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    protected boolean useShapeForLightOcclusion(final BlockState state) {
+        return true;
+    }
+
+    static {
+        SHAPE = Block.column((double) 12.0F, (double) 0.0F, (double) 6.0F);
     }
 }

@@ -15,8 +15,8 @@ public class CrawlerRenderer extends MobRenderer<Crawler, CrawlerRendererState, 
     private static Identifier CLEAN = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/crawler_clean.png");
     private static Identifier MUSHROOM = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/crawler_mushroom.png");
     private static Identifier MOSS = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/crawler_moss.png");
-    private static Identifier PODSOL = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/crawler_podsol.png");
-    private static Identifier SHORE = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/crawler_shore.png");
+    private static Identifier PODZOL = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/crawler_podzol.png");
+    private static Identifier SALT = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/crawler_salt.png");
 
     public CrawlerRenderer(EntityRendererProvider.Context context) {
         super(
@@ -28,7 +28,13 @@ public class CrawlerRenderer extends MobRenderer<Crawler, CrawlerRendererState, 
 
     @Override
     public Identifier getTextureLocation(CrawlerRendererState state) {
-        return CLEAN;
+        return switch (state.variant) {
+            case Crawler.OvergrownType.MUSHROOM ->  MUSHROOM;
+            case Crawler.OvergrownType.MOSS ->  MOSS;
+            case Crawler.OvergrownType.PODZOL ->  PODZOL;
+            case Crawler.OvergrownType.SALT ->  SALT;
+            default ->  CLEAN;
+        };
     }
 
     @Override
@@ -39,5 +45,6 @@ public class CrawlerRenderer extends MobRenderer<Crawler, CrawlerRendererState, 
     @Override
     public void extractRenderState(Crawler entity, CrawlerRendererState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
+        state.variant = entity.getOvergrownSurface();
     }
 }

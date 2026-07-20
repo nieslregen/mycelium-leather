@@ -41,18 +41,15 @@ public class ModCreativeTabs {
                         output.accept(ModItems.TOASTED_BREAD);
                         output.accept(ModItems.SCRAMBLED_EGGS);
                         output.accept(ModItems.PAN_FRIED_POTATOES);
+                        output.accept(ModItems.SALT);
                         output.accept(ModBlocks.FEAST_OF_THE_MUSHROOM_FIELDS);
-                        output.accept(ModItems.MYCELIUM_CHICKEN_EGG);
                         output.accept(ModItems.SUSPICIOUS_EGG);
+                        output.accept(ModItems.MYCELIUM_CHICKEN_EGG);
                         output.accept(ModItems.MYCELIUM_CHICKEN_SPAWN_EGG);
                         output.accept(ModBlocks.MYCELIUM_CHICKEN_NEST);
-                        output.accept(ModBlocks.MUSHROOM_STEM_HOLLOW);
-                        output.accept(ModBlocks.SCRATCHED_MUSHROOM_STEM);
-
                         output.accept(ModItems.FEATHER_VARIANT_MUSHROOM);
                         output.accept(ModItems.FEATHER_VARIANT_WARM);
                         output.accept(ModItems.FEATHER_VARIANT_COLD);
-                        
                         output.accept(ModItems.COPPER_DAGGER);
                         output.accept(ModItems.IRON_DAGGER);
                         output.accept(ModItems.GOLDEN_DAGGER_CLASSIC);
@@ -60,6 +57,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.GOLDEN_DAGGER_WARM);
                         output.accept(ModItems.GOLDEN_DAGGER_MUSHROOM);
                         output.accept(ModItems.DIAMOND_DAGGER);
+                        output.accept(ModBlocks.MUSHROOM_STEM_HOLLOW);
+                        output.accept(ModBlocks.SCRATCHED_MUSHROOM_STEM);
                     })
                     .build()
     );

@@ -69,16 +69,17 @@ public class AbstractCookingUtilEntity extends BlockEntity implements Implemente
                             new ItemStack(Items.RED_MUSHROOM, 3),
                             new ItemStack(ModItems.TRUFFLE, 2),
                             new ItemStack(Items.MUSHROOM_STEW),
-                            new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG)
+                            new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG),
+                            new ItemStack(ModItems.SALT)
                     ),
                     new ItemStack(ModBlocks.FEAST_OF_THE_MUSHROOM_FIELDS),
                     true,
                     CookingRecipe.UtilType.FryingPan
             ),
-            new CookingRecipe(4, List.of(new ItemStack(Items.EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
-            new CookingRecipe(5, List.of(new ItemStack(Items.BROWN_EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
-            new CookingRecipe(6, List.of(new ItemStack(Items.BLUE_EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
-            new CookingRecipe(7, List.of(new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG, 3)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(4, List.of(new ItemStack(Items.EGG, 3), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(5, List.of(new ItemStack(Items.BROWN_EGG, 3), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(6, List.of(new ItemStack(Items.BLUE_EGG, 3), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(7, List.of(new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG, 3), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
             new CookingRecipe(8, List.of(new ItemStack(Items.POTATO, 2)), new ItemStack(ModItems.PAN_FRIED_POTATOES), true, CookingRecipe.UtilType.FryingPan),
 
             new CookingRecipe(9, List.of(new ItemStack(Items.CHICKEN)), new ItemStack(Items.COOKED_CHICKEN), true, CookingRecipe.UtilType.FryingPan),

@@ -22,17 +22,6 @@ public class MyceliumChickenNestEntity extends BlockEntity {
 
     private Optional<LivingEntity> thief = Optional.empty();
 
-
-    public boolean layEgg(BlockState state) {
-        boolean hasEgg = state.getValue(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock.HAS_EGG);
-
-        if (hasEgg) { return false; }
-
-        state.setValue(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock.HAS_EGG, true);
-        currentTemperature = MAX_TEMPERATURE;
-        return true;
-    }
-
     public boolean hasEgg(BlockState state) {
         return state.getValue(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock.HAS_EGG);
     }
