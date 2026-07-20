@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "mycelium-leather:mycelium-patch"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:red_mushroom"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:brown_mushroom"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
