@@ -1,6 +1,7 @@
 package com.nieslregen.worldgen;
 
 import com.nieslregen.mob.ModEntityTypes;
+import com.nieslregen.mob.cawler.Crawler;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -25,6 +26,44 @@ public class ModEntityGeneration {
                 ModEntityTypes.MYCELIUM_CHICKEN,
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                MyceliumChicken::checkChickenSpawnRules);
+                MyceliumChicken::checkChickenSpawnRules
+        );
+
+        BiomeModifications.addSpawn(
+                BiomeSelectors.includeByKey(
+                        Biomes.MUSHROOM_FIELDS,
+                        Biomes.STONY_SHORE,
+                        Biomes.BEACH,
+                        Biomes.SNOWY_BEACH,
+                        Biomes.OLD_GROWTH_PINE_TAIGA,
+                        Biomes.OLD_GROWTH_SPRUCE_TAIGA
+                ),
+                MobCategory.CREATURE,
+                ModEntityTypes.CRAWLER,
+                30,
+                3,
+                5
+        );
+        SpawnPlacements.register(
+                ModEntityTypes.CRAWLER,
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Crawler::checkCrawlerSpawnRules
+        );
+
+//        BiomeModifications.addSpawn(
+//                BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS),
+//                MobCategory.CREATURE,
+//                ModEntityTypes.SQUIRREL,
+//                30,
+//                3,
+//                5
+//        );
+//        SpawnPlacements.register(
+//                ModEntityTypes.CRAWLER,
+//                SpawnPlacementTypes.ON_GROUND,
+//                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+//                Crawler::checkCrawlerSpawnRules
+//        );
     }
 }

@@ -57,6 +57,7 @@ public class ModCreativeTabs {
                         output.accept(ModItems.GOLDEN_DAGGER_WARM);
                         output.accept(ModItems.GOLDEN_DAGGER_MUSHROOM);
                         output.accept(ModItems.DIAMOND_DAGGER);
+                        output.accept(ModBlocks.COOKING_STATION);
                         output.accept(ModBlocks.MUSHROOM_STEM_HOLLOW);
                         output.accept(ModBlocks.SCRATCHED_MUSHROOM_STEM);
                     })

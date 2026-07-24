@@ -15,10 +15,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -26,7 +26,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.cow.MushroomCow;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -53,27 +52,6 @@ public class Crawler extends Animal implements Shearable {
     public Crawler(EntityType<? extends Animal> type, Level level) {
         super(type, level);
         resetTimeUntilResting();
-    }
-
-    //ToDO: delete later
-    @Override
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor level,
-            DifficultyInstance difficulty,
-            EntitySpawnReason reason,
-            @Nullable SpawnGroupData spawnData) {
-
-        super.finalizeSpawn(level, difficulty, reason, spawnData);
-
-        switch (RandomSource.create().nextInt(0, 5)) {
-            case 0 -> setVariant(OvergrownType.NONE);
-            case 1 -> setVariant(OvergrownType.SALT);
-            case 2 -> setVariant(OvergrownType.MUSHROOM);
-            case 3 -> setVariant(OvergrownType.PODZOL);
-            default -> setVariant(OvergrownType.MOSS);
-        }
-
-        return spawnData;
     }
 
     private void resetTimeUntilResting() {
@@ -113,7 +91,7 @@ public class Crawler extends Animal implements Shearable {
         return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 5)
                 .add(Attributes.TEMPT_RANGE, 10)
-                .add(Attributes.MOVEMENT_SPEED, .5)
+                .add(Attributes.MOVEMENT_SPEED, .1)
                 .add(Attributes.FOLLOW_RANGE, 25)
                 .add(Attributes.SCALE, 2.0);
     }
@@ -124,7 +102,7 @@ public class Crawler extends Animal implements Shearable {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, (double)1.25F));
         this.goalSelector.addGoal(2, new EatBlockGoal(this));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,0.1));
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,1));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
     }
@@ -192,6 +170,10 @@ public class Crawler extends Animal implements Shearable {
 
     public boolean isOvergrown() {
         return getVariant() != OvergrownType.NONE;
+    }
+
+    public static boolean checkCrawlerSpawnRules(EntityType<Crawler> crawlerEntityType, ServerLevelAccessor serverLevelAccessor, EntitySpawnReason entitySpawnReason, BlockPos blockPos, RandomSource randomSource) {
+        return serverLevelAccessor.getBlockState(blockPos.below()).is(BlockTags.MOOSHROOMS_SPAWNABLE_ON) && isBrightEnoughToSpawn(serverLevelAccessor, blockPos);
     }
 
     private class EatBlockGoal extends Goal {

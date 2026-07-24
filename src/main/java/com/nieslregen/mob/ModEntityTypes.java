@@ -3,6 +3,7 @@ package com.nieslregen.mob;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.cawler.Crawler;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
+import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -23,6 +24,11 @@ public class ModEntityTypes {
     public static final EntityType<Crawler> CRAWLER = register(
             "crawler",
             EntityType.Builder.of(Crawler::new, MobCategory.CREATURE)
+    );
+
+    public static final EntityType<MyceliumSquirrel> SQUIRREL = register(
+            "mycelium_squirrel",
+            EntityType.Builder.of(MyceliumSquirrel::new, MobCategory.CREATURE)
     );
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {

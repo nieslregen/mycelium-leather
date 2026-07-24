@@ -21,13 +21,9 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.cow.MushroomCow;
-import net.minecraft.world.entity.animal.fox.Fox;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -395,14 +391,14 @@ public class MyceliumChicken extends Animal implements NeutralMob {
         public void start() {
             MyceliumLeatherMod.LOGGER.info("Start ReturnToNestGoal");
 
-            BlockPos pos = chicken.nestPos.get();
-
-            chicken.getNavigation().moveTo(
-                    pos.getX() + 0.5,
-                    pos.getY(),
-                    pos.getZ() + 0.5,
-                    1.25
-            );
+            chicken.nestPos.ifPresent(pos -> chicken
+                    .getNavigation()
+                    .moveTo(
+                            pos.getX() + 0.5,
+                            pos.getY(),
+                            pos.getZ() + 0.5,
+                            1.25
+            ));
         }
 
         @Override

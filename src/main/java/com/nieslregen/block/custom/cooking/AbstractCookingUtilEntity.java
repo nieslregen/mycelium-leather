@@ -16,8 +16,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -80,7 +78,7 @@ public class AbstractCookingUtilEntity extends BlockEntity implements Implemente
             new CookingRecipe(5, List.of(new ItemStack(Items.BROWN_EGG, 3), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
             new CookingRecipe(6, List.of(new ItemStack(Items.BLUE_EGG, 3), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
             new CookingRecipe(7, List.of(new ItemStack(ModItems.MYCELIUM_CHICKEN_EGG, 3), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.SCRAMBLED_EGGS, 3), true, CookingRecipe.UtilType.FryingPan),
-            new CookingRecipe(8, List.of(new ItemStack(Items.POTATO, 2)), new ItemStack(ModItems.PAN_FRIED_POTATOES), true, CookingRecipe.UtilType.FryingPan),
+            new CookingRecipe(8, List.of(new ItemStack(Items.POTATO, 2), new ItemStack(ModItems.SALT)), new ItemStack(ModItems.PAN_FRIED_POTATOES), true, CookingRecipe.UtilType.FryingPan),
 
             new CookingRecipe(9, List.of(new ItemStack(Items.CHICKEN)), new ItemStack(Items.COOKED_CHICKEN), true, CookingRecipe.UtilType.FryingPan),
             new CookingRecipe(10, List.of(new ItemStack(Items.MUTTON)), new ItemStack(Items.COOKED_MUTTON), true, CookingRecipe.UtilType.FryingPan),
@@ -136,8 +134,8 @@ public class AbstractCookingUtilEntity extends BlockEntity implements Implemente
         boolean isLit = false;
         BlockState blockState = level.getBlockState(pos.below());
 
-        if (blockState.getBlock().equals(Blocks.CAMPFIRE)) {
-            blockState.getValue(CampfireBlock.LIT);
+        if (blockState.getBlock().equals(ModBlocks.COOKING_STATION)) {
+            blockState.getValue(CookingStation.LIT);
             isLit = true;
         }
 

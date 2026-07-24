@@ -1,6 +1,5 @@
 package com.nieslregen.mob.client.crawler;
 
-import com.nieslregen.mob.client.myceliumchicken.MyceliumChickenRenderState;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

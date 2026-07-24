@@ -54,6 +54,7 @@ public abstract class AbstractCookingUtilBlock extends BaseEntityBlock {
             Items.BLUE_EGG,
 
             Items.POTATO,
+            ModItems.SALT,
 
             Items.CHICKEN,
             Items.COD,
