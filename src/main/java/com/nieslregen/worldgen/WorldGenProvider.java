@@ -16,6 +16,7 @@ public class WorldGenProvider extends FabricDynamicRegistryProvider {
     protected void configure(HolderLookup.Provider registries, Entries entries) {
         entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE));
         entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE));
+        entries.addAll(registries.lookupOrThrow(Registries.DAMAGE_TYPE));
 
     }
 

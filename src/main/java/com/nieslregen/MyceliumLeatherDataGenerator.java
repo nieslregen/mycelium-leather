@@ -28,5 +28,6 @@ public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 	public void buildRegistry(RegistrySetBuilder registryBuilder) {
 		registryBuilder.add(Registries.CONFIGURED_FEATURE,  ModConfiguredFeatures::configure);
 		registryBuilder.add(Registries.PLACED_FEATURE, ModPlacedFeatures::configure);
+		registryBuilder.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);
 	}
 }

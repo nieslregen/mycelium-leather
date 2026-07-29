@@ -36,7 +36,14 @@
   "block.mycelium-leather.mycelium_chicken_nest_block": "Mycelium Chicken Nest",
   "block.mycelium-leather.feast_of_the_mushroom_fields": "Feast of the Mushroom Fields",
   "effect.mycelium-leather.illness": "Illness",
+  "effect.mycelium-leather.bleeding": "Bleeding",
   "container.herbariumpress": "Herbarium Press",
   "creativemodtab.mycelium_leather.mod_items": "Mycelium Leather Mod Items",
-  "entity.mycelium-leather.mycelium_chicken": "Mycelium Chicken"
+  "entity.mycelium-leather.mycelium_chicken": "Mycelium Chicken",
+  "death.attack.bleeding": "bleed to death.",
+  "death.attack.bleeding.player": "bleed to death trying to escape %s",
+  "death.attack.stab": "was stabbed.",
+  "death.attack.stab.player": "was back stabbed by %s",
+  "death.attack.backstab": "was back stabbed.",
+  "death.attack.backstab.player": "was back stabbed by %s"
 }
