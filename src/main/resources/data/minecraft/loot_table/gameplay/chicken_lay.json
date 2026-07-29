@@ -75,7 +75,7 @@
                 },
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 1.0
+                  "chance": 0.33
                 }
               ],
               "name": "minecraft:feather"
@@ -94,7 +94,7 @@
                 },
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 1.0
+                  "chance": 0.33
                 }
               ],
               "name": "mycelium-leather:feather_warm"
@@ -113,7 +113,7 @@
                 },
                 {
                   "condition": "minecraft:random_chance",
-                  "chance": 1.0
+                  "chance": 0.33
                 }
               ],
               "name": "mycelium-leather:feather_cold"
