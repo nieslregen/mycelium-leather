@@ -55,5 +55,6 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.GOLDEN_DAGGER_COLD, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.GOLDEN_DAGGER_MUSHROOM, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.DIAMOND_DAGGER, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.WOODEN_SPADE, ModelTemplates.FLAT_ITEM);
     }
 }

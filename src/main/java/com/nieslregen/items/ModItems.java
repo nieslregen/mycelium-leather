@@ -30,7 +30,7 @@ public class ModItems {
     public static final Item MYCELIUM_PATCH = registerItem("mycelium-patch", properties -> new AbstractPatchItem(properties.stacksTo(16), Blocks.MYCELIUM));
     public static final Item MYCELIUM_PATCH_DRIED = registerItem("mycelium-patch-dried", Item::new);
     public static final Item GRASS_PATCH = registerItem("grass-patch", properties -> new AbstractPatchItem(properties.stacksTo(16), Blocks.GRASS_BLOCK));
-    public static final Item ITEM_SPADE = registerItem("spade",  properties -> new SpadeItem(properties.durability(64)));
+    public static final Item ITEM_SPADE = registerItem("spade",  properties -> new SpadeItem(properties.durability(250)));
 
     public static final Item SOOT = registerItem("soot", Item::new);
     public static final Item SOOT_INK = registerItem("soot-ink", Item::new);
@@ -56,7 +56,7 @@ public class ModItems {
     public static final Item GOLDEN_DAGGER_COLD = registerItem("golden_dagger_cold", properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), Dagger.EffectType.COLD, true));
     public static final Item GOLDEN_DAGGER_MUSHROOM = registerItem("golden_dagger_mushroom", properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), Dagger.EffectType.MUSHROOM, true));
     public static final Item DIAMOND_DAGGER = registerItem("diamond_dagger", properties -> new Dagger(properties.sword(ToolMaterial.DIAMOND, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
-
+    public static final Item WOODEN_SPADE = registerItem("wooden_spade", properties -> new SpadeItem(properties.durability(59)));
 
 
     private static Item registerItem(String name, Function<Item.Properties, Item> function) {
@@ -79,6 +79,7 @@ public class ModItems {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(MYCELIUM_PATCH_DRIED));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(GRASS_PATCH));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(ITEM_SPADE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(WOODEN_SPADE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> output.accept(ARROW_OF_ILLNESS));
 
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(MUSHROOM_PASTE));

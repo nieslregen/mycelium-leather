@@ -21,6 +21,7 @@ public class ModCreativeTabs {
                     .icon(() -> new ItemStack(ModItems.MYCELIUM_LEATHER))
                     .title(Component.translatable("creativemodtab.mycelium_leather.mod_items"))
                     .displayItems((parameters, output) -> {
+                        output.accept(ModItems.WOODEN_SPADE);
                         output.accept(ModItems.ITEM_SPADE);
                         output.accept(ModItems.GRASS_PATCH);
                         output.accept(ModItems.MYCELIUM_PATCH);

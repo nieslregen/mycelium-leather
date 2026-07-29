@@ -119,6 +119,28 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .group("spade")
                         .save(output, "spade_from_stick_and_iron_ingot");
 
+                shaped(RecipeCategory.TOOLS, ModItems.WOODEN_SPADE)
+                        .pattern("  I")
+                        .pattern(" S ")
+                        .pattern("   ")
+                        .define('I', ItemTags.WOODEN_TOOL_MATERIALS)
+                        .define('S', Items.STICK)
+                        .unlockedBy("wood", has(ItemTags.WOODEN_TOOL_MATERIALS))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .group("spade")
+                        .save(output, "wooden_spade_legacy");
+
+                shaped(RecipeCategory.TOOLS, ModItems.WOODEN_SPADE)
+                        .pattern("  I")
+                        .pattern(" S ")
+                        .pattern("   ")
+                        .define('I', ItemTags.WOODEN_TOOL_MATERIALS)
+                        .define('S', Items.STICK)
+                        .unlockedBy("wood", has(ItemTags.WOODEN_TOOL_MATERIALS))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .group("spade")
+                        .save(output, "wooden_spade");
+
                 shaped(RecipeCategory.COMBAT, Items.LEATHER_BOOTS)
                         .pattern("   ")
                         .pattern("L L")
