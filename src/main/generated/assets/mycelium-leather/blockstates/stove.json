@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "log=0": { "model": "mycelium-leather:block/stove/stove0" },
+    "log=1": { "model": "mycelium-leather:block/stove/stove1" },
+    "log=2": { "model": "mycelium-leather:block/stove/stove2" },
+    "log=3": { "model": "mycelium-leather:block/stove/stove3" },
+    "log=4": { "model": "mycelium-leather:block/stove/stove4" }
+  }
+}

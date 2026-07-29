@@ -22,7 +22,7 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
         dropSelf(ModBlocks.HERBARIUM_PRESS);
         dropSelf(ModBlocks.TINY_CAULDRON);
         dropSelf(ModBlocks.FRYING_PAN);
-        dropSelf(ModBlocks.COOKING_STATION);
+        dropSelf(ModBlocks.STOVE);
     }
 
     @Override

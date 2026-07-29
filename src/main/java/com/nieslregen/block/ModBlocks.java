@@ -3,7 +3,7 @@ package com.nieslregen.block;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.custom.FeastOfTheMushroomFields;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
-import com.nieslregen.block.custom.cooking.CookingStation;
+import com.nieslregen.block.custom.cooking.stove.StoveBlock;
 import com.nieslregen.block.custom.cooking.fryingpan.FryingPanBlock;
 import com.nieslregen.block.custom.cooking.tinycauldron.TinyCauldronBlock;
 import com.nieslregen.block.custom.herbariumpress.HerbariumPressBlock;
@@ -61,7 +61,7 @@ public class ModBlocks {
                     .randomTicks()
     ));
 
-    public static final Block COOKING_STATION = registerBlock("cooking_station", properties -> new CookingStation(properties.instabreak()));
+    public static final Block STOVE = registerBlock("stove", properties -> new StoveBlock(properties.instabreak()));
 
     public static final Block MUSHROOM_STEM_HOLLOW = registerBlock("mushroom_stem_hollow", MushroomStemHollowBlock::new);
     public static final Block FEAST_OF_THE_MUSHROOM_FIELDS = registerBlock("feast_of_the_mushroom_fields", FeastOfTheMushroomFields::new);
@@ -100,7 +100,7 @@ public class ModBlocks {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(SCRATCHED_MUSHROOM_STEM));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MUSHROOM_STEM_HOLLOW));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_NEST));
-        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(COOKING_STATION));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(STOVE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(FEAST_OF_THE_MUSHROOM_FIELDS));
     }
 }

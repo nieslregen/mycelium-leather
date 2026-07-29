@@ -1,6 +1,7 @@
 package com.nieslregen.block.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,10 +30,16 @@ public class FeastOfTheMushroomFields extends Block {
     protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
 
+        if (level != null) {
+            player.addEffect(new MobEffectInstance(MobEffects.SPEED, 20 * 60), player);
+            player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 20 * 60, 2), player);
+            player.heal(8f);
+            player.getFoodData().eat(10,10);
+            state.getBlock().popResource(level, pos, new ItemStack(Items.BOWL));
+            level.destroyBlock(pos, false);
+        }
 
-        player.addEffect(new MobEffectInstance(MobEffects.SPEED, 20 * 60), player);
-        state.getBlock().popResource(level, pos, new ItemStack(Items.BOWL));
-        level.destroyBlock(pos, false);
+
         return InteractionResult.SUCCESS;
     }
 

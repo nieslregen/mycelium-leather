@@ -3,6 +3,7 @@ package com.nieslregen.block;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileEntity;
 import com.nieslregen.block.custom.cooking.fryingpan.FryingPanEntity;
+import com.nieslregen.block.custom.cooking.stove.StoveEntity;
 import com.nieslregen.block.custom.cooking.tinycauldron.TinyCauldronEntity;
 import com.nieslregen.block.custom.herbariumpress.HerbariumPressEntity;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
@@ -23,8 +24,9 @@ public class ModBlockEntities {
     public static final BlockEntityType<FryingPanEntity> FRYING_PAN_ENTITY = register("frying_pan", FryingPanEntity::new, ModBlocks.FRYING_PAN);
     public static final BlockEntityType<TinyCauldronEntity> TINY_CAULDRON_ENTITY = register("tiny_cauldron", TinyCauldronEntity::new,  ModBlocks.TINY_CAULDRON);
     public static final BlockEntityType<CharCoalPileEntity> CHARCOAL_PILE_ENTITY = register("soot_trap_furnace", CharCoalPileEntity::new, ModBlocks.CHARCOAL_PILE);
+    public static final BlockEntityType<StoveEntity> STOVE_ENTITY = register("stove", StoveEntity::new, ModBlocks.STOVE);
 
-    // ToDo: Check if both EntityTyoes can be removed
+    // ToDo: Check if both EntityTypes can be removed
     public static final BlockEntityType<MushroomStemHollowEntity> MUSHROOM_STEM_HOLLOW_ENTITY = register("mushroom_stem_hollow", MushroomStemHollowEntity::new, ModBlocks.MUSHROOM_STEM_HOLLOW);
     public static final BlockEntityType<ScratchedMushroomStemEntity> SCRATCHED_MUSHROOM_STEM_ENTITY = register("scratched_mushroom_stem", ScratchedMushroomStemEntity::new, ModBlocks.SCRATCHED_MUSHROOM_STEM);
 

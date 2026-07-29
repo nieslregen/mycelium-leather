@@ -4,6 +4,7 @@ import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.block.container.ImplementedContainer;
 import com.nieslregen.block.custom.cooking.fryingpan.FryingPanEntity;
+import com.nieslregen.block.custom.cooking.stove.StoveBlock;
 import com.nieslregen.block.custom.cooking.tinycauldron.TinyCauldronEntity;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
@@ -134,9 +135,8 @@ public class AbstractCookingUtilEntity extends BlockEntity implements Implemente
         boolean isLit = false;
         BlockState blockState = level.getBlockState(pos.below());
 
-        if (blockState.getBlock().equals(ModBlocks.COOKING_STATION)) {
-            blockState.getValue(CookingStation.LIT);
-            isLit = true;
+        if (blockState.getBlock().equals(ModBlocks.STOVE)) {
+            isLit = blockState.getValue(StoveBlock.LIT);;
         }
 
         for (int slot = 0; slot < items.size(); slot++) {
