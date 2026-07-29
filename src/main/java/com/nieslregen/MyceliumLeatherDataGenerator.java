@@ -1,8 +1,13 @@
 package com.nieslregen;
 
 import com.nieslregen.datagen.*;
+import com.nieslregen.worldgen.ModConfiguredFeatures;
+import com.nieslregen.worldgen.ModPlacedFeatures;
+import com.nieslregen.worldgen.WorldGenProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 
 public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 	@Override
@@ -16,5 +21,12 @@ public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModBlockTagsProvider::new);
 		pack.addProvider(ModItemTagsProvider::new);
 		pack.addProvider(ModEntityLootTableProvider::new);
+		pack.addProvider(WorldGenProvider::new);
+	}
+
+	@Override
+	public void buildRegistry(RegistrySetBuilder registryBuilder) {
+		registryBuilder.add(Registries.CONFIGURED_FEATURE,  ModConfiguredFeatures::configure);
+		registryBuilder.add(Registries.PLACED_FEATURE, ModPlacedFeatures::configure);
 	}
 }

@@ -1,26 +1,56 @@
 package com.nieslregen.worldgen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.core.HolderLookup;
+import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.worldgen.hugemushroom.HugeBrownMushroomWithHollowFeature;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-import java.util.concurrent.CompletableFuture;
+import static com.nieslregen.worldgen.ModFeatures.HUGE_BROWN_MUSHROOM_WITH_HOLLOW;
 
-public class ModConfiguredFeatures extends FabricDynamicRegistryProvider {
-    public ModConfiguredFeatures(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, registriesFuture);
-    }
+public class ModConfiguredFeatures {
 
-    @Override
-    protected void configure(HolderLookup.Provider registries, Entries entries) {
-        entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE));
-        entries.addAll(registries.lookupOrThrow(Registries.PLACED_FEATURE));
+    public static final ResourceKey<ConfiguredFeature<?,?>> HUGE_BROWN_MUSHROOM_WITH_HOLLOW_KEY =
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE,
+                    Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "huge_brown_mushroom_with_hollow_key")
+            );
 
-    }
 
-    @Override
-    public String getName() {
-        return "WorldGen Features";
+    public static void configure(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        HugeMushroomFeatureConfiguration config =
+                new HugeMushroomFeatureConfiguration(
+                        BlockStateProvider.simple(
+                                Blocks.BROWN_MUSHROOM_BLOCK.defaultBlockState()
+                                        .setValue(HugeMushroomBlock.DOWN, false)
+                        ),
+                        BlockStateProvider.simple(
+                                Blocks.MUSHROOM_STEM.defaultBlockState()
+                                        .setValue(HugeMushroomBlock.UP, false)
+                                        .setValue(HugeMushroomBlock.DOWN, false)
+                        ),
+                        2,
+                        BlockPredicate.matchesTag(BlockTags.HUGE_BROWN_MUSHROOM_CAN_PLACE_ON)
+                );
+
+        context.register(
+                HUGE_BROWN_MUSHROOM_WITH_HOLLOW_KEY,
+                new ConfiguredFeature<>(
+                        HUGE_BROWN_MUSHROOM_WITH_HOLLOW,
+                        config
+                )
+        );
     }
 }

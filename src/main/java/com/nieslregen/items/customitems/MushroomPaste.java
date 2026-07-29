@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class MushroomPaste extends Item {
+public class MushroomPaste extends AbstractHerb {
     public MushroomPaste(Properties properties) {
         super(properties);
     }
@@ -19,6 +19,7 @@ public class MushroomPaste extends Item {
         if (entity instanceof Player player ) {
             if (level instanceof ServerLevel serverLevel) {
                 player.heal(2F);
+                returnBowl(player);
             }
         }
         return result;

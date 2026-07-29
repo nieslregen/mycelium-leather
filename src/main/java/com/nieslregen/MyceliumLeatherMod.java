@@ -9,8 +9,14 @@ import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.ModPoiTypes;
 import com.nieslregen.tab.ModCreativeTabs;
+import com.nieslregen.worldgen.ModFeatures;
+import com.nieslregen.worldgen.ModPlacedFeatures;
 import com.nieslregen.worldgen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +26,7 @@ public class MyceliumLeatherMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModFeatures.init();
 		ModCreativeTabs.registerModCreativeTabs();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
@@ -31,17 +38,10 @@ public class MyceliumLeatherMod implements ModInitializer {
 		ModWorldGeneration.init();
 		ModPoiTypes.init();
 
-		modifyLootTables();
-	}
-
-	private void modifyLootTables() {
-//		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
-//			if (key.equals(BuiltInLootTables.CHICKEN_LAY)) {
-//				tableBuilder.withPool(
-//						LootPool.lootPool()
-//								.add(LootItem.lootTableItem(Items.FEATHER))
-//				);
-//			}
-//		});
+		BiomeModifications.addFeature(
+				BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS),
+				GenerationStep.Decoration.VEGETAL_DECORATION,
+				ModPlacedFeatures.HUGE_BROWN_MUSHROOM_WITH_HOLLOW_PLACED_KEY
+		);
 	}
 }

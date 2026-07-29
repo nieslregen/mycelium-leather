@@ -31,3 +31,44 @@ If this repository is included in a dataset used for training AI or machine lear
 The MIT License does not grant any rights to assets that are not covered by it. Unauthorized use of such assets may violate the rights of their respective owners.
 
 **Please be aware that a lack of knowledge regarding the origin or licensing status of an asset does not automatically protect against potential legal consequences!**
+
+
+## Project's Philosophy
+There are many ways to play Minecraft and most (if not all of them) are centered around exploitation and maximization.
+Which is indeed a valid and fun way to play this game. Most known player types are for example survivalists, builders, explorers, speed runners or cozy players.
+
+Of course, there are no harsh borders and players do fulfil more than one category.
+I believe that even more (niche) play styles exists which struggle to play pure vanilla minecraft how they would like to behave.
+
+### The ecological playstyle and its problems
+Minecraft's current game philosophy explicitly states that only the player is allowed to make meaningful changes and alterations
+to the world. In other words this means that no entity should influence or change the environment directly. Yes, mobs (like the Enderman) annoy players when they take away or place blocks.
+But most of Minecraft's mobs feel dead and random because they are by design not allowed to change their environment.
+
+This leads them to not make anything but walking randomly around and eventually disappearing without leaving a mark on their environment.
+Sadly it doesn't matter if they exist or not. The world is both alive and dead at the same time.
+
+This restriction may lead to a boring experience when your interactions and builds are based on the idea of a living world.
+
+But how can Minecraft feel more alive and how can mobs bring more value to the game?
+
+
+### Do simulations help?
+There are multiple reasons not to simulate an entire ecological system:
+- Simulations are quite complicated and technically difficult to implement and maintain properly.
+- simulated systems can be massively disrupted when key features are altered or taken away.
+- The player should never be the cause of changes he or she cannot directly observe.
+
+### Entity driven decisions
+To make Minecraft feel *more alive* entities should not aimlessly roam around and do nothing.
+Instead, they should react to the environment and it's condition.
+
+This also means that ... // ToDo
+
+### So what's the goal and how will (future) game mechanics and entities be designed?
+To achieve a more livable and relaxed experience I described these guidelines:
+- mobs should always have unique features depending on it's environment
+- a "relevant" item should never be exclusively obtainable by killing neutral/friendly mobs
+- a friendly/neutral mob's purpose should never be just killing it
+
+The goal of this project is  

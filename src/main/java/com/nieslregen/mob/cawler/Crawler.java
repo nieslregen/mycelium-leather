@@ -173,7 +173,7 @@ public class Crawler extends Animal implements Shearable {
     }
 
     public static boolean checkCrawlerSpawnRules(EntityType<Crawler> crawlerEntityType, ServerLevelAccessor serverLevelAccessor, EntitySpawnReason entitySpawnReason, BlockPos blockPos, RandomSource randomSource) {
-        return serverLevelAccessor.getBlockState(blockPos.below()).is(BlockTags.MOOSHROOMS_SPAWNABLE_ON) && isBrightEnoughToSpawn(serverLevelAccessor, blockPos);
+        return isBrightEnoughToSpawn(serverLevelAccessor, blockPos);
     }
 
     private class EatBlockGoal extends Goal {

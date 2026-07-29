@@ -27,11 +27,3 @@ public abstract class AbstractHugeMushroomWithHollow extends AbstractHugeMushroo
         }
     }
 }
-// FeatureUtils.register(
-//         context,
-//         HUGE_BROWN_MUSHROOM,
-//         Feature.HUGE_BROWN_MUSHROOM,
-//         new HugeMushroomFeatureConfiguration(
-//                 BlockStateProvider
-//                         .simple((BlockState)((BlockState)Blocks.BROWN_MUSHROOM_BLOCK.defaultBlockState().setValue(HugeMushroomBlock.UP, true)).setValue(HugeMushroomBlock.DOWN, false)), BlockStateProvider.simple((BlockState)((BlockState)Blocks.MUSHROOM_STEM.defaultBlockState().setValue(HugeMushroomBlock.UP, false)).setValue(HugeMushroomBlock.DOWN, false)), 3, BlockPredicate.matchesTag(BlockTags.HUGE_BROWN_MUSHROOM_CAN_PLACE_ON)));
-//

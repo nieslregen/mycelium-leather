@@ -40,9 +40,9 @@ public class ModEntityGeneration {
                 ),
                 MobCategory.CREATURE,
                 ModEntityTypes.CRAWLER,
-                30,
-                3,
-                5
+                5,
+                1,
+                2
         );
         SpawnPlacements.register(
                 ModEntityTypes.CRAWLER,
@@ -50,20 +50,5 @@ public class ModEntityGeneration {
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Crawler::checkCrawlerSpawnRules
         );
-
-//        BiomeModifications.addSpawn(
-//                BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS),
-//                MobCategory.CREATURE,
-//                ModEntityTypes.SQUIRREL,
-//                30,
-//                3,
-//                5
-//        );
-//        SpawnPlacements.register(
-//                ModEntityTypes.CRAWLER,
-//                SpawnPlacementTypes.ON_GROUND,
-//                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-//                Crawler::checkCrawlerSpawnRules
-//        );
     }
 }
