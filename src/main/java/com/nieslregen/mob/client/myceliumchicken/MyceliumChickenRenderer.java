@@ -5,14 +5,10 @@ import com.nieslregen.mob.client.ModEntityModelLayers;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.animal.chicken.BabyChickenModel;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AgeableMob;
 
 @Environment(EnvType.CLIENT)
 public class MyceliumChickenRenderer extends AgeableMobRenderer<MyceliumChicken, MyceliumChickenRenderState, MyceliumChickenModel> {

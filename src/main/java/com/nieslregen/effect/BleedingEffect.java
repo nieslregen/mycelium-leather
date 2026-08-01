@@ -2,7 +2,6 @@ package com.nieslregen.effect;
 
 import com.nieslregen.datagen.ModDamageTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.PoisonMobEffect;
 import net.minecraft.world.entity.LivingEntity;
