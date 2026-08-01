@@ -65,9 +65,9 @@ public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int tick
         if (entity != null && entity.is(EntityTypeTags.BEEHIVE_INHABITORS)) {
             entity.setNoGravity(true);
             if (entity instanceof Bee) {
-                Bee bee = (Bee)entity;
-                bee.setHivePos(hivePos);
-                setBeeReleaseData(this.ticksInContainer, bee);
+                Bee occupant = (Bee)entity;
+                occupant.setHivePos(hivePos);
+                setOccuoantReleaseData(this.ticksInContainer, occupant);
             }
 
             return entity;
@@ -76,7 +76,7 @@ public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int tick
         }
     }
 
-    private static void setBeeReleaseData(final int ticksInHive, final Bee bee) {
+    private static void setOccuoantReleaseData(final int ticksInHive, final Bee bee) {
         updateBeeAge(ticksInHive, bee);
         bee.setInLoveTime(Math.max(0, bee.getInLoveTime() - ticksInHive));
     }

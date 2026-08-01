@@ -1,6 +1,22 @@
-# Important, please read carefully!
+# Everything you need to know or might ask about this project:
 
-## License 
+## Table of content
+- [License](#license)
+    - [Why?](#why)
+    - [Am I allowed to make money?](#am-i-allowed-to-make-money-with-parts-of-this-project)
+    - [Important Notice Regarding AI Training!](#important-notice-regarding-ai-training)
+- [Project's Philosophy](#projects-philosophy)
+  - [Minecraft's Game Philosophy and its problem](#minecrafts-game-philosophy-and-its-problem)
+  - [Does simulating an ecosystem help?](#does-simulating-an-ecosystem-help)
+  - [Entity driven decisions](#entity-driven-decisions)
+  - [Goal and Mod Design Guideline](#goal-and-mod-design-guideline)
+- [Change Log](#change-log)
+  - [1.0 Release](#10-release)
+  - [1.1 Soot Ink](#11-soot-ink)
+  - [1.2 Mobs of the Mushroom Fields](#12-mobs-of-the-mushroom-fields)
+
+  
+## License
 
 The source code and all current assets in this repository are licensed under the MIT License.
 
@@ -35,40 +51,134 @@ The MIT License does not grant any rights to assets that are not covered by it. 
 
 ## Project's Philosophy
 There are many ways to play Minecraft and most (if not all of them) are centered around exploitation and maximization.
-Which is indeed a valid and fun way to play this game. Most known player types are for example survivalists, builders, explorers, speed runners or cozy players.
+Which is indeed a valid and fun way to play this game and that is also what most players expect from Minecraft.
 
-Of course, there are no harsh borders and players do fulfil more than one category.
-I believe that even more (niche) play styles exists which struggle to play pure vanilla minecraft how they would like to behave.
-
-### The ecological playstyle and its problems
+### Minecraft's game philosophy and its problem
 Minecraft's current game philosophy explicitly states that only the player is allowed to make meaningful changes and alterations
-to the world. In other words this means that no entity should influence or change the environment directly. Yes, mobs (like the Enderman) annoy players when they take away or place blocks.
-But most of Minecraft's mobs feel dead and random because they are by design not allowed to change their environment.
+to the world. In other words, this means that no entity should influence or change the environment directly. 
+I believe that this design choice causes two problems:
+1. Mobs feel boring and random. They often serve only as food source or visual decoration. Most of them (excluding aggressive mobs) do not interact with the player. They wander without any destination in mind.
+2. When a mob's singular purpose is to be farmed then it will probably be seen as a resource rather than a living entity. 
 
-This leads them to not make anything but walking randomly around and eventually disappearing without leaving a mark on their environment.
-Sadly it doesn't matter if they exist or not. The world is both alive and dead at the same time.
-
-This restriction may lead to a boring experience when your interactions and builds are based on the idea of a living world.
-
-But how can Minecraft feel more alive and how can mobs bring more value to the game?
+But is there a way how Minecraft can feel more alive and how can mobs bring more value to the game?
 
 
-### Do simulations help?
+### Does simulating an ecosystem help?
 There are multiple reasons not to simulate an entire ecological system:
 - Simulations are quite complicated and technically difficult to implement and maintain properly.
 - simulated systems can be massively disrupted when key features are altered or taken away.
 - The player should never be the cause of changes he or she cannot directly observe.
 
+Don't worry, simulating an entire ecosystem just to have a meaningful and wild environment is not necessary here.
+
 ### Entity driven decisions
 To make Minecraft feel *more alive* entities should not aimlessly roam around and do nothing.
-Instead, they should react to the environment and it's condition.
+Instead, they should react (and adapt) to their environment. Modern mob design already implements this approach:
 
-This also means that ... // ToDo
+For example, foxes hunt chickens, sleep during the day and pick up items when lying around.
 
-### So what's the goal and how will (future) game mechanics and entities be designed?
-To achieve a more livable and relaxed experience I described these guidelines:
-- mobs should always have unique features depending on it's environment
-- a "relevant" item should never be exclusively obtainable by killing neutral/friendly mobs
-- a friendly/neutral mob's purpose should never be just killing it
 
-The goal of this project is  
+### Goal and Mod Design Guideline
+The following bullet points might help to make the game more vivid:
+
+1. No essential resource should require killing neutral or friendly mobs; their value should exist beyond killing it.
+2. Mobs should have unique traits and behaviors based on their environment.
+3. Mobs should interact with the player and/or each other (in unique ways).
+4. Neutral mobs should engage in combat only for meaningful reasons, such as survival or defense.
+
+This guideline is not set in stone and rather be seen as design philosophy.
+
+## Change log
+
+### 1.0 Release
+- Tool: **Spade**
+- Item: **Grass Patch**
+- Item: **Mycelium Patch**
+- Item: **Dried Mycelium Patch**
+- Block: **Herbarium Press**
+
+
+- Recipe: **Dried Mycelium Patch** (Furnace)
+
+
+- _Patches (Hot Fixes):_
+    - _1.0.1_
+        - _Added: Additional recipe to craft **Spade**_
+       
+
+### 1.1 Soot Ink
+- Item: **Soot**
+- Item: **Soot Ink**
+- Item: **Suspicious Flask**
+- Item: **Arrow of Illness**
+
+
+- Block: **Tiny Cauldron**
+- Block: **Charcoal Pile**
+
+
+- Recipe (Tiny Cauldron): **Soot** (Tiny Cauldron)
+- Recipe (Tiny Cauldron): **Arrow of Illness** (Tiny Cauldron)
+
+
+- Removed: unintentional recipe for *Mycelium Leather* that could be crafted via *Crafting Table*
+
+
+- _Patches (Hot Fixes):_
+  - _1.1.1_
+      - _Fix: Using a **Flint and Steel** to ignite a **Charcoal Pile** now reduces its durability_
+      - _Updated: durability of **Spade** now matches the **Iron Shovel**'s durability_
+      - _Added: **Tiny Cauldron**, **Herbarium Press** and **Charcoal Pile** can now be crafted with **Pale Wood**_
+  - _1.1.2_
+    - _Hotfix: Tiny cauldron did not drop the correct item when using the same recipe multiple times in a row_
+
+### 1.2 Mobs of the Mushroom Fields
+- Mob: **Mushroom Chicken**
+- Mob: **Mushroom Squirrel**
+- Mob: **Crawler**
+
+
+- Vegetation: **Huge Mushroom** with **Hollow** (Red & Brown variants)
+
+
+- Item (Herb, edible): **Mushroom Paste**
+
+
+- Item (Cooking Ingredient): **Salt**
+- Item (Cooking Ingredient, edible): **Truffle**
+
+
+- Item (Food, edible): **Feast of the Mushroom Fields**
+- Item (Food, edible): **Scrambled Eggs**
+- Item (Food, edible): **Pan Fried Potatoes**
+- Item (Food, edible): **Baked Bread**
+
+
+- Item (Tool): **Wooden Spade**
+
+
+- Block: **Frying Pan**
+- Block: **Stove**
+
+
+- Weapon: **Dagger**
+  - **Copper Dagger**
+  - **Iron Dagger**
+  - **Gold Dagger** (4 different effects)
+  - **Diamond Dagger**
+
+
+- Item (variants): **Feather** (Cold, Warm, Mushroom) 
+
+
+- Recipe (Frying Pan): **Feast of the Mushroom Fields**
+- Recipe (Frying Pan): **Scrambled Eggs**
+- Recipe (Frying Pan): **Pan Fried Potatoes**
+
+
+- Recipe (Furnace): **Baked Bread**
+
+
+- Recipe: **Moss Block** (crafted from Moss Carpet)
+
+

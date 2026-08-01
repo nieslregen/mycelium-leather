@@ -10,6 +10,7 @@ import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -17,6 +18,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,8 +26,14 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.chicken.ChickenSoundVariant;
+import net.minecraft.world.entity.animal.chicken.ChickenSoundVariants;
+import net.minecraft.world.entity.animal.chicken.ChickenVariant;
+import net.minecraft.world.entity.animal.chicken.ChickenVariants;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -49,6 +57,7 @@ import static net.minecraft.world.entity.animal.camel.Camel.LAST_POSE_CHANGE_TIC
 
 public class MyceliumChicken extends Animal implements NeutralMob {
 
+    private static final EntityDimensions BABY_DIMENSIONS;
     public final AnimationState sitAnimationState = new AnimationState();
     public final AnimationState sitPoseAnimationState = new AnimationState();
     public final AnimationState sitUpAnimationState = new AnimationState();
@@ -68,19 +77,36 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     private int idleAnimationTimeout = 0;
     private int featherTime;
 
+    private int trollCooldown = 20* 15;
+
 
     public static boolean checkChickenSpawnRules(final EntityType<MyceliumChicken> type, final LevelAccessor level, final EntitySpawnReason spawnReason, final BlockPos pos, final RandomSource random) {
         return level.getBlockState(pos.below()).is(BlockTags.MOOSHROOMS_SPAWNABLE_ON) && isBrightEnoughToSpawn(level, pos);
     }
 
+
+    static {
+        BABY_DIMENSIONS = EntityDimensions.scalable(0.3F, 0.4F).withEyeHeight(0.28125F).withAttachments(EntityAttachments.builder().attach(EntityAttachment.PASSENGER, 0.0F, 0.375F, 0.0F));
+    }
+
+    @Override
+    protected EntityDimensions getDefaultDimensions(Pose pose) {
+        return this.isBaby() ? BABY_DIMENSIONS : super.getDefaultDimensions(pose);
+    }
+
+    private void resetTrollCooldown() {
+        trollCooldown = this.random.nextInt(6000) + 6000;
+    }
+
     public MyceliumChicken(EntityType<? extends Animal> type, Level level) {
         super(type, level);
         this.featherTime = this.random.nextInt(6000) + 6000;
+//        resetTrollCooldown();
     }
 
     @Override
     public boolean isFood(final ItemStack itemStack) {
-        return itemStack.is(ItemTags.CHICKEN_FOOD);
+        return itemStack.is(ModTags.Items.MYCELIUM_CHICKEN_FOOD);
     }
 
     @Override
@@ -106,6 +132,34 @@ public class MyceliumChicken extends Animal implements NeutralMob {
     // ToDo: sitting animation
     // ToDo: trolling
     // ToDo: different feather drops
+
+
+    private ChickenSoundVariant.ChickenSoundSet getSoundVariant() {
+
+        ChickenSoundVariant soundSet = SoundEvents.CHICKEN_SOUNDS.get(ChickenSoundVariants.SoundSet.CLASSIC);
+        return isBaby() ? soundSet.babySounds() : soundSet.adultSounds();
+    }
+
+
+    @Override
+    protected @Nullable SoundEvent getDeathSound() {
+        return getSoundVariant().deathSound().value();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return getSoundVariant().ambientSound().value();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getHurtSound(DamageSource source) {
+        return getSoundVariant().hurtSound().value();
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState blockState) {
+        this.playSound(getSoundVariant().stepSound().value());
+    }
 
     @Override
     protected void registerGoals() {
@@ -198,6 +252,7 @@ public class MyceliumChicken extends Animal implements NeutralMob {
         this.flap += this.flapping * 2.0F;
         Level var3 = this.level();
         if (var3 instanceof ServerLevel level) {
+            trollCooldown--;
             if (this.isAlive() && !this.isBaby() && --this.featherTime <= 0) {
 
                 if (this.dropFromGiftLootTable(level, MYCELIUM_CHICKEN_DROP, this::spawnAtLocation)) {
@@ -216,6 +271,21 @@ public class MyceliumChicken extends Animal implements NeutralMob {
 
     protected void onFlap() {
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+    }
+
+    private List<LivingEntity> getTargets(MyceliumChicken chicken, int radius) {
+
+        BlockPos pos = nestPos.orElseGet(chicken::getOnPos);
+
+        AABB area = new AABB(pos).inflate(radius);
+
+        return chicken.level().getEntitiesOfClass(
+                LivingEntity.class,
+                area,
+                entity -> entity != chicken
+                        && entity.isAlive()
+                        && !(entity instanceof MyceliumChicken)
+        );
     }
 
 
@@ -440,26 +510,15 @@ public class MyceliumChicken extends Animal implements NeutralMob {
             this.chicken = chicken;
         }
 
-        private List<LivingEntity> getTargets() {
-            if (chicken.nestPos.isEmpty()) {
-                return Collections.emptyList();
-            }
 
-            AABB area = new AABB(chicken.nestPos.get()).inflate(3);
-
-            return level().getEntitiesOfClass(
-                    LivingEntity.class,
-                    area,
-                    entity -> entity != chicken
-                            && entity.isAlive()
-                            && !(entity instanceof MyceliumChicken)
-            );
-        }
 
 
         @Override
         public boolean canUse() {
-            List<LivingEntity> targets = getTargets();
+            if (!nestPos.isPresent()) {
+                return false;
+            }
+            List<LivingEntity> targets = chicken.getTargets(this.chicken, 3);
 
             if (!targets.isEmpty()) {
                 chicken.setTarget(targets.getFirst());
@@ -474,8 +533,9 @@ public class MyceliumChicken extends Animal implements NeutralMob {
         public boolean canContinueToUse() {
             return chicken.getTarget() != null
                     && chicken.getTarget().isAlive()
-                    && getTargets().contains(chicken.getTarget())
+                    && chicken.getTargets(this.chicken, 3).contains(chicken.getTarget())
                     && !chicken.carriesStolenEgg
+                    && nestPos.isPresent()
                     && super.canContinueToUse();
         }
 
@@ -651,7 +711,60 @@ public class MyceliumChicken extends Animal implements NeutralMob {
 
         @Override
         public boolean canUse() {
+            return chicken.trollCooldown <= 0 && !chicken.isBaby();
+        }
+
+        @Override
+        public boolean canContinueToUse() {
             return false;
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            throwEgg();
+            MyceliumLeatherMod.LOGGER.info("Troll");
+
+        }
+
+        private void throwEgg() {
+            List<LivingEntity> entities = this.chicken.getTargets(this.chicken, 15);
+
+            for (LivingEntity entity : entities) {
+                MyceliumLeatherMod.LOGGER.info("entity: {}", entity);
+            }
+
+            entities.stream()
+                    .filter(entity -> entity instanceof Player)
+                    .findFirst()
+                    .ifPresent(player -> {
+                        double xd = player.position().x;
+                        double yd = player.position().y;
+                        double zd = player.position().z;
+
+                        ItemStack itemStack = new ItemStack(ModItems.SUSPICIOUS_EGG);
+
+                        if (chicken.level() instanceof ServerLevel serverLevel) {
+                            Projectile.spawnProjectileUsingShoot(
+                                    ThrownSuspiciousEgg::new,
+                                    serverLevel,
+                                    itemStack,
+                                    chicken,
+                                    xd,
+                                    yd,
+                                    zd,
+                                    1.5F,
+                                    1.0F);
+                        }
+
+                        chicken.playSound(chicken.getSoundVariant().hurtSound().value());
+                    });
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            chicken.resetTrollCooldown();
         }
     }
 }

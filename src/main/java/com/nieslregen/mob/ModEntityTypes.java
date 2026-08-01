@@ -18,17 +18,20 @@ public class ModEntityTypes {
     public static final EntityType<MyceliumChicken> MYCELIUM_CHICKEN = register(
             "mycelium_chicken",
             EntityType.Builder.<MyceliumChicken>of(MyceliumChicken::new, MobCategory.CREATURE)
+                    .eyeHeight(0.8f)
                     .sized(0.75f, 1.75f)
     );
 
     public static final EntityType<Crawler> CRAWLER = register(
             "crawler",
             EntityType.Builder.of(Crawler::new, MobCategory.CREATURE)
+                    .eyeHeight(0.8f)
     );
 
     public static final EntityType<MyceliumSquirrel> SQUIRREL = register(
             "mycelium_squirrel",
             EntityType.Builder.of(MyceliumSquirrel::new, MobCategory.CREATURE)
+                    .eyeHeight(0.8f)
     );
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {

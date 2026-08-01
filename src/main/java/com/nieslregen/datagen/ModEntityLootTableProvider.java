@@ -45,7 +45,7 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
         output.accept(MYCELIUM_CHICKEN_DROP, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.FEATHER)
+                        .add(LootItem.lootTableItem(ModItems.FEATHER_VARIANT_MUSHROOM)
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
                         .setRolls(ConstantValue.exactly(1))));
 

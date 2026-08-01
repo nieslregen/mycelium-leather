@@ -5,18 +5,28 @@ import com.nieslregen.mob.client.ModEntityModelLayers;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.model.animal.chicken.BabyChickenModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.AgeableMob;
 
 @Environment(EnvType.CLIENT)
-public class MyceliumChickenRenderer extends MobRenderer<MyceliumChicken, MyceliumChickenRenderState, MyceliumChickenModel> {
+public class MyceliumChickenRenderer extends AgeableMobRenderer<MyceliumChicken, MyceliumChickenRenderState, MyceliumChickenModel> {
 
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/mycelium_chicken.png");
+    private static final Identifier BABY_TEXTURE = Identifier.withDefaultNamespace("textures/entity/chicken/chicken_cold_baby.png");
 
     public MyceliumChickenRenderer(final EntityRendererProvider.Context context) {
-        super(context, new MyceliumChickenModel(context.bakeLayer(ModEntityModelLayers.MYCELIUM_CHICKEN_LAYER)), 0.375F);
+        super(
+                context,
+                new MyceliumChickenModel(context.bakeLayer(ModEntityModelLayers.MYCELIUM_CHICKEN_LAYER)),
+                new MyceliumChickenModel(context.bakeLayer(ModEntityModelLayers.MYCELIUM_CHICKEN_LAYER)),
+                0.375F
+        );
     }
 
     @Override
@@ -26,7 +36,7 @@ public class MyceliumChickenRenderer extends MobRenderer<MyceliumChicken, Myceli
 
     @Override
     public Identifier getTextureLocation(MyceliumChickenRenderState state) {
-        return TEXTURE;
+        return state.isBaby ? BABY_TEXTURE : TEXTURE;
     }
 
     @Override

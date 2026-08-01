@@ -15,7 +15,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
@@ -45,17 +44,12 @@ import java.util.function.IntFunction;
 public class Crawler extends Animal implements Shearable {
 
     private static final EntityDataAccessor<Integer> DATA_TYPE;
+    private boolean sleeping;
 
-    private int timeUntilResting = 0;
-    private boolean needsToRest = false;
 
     public Crawler(EntityType<? extends Animal> type, Level level) {
         super(type, level);
-        resetTimeUntilResting();
-    }
-
-    private void resetTimeUntilResting() {
-        timeUntilResting = this.random.nextInt(6000) + 6000;
+        sleeping = false;
     }
 
     @Override
@@ -74,7 +68,6 @@ public class Crawler extends Animal implements Shearable {
 
     static {
         DATA_TYPE = SynchedEntityData.defineId(Crawler.class, EntityDataSerializers.INT);
-//        BABY_DIMENSIONS = EntityDimensions.scalable(0.45F, 0.7F).withEyeHeight(0.69F).withAttachments(EntityAttachments.builder().attach(EntityAttachment.PASSENGER, 0.0F, 0.75F, 0.0F));
     }
 
     @Override
@@ -101,7 +94,7 @@ public class Crawler extends Animal implements Shearable {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, (double)1.25F));
-        this.goalSelector.addGoal(2, new EatBlockGoal(this));
+        this.goalSelector.addGoal(2, new Sleep(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,1));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -125,12 +118,6 @@ public class Crawler extends Animal implements Shearable {
     @Override
     public void aiStep() {
         super.aiStep();
-
-        if (this.level() instanceof ServerLevel serverLevel && !needsToRest) {
-            if (this.isAlive() && --timeUntilResting <= 0) {
-                needsToRest = true;
-            }
-        }
     }
 
     @Override
@@ -156,7 +143,6 @@ public class Crawler extends Animal implements Shearable {
 
         });
         setVariant(OvergrownType.NONE);
-//        this.setSheared(true);
     }
 
     @Override
@@ -176,21 +162,13 @@ public class Crawler extends Animal implements Shearable {
         return isBrightEnoughToSpawn(serverLevelAccessor, blockPos);
     }
 
-    private class EatBlockGoal extends Goal {
+    private class Sleep extends Goal {
         Crawler crawler;
-        private int restingTime = 0;
 
-        public EatBlockGoal(Crawler crawler) {
+        public Sleep(Crawler crawler) {
             this.crawler = crawler;
         }
 
-        @Override
-        public void tick() {
-            super.tick();
-            restingTime++;
-
-
-        }
 
         public void grow() {
             BlockPos pos = this.crawler.blockPosition().below();
@@ -232,27 +210,31 @@ public class Crawler extends Animal implements Shearable {
 
         @Override
         public boolean canUse() {
-            return this.crawler.needsToRest;
+            return !crawler.sleeping
+                    && crawler.level().isDarkOutside();
         }
 
         @Override
         public boolean canContinueToUse() {
-            return super.canContinueToUse() && this.crawler.needsToRest && this.restingTime <= 20 * 60 * 3;
+            return super.canContinueToUse()
+                    && this.crawler.sleeping
+                    && this.crawler.level().isDarkOutside();
         }
 
         @Override
         public void start() {
             super.start();
-            this.crawler.moveControl.setWait();
+            this.crawler.sleeping = true;
+            this.crawler.getNavigation().stop();
         }
 
         @Override
         public void stop() {
             super.stop();
-            this.crawler.needsToRest = false;
-            this.crawler.resetTimeUntilResting();
-            restingTime = 0;
-            grow();
+            this.crawler.sleeping = false;
+            if (this.crawler.level().getDefaultClockTime() < 6000) {
+                grow();
+            }
         }
     }
 
