@@ -11,7 +11,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:feather"
+          "name": "mycelium-leather:feather_mushroom"
         }
       ],
       "rolls": 1.0
