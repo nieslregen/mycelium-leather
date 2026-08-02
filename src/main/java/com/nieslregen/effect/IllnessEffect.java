@@ -28,6 +28,7 @@ public class IllnessEffect extends MobEffect {
         if (--shitEggTimer <= 0) {
             if (mob.dropFromGiftLootTable(serverLevel, ILLNESS_DROP, mob::spawnAtLocation)) {
                 mob.playSound(SoundEvents.CHICKEN_EGG);
+                resetTimer();
             }
         }
         return true;

@@ -61,7 +61,7 @@ public class MyceliumChicken extends SetupAnimal implements NeutralMob {
     private int idleAnimationTimeout = 0;
     private int featherTime;
 
-    private int trollCooldown = 20* 15;
+    public int trollCooldown = 20* 15;
 
 
     public static boolean checkChickenSpawnRules(final EntityType<MyceliumChicken> type, final LevelAccessor level, final EntitySpawnReason spawnReason, final BlockPos pos, final RandomSource random) {
