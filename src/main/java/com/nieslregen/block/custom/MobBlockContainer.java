@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.VisibleForDebug;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -26,9 +27,11 @@ public class MobBlockContainer extends BlockEntity {
 
     private final List<CustomOccupantData> storedOccupants = new ArrayList<>();
     public static final int MAX_OCCUPANTS = 3;
+    public final EntityType<?> occupantType;
 
-    public MobBlockContainer(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
+    public MobBlockContainer(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState, EntityType<?> occupantTyp) {
         super(type, worldPosition, blockState);
+        this.occupantType = occupantTyp;
     }
 
     public void setChanged() {
@@ -100,7 +103,8 @@ public class MobBlockContainer extends BlockEntity {
 
         if (frontBlocked) { return false; }
 
-        Entity entity = occupantData.createEntity(level, blockPos);
+        MobBlockContainer container = (MobBlockContainer) level.getBlockEntity(blockPos);
+        Entity entity = occupantData.createEntity(level, blockPos, container.occupantType);
         if (entity == null ) { return false; }
 
         if (spawned != null) {
@@ -163,6 +167,10 @@ public class MobBlockContainer extends BlockEntity {
     protected void saveAdditional(final ValueOutput output) {
         super.saveAdditional(output);
 //        output.store("bees", BeehiveBlockEntity.Occupant.LIST_CODEC, this.getBees());
+    }
+
+    public boolean isFull() {
+        return false;
     }
 
 

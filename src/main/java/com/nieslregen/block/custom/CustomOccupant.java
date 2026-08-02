@@ -3,12 +3,12 @@ package com.nieslregen.block.custom;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.mob.HollowUser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.bee.Bee;
@@ -20,6 +20,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int ticksInContainer, int minTicksInContainer) {
 
@@ -37,36 +38,31 @@ public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int tick
     public static final StreamCodec<RegistryFriendlyByteBuf,CustomOccupant> STREAM_CODEC;
 
     public static CustomOccupant of(final Entity entity) {
-        CustomOccupant var5;
+        CustomOccupant occupant;
         try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(entity.problemPath(), MyceliumLeatherMod.LOGGER)) {
             TagValueOutput output = TagValueOutput.createWithContext(reporter, entity.registryAccess());
             entity.save(output);
-//            List var10000 = BeehiveBlockEntity.IGNORED_BEE_TAGS;
             Objects.requireNonNull(output);
-//            var10000.forEach(output::discard);
             CompoundTag entityTag = output.buildResult();
-            boolean hasNectar = entityTag.getBooleanOr("HasNectar", false);
-            var5 = new CustomOccupant(TypedEntityData.of(entity.getType(), entityTag), 0, hasNectar ? 2400 : 600);
+            occupant = new CustomOccupant(TypedEntityData.of(entity.getType(), entityTag), 0, 2400);
         }
 
-        return var5;
+        return occupant;
     }
 
-    public static BeehiveBlockEntity.Occupant create(final int ticksInHive) {
-        return new BeehiveBlockEntity.Occupant(TypedEntityData.of(EntityTypes.BEE, new CompoundTag()), ticksInHive, 600);
+    public static BeehiveBlockEntity.Occupant create(final int ticksInHive, EntityType<?> type) {
+        return new BeehiveBlockEntity.Occupant(TypedEntityData.of(type, new CompoundTag()), ticksInHive, 600);
     }
 
-    public @Nullable Entity createEntity(final Level level, final BlockPos hivePos) {
+    public @Nullable Entity createEntity(final Level level, final BlockPos homePos, EntityType<?> type) {
         CompoundTag entityTag = this.entityData.copyTagWithoutId();
-//        List var10000 = BeehiveBlockEntity.IGNORED_BEE_TAGS;
         Objects.requireNonNull(entityTag);
-//        var10000.forEach(entityTag::remove);
         Entity entity = EntityType.loadEntityRecursive((EntityType)this.entityData.type(), entityTag, level, EntitySpawnReason.LOAD, EntityProcessor.NOP);
-        if (entity != null && entity.is(EntityTypeTags.BEEHIVE_INHABITORS)) {
-            entity.setNoGravity(true);
-            if (entity instanceof Bee) {
-                Bee occupant = (Bee)entity;
-                occupant.setHivePos(hivePos);
+        if (entity != null) {
+//            entity.setNoGravity(true);
+            if (entity.is(type)) {
+                HollowUser occupant = (HollowUser) entity;
+                occupant.homePos = Optional.of(homePos);
                 setOccuoantReleaseData(this.ticksInContainer, occupant);
             }
 
@@ -76,18 +72,18 @@ public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int tick
         }
     }
 
-    private static void setOccuoantReleaseData(final int ticksInHive, final Bee bee) {
-        updateBeeAge(ticksInHive, bee);
-        bee.setInLoveTime(Math.max(0, bee.getInLoveTime() - ticksInHive));
+    private static void setOccuoantReleaseData(final int ticksInHive, final HollowUser hollowUser) {
+        updateOccupantAge(ticksInHive, hollowUser);
+        hollowUser.setInLoveTime(Math.max(0, hollowUser.getInLoveTime() - ticksInHive));
     }
 
-    private static void updateBeeAge(final int ticksInHive, final Bee bee) {
-        if (!bee.isAgeLocked()) {
-            int age = bee.getAge();
+    private static void updateOccupantAge(final int ticksInHive, final HollowUser hollowUse) {
+        if (!hollowUse.isAgeLocked()) {
+            int age = hollowUse.getAge();
             if (age < 0) {
-                bee.setAge(Math.min(0, age + ticksInHive));
+                hollowUse.setAge(Math.min(0, age + ticksInHive));
             } else if (age > 0) {
-                bee.setAge(Math.max(0, age - ticksInHive));
+                hollowUse.setAge(Math.max(0, age - ticksInHive));
             }
 
         }

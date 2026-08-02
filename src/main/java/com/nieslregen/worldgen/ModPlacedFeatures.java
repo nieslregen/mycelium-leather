@@ -23,6 +23,12 @@ public class ModPlacedFeatures {
                     Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "huge_brown_mushroom_with_hollow_placed")
             );
 
+    public static final ResourceKey<PlacedFeature> HUGE_RED_MUSHROOM_WITH_HOLLOW_PLACED_KEY =
+            ResourceKey.create(
+                    Registries.PLACED_FEATURE,
+                    Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "huge_red_mushroom_with_hollow_placed")
+            );
+
     public static void configure(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -31,11 +37,25 @@ public class ModPlacedFeatures {
                 new PlacedFeature(
                         configuredFeatures.getOrThrow(ModConfiguredFeatures.HUGE_BROWN_MUSHROOM_WITH_HOLLOW_KEY),
                         List.of(
-                                RarityFilter.onAverageOnceEvery(25), // spawns once every 10 chunks on average
+                                RarityFilter.onAverageOnceEvery(50),
+                                BiomeFilter.biome(),
+                                InSquarePlacement.spread(),
+                                PlacementUtils.HEIGHTMAP_WORLD_SURFACE
+        )));
+
+        context.register(
+                HUGE_RED_MUSHROOM_WITH_HOLLOW_PLACED_KEY,
+                new PlacedFeature(
+                        configuredFeatures.getOrThrow(ModConfiguredFeatures.HUGE_RED_MUSHROOM_WITH_HOLLOW_KEY),
+                        List.of(
+                                RarityFilter.onAverageOnceEvery(50),
                                 BiomeFilter.biome(),
                                 InSquarePlacement.spread(),
                                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE
                         )
-    ));
+                )
+        );
+
+
     }
 }

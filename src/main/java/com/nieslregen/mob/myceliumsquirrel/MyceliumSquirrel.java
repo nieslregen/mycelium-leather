@@ -2,8 +2,16 @@ package com.nieslregen.mob.myceliumsquirrel;
 
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlocks;
+import com.nieslregen.block.custom.CustomOccupant;
+import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
+import com.nieslregen.items.ModItems;
+import com.nieslregen.mob.HollowUser;
 import com.nieslregen.mob.ModPoiTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
@@ -15,22 +23,26 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Comparator;
 import java.util.Optional;
 
-public class MyceliumSquirrel extends Animal {
+public class MyceliumSquirrel extends HollowUser {
 
     boolean isClimbing = false;
 
-    private Optional<BlockPos> homePos = Optional.empty();
+
     private int timeUntilResting;
+    private int digTimer;
     private boolean needsToRest = false;
 
     // Avoid daylight goal?
@@ -41,7 +53,25 @@ public class MyceliumSquirrel extends Animal {
     public MyceliumSquirrel(EntityType<? extends Animal> type, Level level) {
         super(type, level);
         resetTimeUntilResting();
+        resetDigTimer();
 
+        if (level instanceof ServerLevel) {
+
+            Registry<PoiType> registry = level.registryAccess()
+                    .lookupOrThrow(Registries.POINT_OF_INTEREST_TYPE);
+
+            registry.get(ModPoiTypes.SQUIRREL_HOME)
+                    .ifPresentOrElse(
+                            poi -> System.out.println("POI gefunden: " + poi),
+                            () -> System.out.println("POI NICHT gefunden!")
+                    );
+
+
+            registry.listElements()
+                    .forEach(holder ->
+                            System.out.println(holder.key())
+                    );
+        }
     }
 
     @Override
@@ -84,8 +114,12 @@ public class MyceliumSquirrel extends Animal {
     }
 
     private void resetTimeUntilResting() {
-        timeUntilResting = this.random.nextInt(6000) + 6000;
+        timeUntilResting = 0;
         needsToRest = false;
+    }
+
+    private void resetDigTimer() {
+        digTimer = this.random.nextInt(6000) + 6000;
     }
 
     @Override
@@ -101,32 +135,24 @@ public class MyceliumSquirrel extends Animal {
         if (!this.level().isClientSide()) {
             this.setClimbing(this.horizontalCollision);
         }
+        digTimer--;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, (double)1.25F));
-        this.goalSelector.addGoal(2, new SquirrelLocateHollowGoal(this));
-        this.goalSelector.addGoal(2, new GoHomeGoal(this));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,1));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(1, new EnterHollowGoal(this));
+        this.goalSelector.addGoal(2, new PanicGoal(this, (double)1.25F));
+        this.goalSelector.addGoal(3, new SquirrelLocateHollowGoal(this));
+        this.goalSelector.addGoal(4, new GoHomeGoal(this));
+        this.goalSelector.addGoal(5, new DigForTrufflesGoal(this));
+        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this,1));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
     }
 
-    public Optional<BlockPos> getHomePos() {
-        if (homePos.isPresent()) {
-            BlockState state = this.level().getBlockState(homePos.get());
-            if (state.is(ModBlocks.MUSHROOM_STEM_HOLLOW)) {
-                return homePos;
-            } else {
-                homePos = Optional.empty();
-            }
-        }
-        return Optional.empty();
 
-    }
 
     private class SquirrelLocateHollowGoal extends Goal {
         private final MyceliumSquirrel squirrel;
@@ -148,6 +174,7 @@ public class MyceliumSquirrel extends Animal {
 
         @Override
         public void start() {
+            MyceliumLeatherMod.LOGGER.info("Search for hollow");
             squirrel.resetTimeUntilResting();
             squirrel.homePos = findHollowWithSpace();
         }
@@ -162,6 +189,7 @@ public class MyceliumSquirrel extends Animal {
                             20,
                             PoiManager.Occupancy.ANY)
                     .map(PoiRecord::getPos)
+                    .peek(x -> MyceliumLeatherMod.LOGGER.info("Hollow found at [{}]", x))
                     .filter(this::doesHollowHaveSpace)
                     .sorted(Comparator.comparingDouble((pos) -> pos.distSqr(squirrelPos)))
                     .findFirst();
@@ -218,6 +246,70 @@ public class MyceliumSquirrel extends Animal {
         public boolean canUse() {
             return squirrel.homePos.isPresent()
                     && squirrel.needsToRest;
+        }
+    }
+
+    private class DigForTrufflesGoal extends Goal {
+        private final MyceliumSquirrel squirrel;
+
+        private DigForTrufflesGoal(MyceliumSquirrel squirrel) {
+            this.squirrel = squirrel;
+        }
+
+        @Override
+        public boolean canUse() {
+            return squirrel.digTimer <= 0
+                    && !squirrel.needsToRest;
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            squirrel.resetDigTimer();
+            if (squirrel.level().getBlockState(squirrel.blockPosition().below()).is(Blocks.MYCELIUM)) {
+                int randomizedDrop = squirrel.random.nextInt(1, 3);
+                Block.popResourceFromFace(level(), squirrel.blockPosition().below(), Direction.UP, new ItemStack(ModItems.TRUFFLE, randomizedDrop));
+            }
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return false;
+        }
+    }
+
+
+    private class EnterHollowGoal extends Goal {
+        private final MyceliumSquirrel squirrel;
+
+        private EnterHollowGoal(MyceliumSquirrel squirrel) {
+            this.squirrel = squirrel;
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            squirrel.homePos.ifPresent(pos -> {
+                MushroomStemHollowEntity entity = (MushroomStemHollowEntity) squirrel.level().getBlockEntity(pos);
+                if (entity != null) {
+                    entity.addOccupant(squirrel);
+                }
+            });
+        }
+
+        @Override
+        public boolean canUse() {
+            if (squirrel.homePos.isPresent() && squirrel.needsToRest) {
+                if (squirrel.level().getBlockEntity(squirrel.homePos.get()) instanceof MushroomStemHollowEntity entity) {
+                    return !entity.isFull() && entity.getBlockPos().closerToCenterThan(squirrel.position(), 2f);
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return false;
         }
     }
 }

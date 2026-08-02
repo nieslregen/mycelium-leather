@@ -15,6 +15,7 @@ import com.nieslregen.worldgen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import org.slf4j.Logger;
@@ -36,12 +37,17 @@ public class MyceliumLeatherMod implements ModInitializer {
 		ModEffects.registerEffects();
 		ModEntityTypes.registerModEntityTypes();
 		ModWorldGeneration.init();
-		ModPoiTypes.init();
 
 		BiomeModifications.addFeature(
 				BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS),
 				GenerationStep.Decoration.VEGETAL_DECORATION,
 				ModPlacedFeatures.HUGE_BROWN_MUSHROOM_WITH_HOLLOW_PLACED_KEY
+		);
+
+		BiomeModifications.addFeature(
+				BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS),
+				GenerationStep.Decoration.VEGETAL_DECORATION,
+				ModPlacedFeatures.HUGE_RED_MUSHROOM_WITH_HOLLOW_PLACED_KEY
 		);
 	}
 }

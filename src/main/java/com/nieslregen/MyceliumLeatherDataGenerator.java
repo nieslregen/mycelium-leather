@@ -1,6 +1,7 @@
 package com.nieslregen;
 
 import com.nieslregen.datagen.*;
+import com.nieslregen.mob.ModPoiTypes;
 import com.nieslregen.worldgen.ModConfiguredFeatures;
 import com.nieslregen.worldgen.ModPlacedFeatures;
 import com.nieslregen.worldgen.WorldGenProvider;
@@ -29,5 +30,6 @@ public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 		registryBuilder.add(Registries.CONFIGURED_FEATURE,  ModConfiguredFeatures::configure);
 		registryBuilder.add(Registries.PLACED_FEATURE, ModPlacedFeatures::configure);
 		registryBuilder.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);
+		registryBuilder.add(Registries.POINT_OF_INTEREST_TYPE, ModPoiTypes::bootstrap);
 	}
 }
