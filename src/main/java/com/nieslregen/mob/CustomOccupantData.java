@@ -1,4 +1,4 @@
-package com.nieslregen.block.custom;
+package com.nieslregen.mob;
 
 
 public class CustomOccupantData {

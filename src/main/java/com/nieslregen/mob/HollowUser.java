@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
 
-public abstract class HollowUser extends Animal {
+public abstract class HollowUser extends SetupAnimal {
     public Optional<BlockPos> homePos = Optional.empty();
 
     public HollowUser(EntityType<? extends Animal> type, Level level) {

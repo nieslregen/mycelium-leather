@@ -21,6 +21,8 @@ import java.util.function.BiConsumer;
 
 public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider {
 
+    public static ResourceKey<LootTable> ILLNESS_DROP = ResourceKey
+            .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "mobeffects/illness_drop"));
 
     public static ResourceKey<LootTable> MYCELIUM_CHICKEN_DROP = ResourceKey
             .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "mycelium_chicken/feather_drop"));
@@ -43,6 +45,12 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+        output.accept(ILLNESS_DROP, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(ModItems.SUSPICIOUS_EGG)
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+                        .setRolls(ConstantValue.exactly(1))));
+
         output.accept(MYCELIUM_CHICKEN_DROP, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(ModItems.FEATHER_VARIANT_MUSHROOM)

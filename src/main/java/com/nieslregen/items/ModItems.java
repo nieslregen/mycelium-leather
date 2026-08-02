@@ -19,6 +19,7 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.Blocks;
 
+import java.util.List;
 import java.util.function.Function;
 
 public class ModItems {
@@ -35,20 +36,20 @@ public class ModItems {
     public static final Item SOOT = registerItem("soot", Item::new);
     public static final Item SOOT_INK = registerItem("soot-ink", Item::new);
     public static final Item SUSPICIOUS_FLASK = registerItem("suspicious-flask", Item::new);
-    public static final Item ARROW_OF_ILLNESS = registerItem("arrow-of-illness", properties -> new AbstractMobEffectArrow(properties, ModEffects.ILLNESS));
+    public static final Item ARROW_OF_ILLNESS = registerItem("arrow-of-illness", properties -> new AbstractMobEffectArrow(properties, List.of(ModEffects.ILLNESS)));
 
     public static final Item MYCELIUM_CHICKEN_SPAWN_EGG = registerItem("mycelium_chicken_spawn_egg", properties -> new SpawnEggItem(properties.spawnEgg(ModEntityTypes.MYCELIUM_CHICKEN)));
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
     public static final Item MYCELIUM_CHICKEN_EGG = registerItem("mycelium_chicken_egg", Item::new);
-    public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", properties -> new MushroomPaste(properties.food(new FoodProperties(1,1, false)).stacksTo(4)));
+    public static final Item MUSHROOM_PASTE = registerItem("mushroom_paste", properties -> new MushroomPaste(properties.food(new FoodProperties(1,0.1f, false)).stacksTo(4)));
     public static final Item SALT = registerItem("salt", Item::new);
     public static final Item FEATHER_VARIANT_WARM = registerItem("feather_warm", Item::new);
     public static final Item FEATHER_VARIANT_MUSHROOM = registerItem("feather_mushroom", Item::new);
     public static final Item FEATHER_VARIANT_COLD = registerItem("feather_cold", Item::new);
-    public static final Item TRUFFLE = registerItem("truffle", properties -> new Item(properties.food(new FoodProperties(1,1,true))));
-    public static final Item TOASTED_BREAD = registerItem("toasted_bread", properties -> new Item(properties.food(new FoodProperties(6,3,true))));
-    public static final Item SCRAMBLED_EGGS = registerItem("scrambled_eggs", properties -> new Item(properties.food(new FoodProperties(4,2.5F,true))));
-    public static final Item PAN_FRIED_POTATOES = registerItem("pan_fried_potatoes", properties -> new Item(properties.food(new FoodProperties(8,6F,true))));
+    public static final Item TRUFFLE = registerItem("truffle", properties -> new Item(properties.food(new FoodProperties(1,0.2f,true))));
+    public static final Item TOASTED_BREAD = registerItem("toasted_bread", properties -> new Item(properties.food(new FoodProperties(6,0.6f,true))));
+    public static final Item SCRAMBLED_EGGS = registerItem("scrambled_eggs", properties -> new Item(properties.food(new FoodProperties(6,0.6F,true))));
+    public static final Item PAN_FRIED_POTATOES = registerItem("pan_fried_potatoes", properties -> new Item(properties.food(new FoodProperties(6,0.6F,true))));
     public static final Item COPPER_DAGGER = registerItem("copper_dagger", properties -> new Dagger(properties.sword(ToolMaterial.COPPER, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
     public static final Item IRON_DAGGER = registerItem("iron_dagger", properties -> new Dagger(properties.sword(ToolMaterial.IRON, BASE_DMG_DAGGER, BASE_AS_DAGGER)));
     public static final Item GOLDEN_DAGGER_CLASSIC = registerItem("golden_dagger", properties -> new Dagger(properties.sword(ToolMaterial.GOLD, BASE_DMG_DAGGER, BASE_AS_DAGGER), Dagger.EffectType.TEMPERATE, true));

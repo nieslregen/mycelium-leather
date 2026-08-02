@@ -1,12 +1,13 @@
 package com.nieslregen.mob;
 
-import com.nieslregen.block.ModBlocks;
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.block.ModBlocks;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,6 +16,17 @@ import java.util.Set;
 
 public class ModPoiTypes {
 
+    public static void init() {
+        Registry.register(
+                BuiltInRegistries.POINT_OF_INTEREST_TYPE,
+                SQUIRREL_HOME,
+                new PoiType(
+                        getBlockStates(ModBlocks.MUSHROOM_STEM_HOLLOW),
+                        0,
+                        1
+                )
+        );
+    }
 
     public static final ResourceKey<PoiType> SQUIRREL_HOME =
             createKey("squirrel_home");

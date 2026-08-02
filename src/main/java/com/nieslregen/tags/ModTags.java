@@ -4,6 +4,7 @@ import com.nieslregen.MyceliumLeatherMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -23,6 +24,14 @@ public class ModTags {
 
         private static TagKey<Item> createTag(String name) {
             return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name));
+        }
+    }
+
+    public static class Poi {
+        public static final TagKey<PoiType> SQUIRREL_HOME_POI = createTag("hollow_poi");
+
+        private static TagKey<PoiType> createTag(String name) {
+            return TagKey.create(Registries.POINT_OF_INTEREST_TYPE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name));
         }
     }
 }

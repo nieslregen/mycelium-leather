@@ -1,5 +1,7 @@
 package com.nieslregen.block.custom;
 
+import com.nieslregen.mob.CustomOccupant;
+import com.nieslregen.mob.CustomOccupantData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

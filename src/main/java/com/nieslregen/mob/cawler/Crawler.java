@@ -3,9 +3,10 @@ package com.nieslregen.mob.cawler;
 import com.mojang.serialization.Codec;
 import com.nieslregen.datagen.ModEntityLootTableProvider;
 import com.nieslregen.mob.ModEntityTypes;
+import com.nieslregen.mob.SetupAnimal;
+import com.nieslregen.mob.goals.crawler.SleepGoal;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -13,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ByIdMap;
@@ -20,6 +22,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -31,9 +34,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -41,10 +41,10 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.function.IntFunction;
 
-public class Crawler extends Animal implements Shearable {
+public class Crawler extends SetupAnimal implements Shearable {
 
     private static final EntityDataAccessor<Integer> DATA_TYPE;
-    private boolean sleeping;
+    public boolean sleeping;
 
 
     public Crawler(EntityType<? extends Animal> type, Level level) {
@@ -58,7 +58,7 @@ public class Crawler extends Animal implements Shearable {
         entityData.define(DATA_TYPE, OvergrownType.DEFAULT.id);
     }
 
-    private void setVariant(final OvergrownType variant) {
+    public void setVariant(final OvergrownType variant) {
         this.entityData.set(DATA_TYPE, variant.id);
     }
 
@@ -66,8 +66,35 @@ public class Crawler extends Animal implements Shearable {
         return OvergrownType.byId((Integer)this.entityData.get(DATA_TYPE));
     }
 
+
     static {
         DATA_TYPE = SynchedEntityData.defineId(Crawler.class, EntityDataSerializers.INT);
+    }
+
+
+    @Override
+    protected @Nullable SoundEvent getDeathSound() {
+        return SoundEvents.MAGMA_CUBE_DEATH_SMALL;
+    }
+
+//    @Override
+//    protected @Nullable SoundEvent getAmbientSound() {
+//        return SoundEvents.ARMADILLO_BRUSH;
+//    }
+
+    @Override
+    protected @Nullable SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ARMADILLO_EAT;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return null;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState blockState) {
+        this.playSound(SoundEvents.ARMADILLO_STEP);
     }
 
     @Override
@@ -94,7 +121,7 @@ public class Crawler extends Animal implements Shearable {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, (double)1.25F));
-        this.goalSelector.addGoal(2, new Sleep(this));
+        this.goalSelector.addGoal(2, new SleepGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,1));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -162,81 +189,6 @@ public class Crawler extends Animal implements Shearable {
         return isBrightEnoughToSpawn(serverLevelAccessor, blockPos);
     }
 
-    private class Sleep extends Goal {
-        Crawler crawler;
-
-        public Sleep(Crawler crawler) {
-            this.crawler = crawler;
-        }
-
-
-        public void grow() {
-            BlockPos pos = this.crawler.blockPosition().below();
-
-            BlockState blockState = this.crawler.level().getBlockState(pos);
-            Holder<Biome> biomeHolder = this.crawler.level().getBiome(pos);
-
-            if (isBeach(biomeHolder)) {
-                setVariant(OvergrownType.SALT);
-                return;
-
-            }
-
-            if (blockState.is(Blocks.MYCELIUM)) {
-                setVariant(OvergrownType.MUSHROOM);
-                return;
-
-            }
-
-            if (blockState.is(Blocks.PODZOL)) {
-                setVariant(OvergrownType.PODZOL);
-                return;
-
-            }
-
-            if (blockState.is(Blocks.GRASS_BLOCK)) {
-                setVariant(OvergrownType.MOSS);
-            }
-        }
-
-        private boolean isBeach(Holder<Biome> biomeHolder) {
-            if (biomeHolder instanceof Holder<Biome>) {
-                return biomeHolder.is(Biomes.BEACH)
-                        || biomeHolder.is(Biomes.SNOWY_BEACH)
-                        || biomeHolder.is(Biomes.STONY_SHORE);
-            }
-            return false;
-        }
-
-        @Override
-        public boolean canUse() {
-            return !crawler.sleeping
-                    && crawler.level().isDarkOutside();
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return super.canContinueToUse()
-                    && this.crawler.sleeping
-                    && this.crawler.level().isDarkOutside();
-        }
-
-        @Override
-        public void start() {
-            super.start();
-            this.crawler.sleeping = true;
-            this.crawler.getNavigation().stop();
-        }
-
-        @Override
-        public void stop() {
-            super.stop();
-            this.crawler.sleeping = false;
-            if (this.crawler.level().getDefaultClockTime() < 6000) {
-                grow();
-            }
-        }
-    }
 
     public enum OvergrownType implements StringRepresentable {
         NONE("none", 0),
