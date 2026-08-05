@@ -1,6 +1,7 @@
 package com.nieslregen.block.custom.cooking;
 
 import com.mojang.serialization.MapCodec;
+import com.nieslregen.block.custom.RotationalEntityBlock;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,7 +31,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-public abstract class AbstractCookingUtilBlock extends BaseEntityBlock {
+public abstract class AbstractCookingUtilBlock extends RotationalEntityBlock {
 
     private static final VoxelShape SHAPE;
 
@@ -68,7 +69,7 @@ public abstract class AbstractCookingUtilBlock extends BaseEntityBlock {
     public static final BooleanProperty BREWING = BooleanProperty.create("brewing");
 
     public AbstractCookingUtilBlock(Properties properties) {
-        super(properties);
+        super(properties, true);
         registerDefaultState(
                 getStateDefinition()
                         .any()
@@ -88,6 +89,7 @@ public abstract class AbstractCookingUtilBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(BREWING);
     }
 
