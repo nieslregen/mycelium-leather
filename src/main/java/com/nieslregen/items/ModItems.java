@@ -38,6 +38,8 @@ public class ModItems {
     public static final Item SUSPICIOUS_FLASK = registerItem("suspicious-flask", Item::new);
     public static final Item ARROW_OF_ILLNESS = registerItem("arrow-of-illness", properties -> new AbstractMobEffectArrow(properties, List.of(ModEffects.ILLNESS)));
 
+    public static final Item CRAWLER_SPAWN_EGG = registerItem("crawler_spawn_egg", properties -> new SpawnEggItem(properties.spawnEgg(ModEntityTypes.CRAWLER)));
+    public static final Item MYCELIUM_SQUIRREL_SPAWN_EGG = registerItem("mycelium_squirrel_spawn_egg", properties -> new SpawnEggItem(properties.spawnEgg(ModEntityTypes.SQUIRREL)));
     public static final Item MYCELIUM_CHICKEN_SPAWN_EGG = registerItem("mycelium_chicken_spawn_egg", properties -> new SpawnEggItem(properties.spawnEgg(ModEntityTypes.MYCELIUM_CHICKEN)));
     public static final Item SUSPICIOUS_EGG = registerItem("suspicious_egg", SuspiciousEggItem::new);
     public static final Item MYCELIUM_CHICKEN_EGG = registerItem("mycelium_chicken_egg", Item::new);
@@ -90,6 +92,8 @@ public class ModItems {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(SCRAMBLED_EGGS));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(PAN_FRIED_POTATOES));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.SPAWN_EGGS).register(output -> output.accept(MYCELIUM_CHICKEN_SPAWN_EGG));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.SPAWN_EGGS).register(output -> output.accept(MYCELIUM_SQUIRREL_SPAWN_EGG));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.SPAWN_EGGS).register(output -> output.accept(CRAWLER_SPAWN_EGG));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> output.accept(MYCELIUM_CHICKEN_EGG));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> output.accept(FEATHER_VARIANT_COLD));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> output.accept(FEATHER_VARIANT_WARM));

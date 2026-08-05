@@ -44,7 +44,9 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerators.generateFlatItem(ModItems.SALT, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.PAN_FRIED_POTATOES, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_CHICKEN_EGG, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.CRAWLER_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_CHICKEN_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.MYCELIUM_SQUIRREL_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.FEATHER_VARIANT_MUSHROOM, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.FEATHER_VARIANT_COLD, ModelTemplates.FLAT_ITEM);
         itemModelGenerators.generateFlatItem(ModItems.FEATHER_VARIANT_WARM, ModelTemplates.FLAT_ITEM);

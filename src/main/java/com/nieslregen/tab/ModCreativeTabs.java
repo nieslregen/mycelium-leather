@@ -46,7 +46,9 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.FEAST_OF_THE_MUSHROOM_FIELDS);
                         output.accept(ModItems.SUSPICIOUS_EGG);
                         output.accept(ModItems.MYCELIUM_CHICKEN_EGG);
+                        output.accept(ModItems.CRAWLER_SPAWN_EGG);
                         output.accept(ModItems.MYCELIUM_CHICKEN_SPAWN_EGG);
+                        output.accept(ModItems.MYCELIUM_SQUIRREL_SPAWN_EGG);
                         output.accept(ModBlocks.MYCELIUM_CHICKEN_NEST);
                         output.accept(ModItems.FEATHER_VARIANT_MUSHROOM);
                         output.accept(ModItems.FEATHER_VARIANT_WARM);
