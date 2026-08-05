@@ -12,7 +12,7 @@ public class StoveEntity extends BlockEntity {
 
     public static final String FUEL_IDENTIFIER = "fuel";
     private int fuel = 0;
-    private final int FUEL_PER_LOG = 120;
+    private final int FUEL_PER_LOG = 20 * 30;
 
     public StoveEntity( BlockPos worldPosition, BlockState blockState) {
         super(ModBlockEntities.STOVE_ENTITY, worldPosition, blockState);
