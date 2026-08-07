@@ -14,14 +14,18 @@ import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.references.BlockItemIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Function;
 
@@ -66,6 +70,11 @@ public class ModBlocks {
     public static final Block MUSHROOM_STEM_HOLLOW = registerBlock("mushroom_stem_hollow", MushroomStemHollowBlock::new);
     public static final Block FEAST_OF_THE_MUSHROOM_FIELDS = registerBlock("feast_of_the_mushroom_fields", FeastOfTheMushroomFields::new);
 
+    public static final Block BLUE_MUSHROOM_BLOCK = registerBlock(
+            "blue_mushroom_block",
+            properties -> new HugeMushroomBlock(properties.mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD).ignitedByLava()));
+
+
     public static ResourceKey<Block> getResourceKey(Block block) {
         return BuiltInRegistries.BLOCK.getResourceKey(block).get();
     }
@@ -102,5 +111,6 @@ public class ModBlocks {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_NEST));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(STOVE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(FEAST_OF_THE_MUSHROOM_FIELDS));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(BLUE_MUSHROOM_BLOCK));
     }
 }

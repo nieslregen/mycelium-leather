@@ -1,7 +1,7 @@
 package com.nieslregen.worldgen;
 
 import com.nieslregen.MyceliumLeatherMod;
-import com.nieslregen.worldgen.hugemushroom.HugeBrownMushroomWithHollowFeature;
+import com.nieslregen.worldgen.hugemushroom.HugeBlueMushroomWithHollowFeature;
 import com.nieslregen.worldgen.hugemushroom.HugeRedMushroomWithHollowFeature;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,21 +15,12 @@ public class ModFeatures {
 
     }
 
-    public static final Feature<HugeMushroomFeatureConfiguration> HUGE_BROWN_MUSHROOM_WITH_HOLLOW =
+    public static final Feature<HugeMushroomFeatureConfiguration> HUGE_BLUE_MUSHROOM_WITH_HOLLOW =
             Registry.register(
                     BuiltInRegistries.FEATURE,
                     Identifier.fromNamespaceAndPath(
                             MyceliumLeatherMod.MOD_ID,
-                            "huge_brown_mushroom_with_hollow"),
-                    new HugeBrownMushroomWithHollowFeature(HugeMushroomFeatureConfiguration.CODEC)
-            );
-
-    public static final Feature<HugeMushroomFeatureConfiguration> HUGE_RED_MUSHROOM_WITH_HOLLOW =
-            Registry.register(
-                    BuiltInRegistries.FEATURE,
-                    Identifier.fromNamespaceAndPath(
-                            MyceliumLeatherMod.MOD_ID,
-                            "huge_red_mushroom_with_hollow"),
-                    new HugeRedMushroomWithHollowFeature(HugeMushroomFeatureConfiguration.CODEC)
+                            "huge_blue_mushroom_with_hollow"),
+                    new HugeBlueMushroomWithHollowFeature(HugeMushroomFeatureConfiguration.CODEC)
             );
 }

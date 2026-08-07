@@ -17,45 +17,25 @@ import java.util.List;
 
 public class ModPlacedFeatures {
 
-    public static final ResourceKey<PlacedFeature> HUGE_BROWN_MUSHROOM_WITH_HOLLOW_PLACED_KEY =
+    public static final ResourceKey<PlacedFeature> HUGE_BLUE_MUSHROOM_WITH_HOLLOW_PLACED_KEY =
             ResourceKey.create(
                     Registries.PLACED_FEATURE,
-                    Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "huge_brown_mushroom_with_hollow_placed")
+                    Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "huge_blue_mushroom_with_hollow_placed")
             );
 
-    public static final ResourceKey<PlacedFeature> HUGE_RED_MUSHROOM_WITH_HOLLOW_PLACED_KEY =
-            ResourceKey.create(
-                    Registries.PLACED_FEATURE,
-                    Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "huge_red_mushroom_with_hollow_placed")
-            );
 
     public static void configure(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         context.register(
-                HUGE_BROWN_MUSHROOM_WITH_HOLLOW_PLACED_KEY,
+                HUGE_BLUE_MUSHROOM_WITH_HOLLOW_PLACED_KEY,
                 new PlacedFeature(
-                        configuredFeatures.getOrThrow(ModConfiguredFeatures.HUGE_BROWN_MUSHROOM_WITH_HOLLOW_KEY),
+                        configuredFeatures.getOrThrow(ModConfiguredFeatures.HUGE_BLUE_MUSHROOM_WITH_HOLLOW_KEY),
                         List.of(
                                 RarityFilter.onAverageOnceEvery(50),
                                 BiomeFilter.biome(),
                                 InSquarePlacement.spread(),
                                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE
         )));
-
-        context.register(
-                HUGE_RED_MUSHROOM_WITH_HOLLOW_PLACED_KEY,
-                new PlacedFeature(
-                        configuredFeatures.getOrThrow(ModConfiguredFeatures.HUGE_RED_MUSHROOM_WITH_HOLLOW_KEY),
-                        List.of(
-                                RarityFilter.onAverageOnceEvery(50),
-                                BiomeFilter.biome(),
-                                InSquarePlacement.spread(),
-                                PlacementUtils.HEIGHTMAP_WORLD_SURFACE
-                        )
-                )
-        );
-
-
     }
 }

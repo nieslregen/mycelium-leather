@@ -1,9 +1,9 @@
 {
-  "type": "mycelium-leather:huge_red_mushroom_with_hollow",
+  "type": "mycelium-leather:huge_blue_mushroom_with_hollow",
   "config": {
     "can_place_on": {
       "type": "minecraft:matching_block_tag",
-      "tag": "minecraft:huge_red_mushroom_can_place_on"
+      "tag": "minecraft:huge_brown_mushroom_can_place_on"
     },
     "cap_provider": {
       "type": "minecraft:simple_state_provider",
@@ -19,6 +19,7 @@
         }
       }
     },
+    "foliage_radius": 3,
     "stem_provider": {
       "type": "minecraft:simple_state_provider",
       "state": {
