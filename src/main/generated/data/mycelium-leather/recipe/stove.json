@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": "minecraft:cobblestone",
+    "I": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "CIC",
+    "CCC",
+    "C C"
+  ],
+  "result": {
+    "id": "mycelium-leather:stove"
+  }
+}

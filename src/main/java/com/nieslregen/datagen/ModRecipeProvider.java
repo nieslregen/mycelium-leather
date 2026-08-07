@@ -412,14 +412,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .group("tiny_cauldron")
                         .save(output, "tiny_cauldron");
 
-                shaped(RecipeCategory.FOOD, ModBlocks.FRYING_PAN)
-                        .pattern("IIS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.STICK)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .group("frying_pan")
-                        .save(output, "frying_pan");
 
                 shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
                         .pattern("DGD")
@@ -517,6 +509,26 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
                         .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_MUSHROOM), has(ModItems.FEATHER_VARIANT_MUSHROOM))
                         .save(output, "golden_dagger_with_mushroom_variant_feather");
+
+                shaped(RecipeCategory.MISC, ModBlocks.FRYING_PAN)
+                        .pattern("S  ")
+                        .pattern(" II")
+                        .define('I', Items.IRON_INGOT)
+                        .define('S', Items.STICK)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .save(output, "frying_pan");
+
+                shaped(RecipeCategory.MISC, ModBlocks.STOVE)
+                        .pattern("CIC")
+                        .pattern("CCC")
+                        .pattern("C C")
+                        .define('I', Items.IRON_INGOT)
+                        .define('C', Items.COBBLESTONE)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                        .unlockedBy(getHasName(Items.COBBLESTONE), has(Items.COBBLESTONE))
+                        .save(output, "stove");
+
             }
         };
     }
