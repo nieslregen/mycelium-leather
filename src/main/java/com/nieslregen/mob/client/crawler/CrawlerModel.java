@@ -73,7 +73,7 @@ public class CrawlerModel extends EntityModel<CrawlerRendererState> {
     public void setupAnim(final CrawlerRendererState state) {
         super.setupAnim(state);
         this.applyHeadRotation(state, state.yRot, state.xRot);
-        this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
+        this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 7.5F, 8F);
     }
 
     private void applyHeadRotation(final CrawlerRendererState state, float yRot, float xRot) {

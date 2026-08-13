@@ -1,9 +1,11 @@
 package com.nieslregen.mob.cawler;
 
 import com.mojang.serialization.Codec;
+import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.block.ModBlocks;
 import com.nieslregen.datagen.ModEntityLootTableProvider;
 import com.nieslregen.mob.ModEntityTypes;
-import com.nieslregen.mob.SetupAnimal;
+import com.nieslregen.mob.ModAnimal;
 import com.nieslregen.mob.goals.crawler.SleepGoal;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
@@ -34,14 +36,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jspecify.annotations.Nullable;
 
 import java.util.function.IntFunction;
 
-public class Crawler extends SetupAnimal implements Shearable {
+public class Crawler extends ModAnimal implements Shearable {
 
     private static final EntityDataAccessor<Integer> DATA_TYPE;
     public boolean sleeping;
@@ -59,6 +65,7 @@ public class Crawler extends SetupAnimal implements Shearable {
     }
 
     public void setVariant(final OvergrownType variant) {
+        MyceliumLeatherMod.LOGGER.info("setVariant " + variant);
         this.entityData.set(DATA_TYPE, variant.id);
     }
 
@@ -99,7 +106,7 @@ public class Crawler extends SetupAnimal implements Shearable {
 
     @Override
     public boolean isFood(ItemStack itemStack) {
-        return false;
+        return itemStack.is(Blocks.STONE.asItem());
     }
 
     @Override
@@ -122,9 +129,10 @@ public class Crawler extends SetupAnimal implements Shearable {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, (double)1.25F));
         this.goalSelector.addGoal(2, new SleepGoal(this));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this,1));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1f, (i) -> i.is(Blocks.STONE.asItem()), true));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this,1));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
     }
 
     @Override
@@ -189,6 +197,19 @@ public class Crawler extends SetupAnimal implements Shearable {
         return isBrightEnoughToSpawn(serverLevelAccessor, blockPos);
     }
 
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putInt("OvergrownType", this.entityData.get(DATA_TYPE));
+        output.putBoolean("isSleeping", sleeping);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.entityData.set(DATA_TYPE, input.getIntOr("OvergrownType", 0));
+        sleeping = input.getBooleanOr("isSleeping", false);
+    }
 
     public enum OvergrownType implements StringRepresentable {
         NONE("none", 0),

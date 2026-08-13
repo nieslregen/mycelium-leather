@@ -34,7 +34,7 @@ public class DefendNestGoal extends MeleeAttackGoal {
     public boolean canContinueToUse() {
         return chicken.getTarget() != null
                 && chicken.getTarget().isAlive()
-                && chicken.getTargets(this.chicken, 3).contains(chicken.getTarget())
+                && chicken.getTargets(this.chicken, 5).contains(chicken.getTarget())
                 && !chicken.carriesStolenEgg
                 && chicken.nestPos.isPresent()
                 && super.canContinueToUse();

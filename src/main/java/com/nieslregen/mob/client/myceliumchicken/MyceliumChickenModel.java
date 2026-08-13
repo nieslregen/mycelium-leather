@@ -14,7 +14,7 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
     private final ModelPart leftWing;
 
     private final KeyframeAnimation walkAnimation;
-    private final KeyframeAnimation sitAnimation;
+    private final KeyframeAnimation sitDownAnimation;
     private final KeyframeAnimation sitPoseAnimation;
     private final KeyframeAnimation standupAnimation;
     private final KeyframeAnimation idleAnimation;
@@ -27,7 +27,7 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
         this.rightWing = root.getChild("root").getChild("torso").getChild("body").getChild("right_wing");
 
         this.walkAnimation = MyceliumChickenAnimation.walking.bake(this.root);
-        this.sitAnimation = MyceliumChickenAnimation.take_a_seat.bake(this.root);
+        this.sitDownAnimation = MyceliumChickenAnimation.take_a_seat.bake(this.root);
         this.sitPoseAnimation = MyceliumChickenAnimation.take_a_seat.bake(this.root);
         this.standupAnimation = MyceliumChickenAnimation.stand_up.bake(this.root);
         this.idleAnimation = MyceliumChickenAnimation.walking.bake(this.root);
@@ -148,7 +148,7 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
         super.setupAnim(state);
         this.applyHeadRotation(state, state.yRot, state.xRot);
         this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
-        this.sitAnimation.apply(state.sitAnimationState, state.ageInTicks);
+        this.sitDownAnimation.apply(state.sitDownAnimationState, state.ageInTicks);
         this.sitPoseAnimation.apply(state.sitPoseAnimationState, state.ageInTicks);
         this.standupAnimation.apply(state.sitUpAnimationState, state.ageInTicks);
         this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks);
@@ -161,10 +161,6 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
     private void applyHeadRotation(final MyceliumChickenRenderState state, float yRot, float xRot) {
         yRot = Mth.clamp(yRot, -30.0F, 30.0F);
         xRot = Mth.clamp(xRot, -25.0F, 45.0F);
-//        if (state.jumpCooldown > 0.0F) {
-//            float headRotation = 45.0F * state.jumpCooldown / 55.0F;
-//            xRot = Mth.clamp(xRot + headRotation, -25.0F, 70.0F);
-//        }
 
         this.head.yRot = yRot * ((float)Math.PI / 180F);
         this.head.xRot = xRot * ((float)Math.PI / 180F);

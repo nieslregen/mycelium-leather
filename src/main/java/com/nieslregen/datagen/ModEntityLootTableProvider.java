@@ -9,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -38,6 +39,15 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
 
     public static ResourceKey<LootTable> CRAWLER_PODZOL_DROP = ResourceKey
             .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "crawler/podzol_drop"));
+
+    public static ResourceKey<LootTable> DEATH_MYCELIUM_CHICKEN = ResourceKey
+            .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "mycelium_chicken/death"));
+
+    public static ResourceKey<LootTable> DEATH_MYCELIUM_SQUIRREL = ResourceKey
+            .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "mycelium_squirrel/death"));
+
+    public static ResourceKey<LootTable> DEATH_CRAWLER = ResourceKey
+            .create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "crawler/death"));
 
     public ModEntityLootTableProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
         super(output, registryLookupFuture, LootContextParamSets.ENTITY);
@@ -91,6 +101,23 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
                         .setRolls(ConstantValue.exactly(1))));
 
 
+        output.accept(DEATH_CRAWLER, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Blocks.COBBLESTONE.asItem())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
+                        .setRolls(ConstantValue.exactly(1))));
+
+        output.accept(DEATH_MYCELIUM_CHICKEN, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Items.CHICKEN)
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
+                        .setRolls(ConstantValue.exactly(1))));
+
+        output.accept(DEATH_MYCELIUM_SQUIRREL, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(LootItem.lootTableItem(ModItems.TRUFFLE)
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
+                        .setRolls(ConstantValue.exactly(1))));
 
     }
 }

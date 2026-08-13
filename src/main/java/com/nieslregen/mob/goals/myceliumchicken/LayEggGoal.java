@@ -26,12 +26,12 @@ public class LayEggGoal extends MoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        return this.chicken.carriesEgg() && super.canUse(); // ToDo
+        return this.chicken.carriesEgg() && super.canUse();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return super.canContinueToUse(); // ToDo as long as the animation is not finished
+        return super.canContinueToUse();
     }
 
     @Override

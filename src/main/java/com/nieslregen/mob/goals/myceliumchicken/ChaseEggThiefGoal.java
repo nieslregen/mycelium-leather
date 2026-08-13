@@ -41,7 +41,6 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("Start Egg Thief Goal");
         super.start();
         if  (chicken.nestPos.isPresent()) {
             if (chicken.level().getBlockEntity(chicken.nestPos.get()) instanceof MyceliumChickenNestEntity nestEntity && nestEntity.getThief().isPresent()) {
@@ -52,7 +51,6 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
 
     @Override
     public void stop() {
-        MyceliumLeatherMod.LOGGER.info("Stop Egg Thief Goal");
         super.stop();
         chicken.setTarget(null);
         chicken.stopBeingAngry();

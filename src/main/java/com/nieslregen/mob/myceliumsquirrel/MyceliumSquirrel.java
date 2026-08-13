@@ -92,6 +92,8 @@ public class MyceliumSquirrel extends HollowUser {
     }
 
 
+    // ToDo: check if these sounds fit better: SoundEvents.AXOLOTL_DEATH; SoundEvents.AXOLOTL_IDLE_AIR; SoundEvents.AXOLOTL_HURT;
+
     @Override
     protected @Nullable SoundEvent getDeathSound() {
         return SoundEvents.RABBIT_DEATH;

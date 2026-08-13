@@ -89,8 +89,6 @@ public class SleepGoal extends Goal {
     public void stop() {
         super.stop();
         this.crawler.sleeping = false;
-        if (this.crawler.level().getDefaultClockTime() < 6000) {
-            grow();
-        }
+        grow();
     }
 }

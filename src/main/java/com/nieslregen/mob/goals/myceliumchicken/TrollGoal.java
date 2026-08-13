@@ -34,7 +34,6 @@ public class TrollGoal extends Goal {
     public void start() {
         super.start();
         throwEgg();
-        MyceliumLeatherMod.LOGGER.info("Troll");
 
     }
 
@@ -49,9 +48,9 @@ public class TrollGoal extends Goal {
                 .filter(entity -> entity instanceof Player)
                 .findFirst()
                 .ifPresent(player -> {
-                    double xd = player.position().x;
-                    double yd = player.position().y;
-                    double zd = player.position().z;
+                    double xd = player.position().x - chicken.position().x;
+                    double yd = player.position().y - chicken.position().y;
+                    double zd = player.position().z - chicken.position().z;
 
                     ItemStack itemStack = new ItemStack(ModItems.SUSPICIOUS_EGG);
 

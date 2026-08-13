@@ -2,7 +2,6 @@ package com.nieslregen.worldgen;
 
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.worldgen.hugemushroom.HugeBlueMushroomWithHollowFeature;
-import com.nieslregen.worldgen.hugemushroom.HugeRedMushroomWithHollowFeature;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;

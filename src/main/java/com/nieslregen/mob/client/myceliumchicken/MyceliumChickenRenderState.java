@@ -8,7 +8,7 @@ import net.minecraft.world.entity.AnimationState;
 @Environment(EnvType.CLIENT)
 public class MyceliumChickenRenderState extends LivingEntityRenderState {
 
-    public final AnimationState sitAnimationState;
+    public final AnimationState sitDownAnimationState;
     public final AnimationState sitPoseAnimationState;
     public final AnimationState sitUpAnimationState;
     public final AnimationState idleAnimationState;
@@ -17,7 +17,7 @@ public class MyceliumChickenRenderState extends LivingEntityRenderState {
     public float flapSpeed;
 
     public MyceliumChickenRenderState() {
-        this.sitAnimationState = new AnimationState();
+        this.sitDownAnimationState = new AnimationState();
         this.sitPoseAnimationState = new AnimationState();
         this.sitUpAnimationState = new AnimationState();
         this.idleAnimationState = new AnimationState();

@@ -43,7 +43,6 @@ public class ReturnToNestGoal extends Goal {
 
     @Override
     public void stop() {
-        MyceliumLeatherMod.LOGGER.info("End ReturnToNestGoal");
         chicken.getNavigation().stop();
     }
 

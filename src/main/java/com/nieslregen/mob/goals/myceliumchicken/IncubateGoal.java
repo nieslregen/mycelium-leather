@@ -17,59 +17,39 @@ public class IncubateGoal extends Goal {
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
+
     @Override
     public void start() {
         super.start();
-        MyceliumLeatherMod.LOGGER.info("Start Incubating");
-        if (chicken.nestPos.isPresent()){
-            BlockState newState = chicken.level().getBlockState(chicken.nestPos.get()).setValue(MyceliumChickenNestBlock.IS_INCUBATING, true);
-            chicken.level().setBlockAndUpdate(chicken.nestPos.get(), newState);
 
-            chicken.level().setBlockAndUpdate(chicken.nestPos.get(), newState);
+        if (chicken.nestPos.isPresent()){
+            BlockPos pos = chicken.nestPos.get();
+            BlockState newState = chicken.level().getBlockState(pos).setValue(MyceliumChickenNestBlock.IS_INCUBATING, true);
+            chicken.level().setBlockAndUpdate(pos, newState);
 
             if (chicken.carriesStolenEgg) {
                 chicken.level().setBlockAndUpdate(
-                        chicken.nestPos.get(),
-                        chicken.level().getBlockState(chicken.nestPos.get()).setValue(MyceliumChickenNestBlock.HAS_EGG, true)
+                        pos,
+                        chicken.level().getBlockState(pos).setValue(MyceliumChickenNestBlock.HAS_EGG, true)
                 );
                 chicken.carriesStolenEgg = false;
             }
 
             chicken.getNavigation().stop();
+            chicken.setPos(pos.getX(), pos.getY(), pos.getZ());
+            chicken.sitDown();
         }
     }
 
 
     @Override
     public void stop() {
-        MyceliumLeatherMod.LOGGER.info("End Incubating");
         super.stop();
         if (chicken.nestPos.isPresent()){
             BlockState newState = chicken.level().getBlockState(chicken.nestPos.get()).setValue(MyceliumChickenNestBlock.IS_INCUBATING, false);
             chicken.level().setBlockAndUpdate(chicken.nestPos.get(), newState);
         }
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (chicken.nestPos.isEmpty()) {
-            return;
-        }
-
-        BlockPos pos = chicken.nestPos.get();
-
-        if (chicken.getNavigation().isDone()) {
-            double x = pos.getX() + 0.5;
-            double z = pos.getZ() + 0.5;
-
-            chicken.getMoveControl().setWantedPosition(
-                    x,
-                    pos.getY(),
-                    z,
-                    0.15
-            );
-        }
+        chicken.standUp();
     }
 
     @Override
