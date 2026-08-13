@@ -47,6 +47,8 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.function.IntFunction;
 
+import static com.nieslregen.datagen.ModEntityLootTableProvider.DEATH_CRAWLER;
+
 public class Crawler extends ModAnimal implements Shearable {
 
     private static final EntityDataAccessor<Integer> DATA_TYPE;
@@ -102,6 +104,11 @@ public class Crawler extends ModAnimal implements Shearable {
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockState) {
         this.playSound(SoundEvents.ARMADILLO_STEP);
+    }
+
+    @Override
+    protected @Nullable ResourceKey<LootTable> getDeathLootTable() {
+        return DEATH_CRAWLER;
     }
 
     @Override

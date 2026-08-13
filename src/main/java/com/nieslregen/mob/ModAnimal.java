@@ -33,7 +33,6 @@ public abstract class ModAnimal extends Animal {
     @Override
     protected abstract void playStepSound(BlockPos pos, BlockState blockState);
 
-    @Override
     protected abstract @Nullable ResourceKey<LootTable> getDeathLootTable();
 
     @Override

@@ -45,6 +45,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+import static com.nieslregen.datagen.ModEntityLootTableProvider.DEATH_MYCELIUM_CHICKEN;
 import static com.nieslregen.datagen.ModEntityLootTableProvider.MYCELIUM_CHICKEN_DROP;
 
 public class MyceliumChicken extends ModAnimal implements NeutralMob {
@@ -147,7 +148,7 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
 
     @Override
     protected @Nullable ResourceKey<LootTable> getDeathLootTable() {
-        return null;
+        return DEATH_MYCELIUM_CHICKEN;
     }
 
     @Override

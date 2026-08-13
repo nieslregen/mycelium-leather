@@ -10,6 +10,7 @@ import com.nieslregen.mob.goals.squirrel.LocateHollowGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -28,7 +29,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jspecify.annotations.Nullable;
+
+import static com.nieslregen.datagen.ModEntityLootTableProvider.DEATH_MYCELIUM_SQUIRREL;
 
 public class MyceliumSquirrel extends HollowUser {
 
@@ -112,6 +116,11 @@ public class MyceliumSquirrel extends HollowUser {
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockState) {
         playSound(SoundEvents.ARMADILLO_STEP);
+    }
+
+    @Override
+    protected @Nullable ResourceKey<LootTable> getDeathLootTable() {
+        return DEATH_MYCELIUM_SQUIRREL;
     }
 
     @Override
