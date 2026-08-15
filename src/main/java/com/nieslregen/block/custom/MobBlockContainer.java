@@ -164,16 +164,24 @@ public class MobBlockContainer extends BlockEntity {
     protected void loadAdditional(final ValueInput input) {
         super.loadAdditional(input);
         this.storedOccupants.clear();
-//        ((List)input.read("bees", CustomOccupant.LIST_CODEC).orElse(List.of())).forEach(this::storeMob);
+        input.read(
+                    "occupants",
+                    CustomOccupant.LIST_CODEC)
+            .orElse(List.of())
+            .forEach(this::storeMob);
     }
 
     protected void saveAdditional(final ValueOutput output) {
         super.saveAdditional(output);
-//        output.store("bees", BeehiveBlockEntity.Occupant.LIST_CODEC, this.getBees());
+        output.store("occupants", CustomOccupant.LIST_CODEC, this.getMobs());
     }
 
     public boolean isFull() {
         return false;
+    }
+
+    public List<CustomOccupant> getMobs() {
+        return this.storedOccupants.stream().map(CustomOccupantData::toOccupant).toList();
     }
 
 

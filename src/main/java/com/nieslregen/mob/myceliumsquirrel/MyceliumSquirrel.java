@@ -8,6 +8,9 @@ import com.nieslregen.mob.goals.squirrel.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -23,10 +26,13 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.spider.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jspecify.annotations.Nullable;
 
@@ -34,16 +40,12 @@ import static com.nieslregen.datagen.ModEntityLootTableProvider.DEATH_MYCELIUM_S
 
 public class MyceliumSquirrel extends HollowUser {
 
-    boolean isClimbing = false;
-
+    private static final EntityDataAccessor<Byte> DATA_FLAGS_ID;
 
     public int timeUntilResting;
     public int digTimer;
     public boolean needsToRest = false;
     public boolean carriesBaby = false;
-
-    // Avoid daylight goal?
-    // can glide down from nest then when hitting the ground it rolls
 
     public MyceliumSquirrel(EntityType<? extends Animal> type, Level level) {
         super(type, level);
@@ -70,9 +72,14 @@ public class MyceliumSquirrel extends HollowUser {
     }
 
     @Override
+    protected void defineSynchedData(SynchedEntityData.Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(DATA_FLAGS_ID, (byte)0);
+    }
+
+    @Override
     protected PathNavigation createNavigation(Level level) {
         return new WallClimberNavigation(this, level);
-//        return super.createNavigation(level);
     }
 
     @Override
@@ -81,29 +88,33 @@ public class MyceliumSquirrel extends HollowUser {
     }
 
     public boolean isClimbing() {
-        return isClimbing;
+        return ((Byte)this.entityData.get(DATA_FLAGS_ID) & 1) != 0;
     }
-
 
     public void setClimbing(final boolean value) {
-        isClimbing = value;
-    }
+        byte flags = (Byte) this.entityData.get(DATA_FLAGS_ID);
+        if (value) {
+            flags = (byte) (flags | 1);
+        } else {
+            flags = (byte) (flags & -2);
+        }
 
-    // ToDo: check if these sounds fit better: SoundEvents.AXOLOTL_DEATH; SoundEvents.AXOLOTL_IDLE_AIR; SoundEvents.AXOLOTL_HURT;
+        this.entityData.set(DATA_FLAGS_ID, flags);
+    }
 
     @Override
     protected @Nullable SoundEvent getDeathSound() {
-        return SoundEvents.RABBIT_DEATH;
+        return SoundEvents.AXOLOTL_DEATH;
     }
 
     @Override
     protected @Nullable SoundEvent getAmbientSound() {
-        return SoundEvents.ALLAY_THROW;
+        return SoundEvents.AXOLOTL_IDLE_AIR;
     }
 
     @Override
     protected @Nullable SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.RABBIT_HURT;
+        return SoundEvents.AXOLOTL_HURT;
     }
 
     @Override
@@ -129,13 +140,24 @@ public class MyceliumSquirrel extends HollowUser {
                 .add(Attributes.SCALE, 1);
     }
 
-    public void resetTimeUntilResting() {
-        timeUntilResting =  this.random.nextInt(6000) + 6000;;
+    public int resetTimeUntilResting() {
+        timeUntilResting = this.random.nextInt(6000) + 6000;;
         needsToRest = false;
+        return timeUntilResting;
     }
 
-    public void resetDigTimer() {
+    public int resetDigTimer() {
         digTimer = this.random.nextInt(6000) + 6000;
+        return digTimer;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.level().isClientSide()) {
+            this.setClimbing(this.horizontalCollision);
+        }
+        MyceliumLeatherMod.LOGGER.info("is climbing: " + this.isClimbing());
     }
 
     @Override
@@ -147,9 +169,6 @@ public class MyceliumSquirrel extends HollowUser {
                 needsToRest = true;
                 MyceliumLeatherMod.LOGGER.info("Squirrel wants to rest");
             }
-        }
-        if (!this.level().isClientSide()) {
-            this.setClimbing(this.horizontalCollision);
         }
         digTimer--;
     }
@@ -173,5 +192,34 @@ public class MyceliumSquirrel extends HollowUser {
     @Override
     public boolean isFood(ItemStack itemStack) {
         return itemStack.is(ModItems.MYCELIUM_CHICKEN_EGG);
+    }
+
+    static {
+        DATA_FLAGS_ID = SynchedEntityData.defineId(MyceliumSquirrel.class, EntityDataSerializers.BYTE);
+    }
+
+    public static final String TIME_UNTIL_RESTING_IDENTIFIER = "timeUntilResting";
+    public static final String DIG_TIMER_IDENTIFIER = "digTimer";
+    public static final String NEEDS_TO_REST_IDENTIFIER = "needsToRest";
+    public static final String CARRIES_BABY_IDENTIFIER = "carriesBaby";
+
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putInt(TIME_UNTIL_RESTING_IDENTIFIER, timeUntilResting);
+        output.putInt(DIG_TIMER_IDENTIFIER, digTimer);
+
+        output.putBoolean(NEEDS_TO_REST_IDENTIFIER, needsToRest);
+        output.putBoolean(CARRIES_BABY_IDENTIFIER, carriesBaby);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+
+        input.getIntOr(TIME_UNTIL_RESTING_IDENTIFIER, resetTimeUntilResting());
+        input.getIntOr(DIG_TIMER_IDENTIFIER, resetDigTimer());
+
+
     }
 }

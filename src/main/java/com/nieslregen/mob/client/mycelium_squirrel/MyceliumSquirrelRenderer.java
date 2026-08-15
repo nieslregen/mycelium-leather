@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -23,8 +24,6 @@ public class MyceliumSquirrelRenderer extends MobRenderer<MyceliumSquirrel, Myce
 
     private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, "textures/entity/mycelium_squirrel.png");
     private Optional<MyceliumSquirrel> squirrel = Optional.empty();
-    private Optional<Map.Entry<Direction, BlockPos>> sticksOnto = Optional.empty();
-    private boolean isClimbing = false;
 
     public MyceliumSquirrelRenderer(EntityRendererProvider.Context context) {
         super(context, new MyceliumSquirrelModel(context.bakeLayer(ModEntityModelLayers.MYCELIUM_SQUIRREL_LAYER)), .175F);
@@ -50,39 +49,41 @@ public class MyceliumSquirrelRenderer extends MobRenderer<MyceliumSquirrel, Myce
     protected void setupRotations(MyceliumSquirrelRenderState state, PoseStack poseStack, float bodyRot, float entityScale) {
         super.setupRotations(state, poseStack, bodyRot, entityScale);
 
-        // ToDo: move sticking to face logic into squirrel, then ask on which face it sticks (when it sticks onto something then you can rotate)
-        if (squirrel.isPresent()) {
-            MyceliumSquirrel s = squirrel.get();
+        Vec3 moveDir = squirrel.get().getDeltaMovement();
 
-            Map<Direction, BlockPos> m = Map.of(
-                    Direction.NORTH, s.blockPosition().north(),
-                    Direction.EAST,  s.blockPosition().east(),
-                    Direction.SOUTH, s.blockPosition().south(),
-                    Direction.WEST,  s.blockPosition().west()
-            );
+        if (moveDir.y > 0.1F) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(90));
+            stickToWall();
+        }
+        if (moveDir.y < -0.1F) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(-90));
+            stickToWall();
+        }
+    }
 
-            Optional<Map.Entry<Direction, BlockPos>> nearest =
-                    m.entrySet()
-                            .stream()
-                            .filter(e -> !s.level().getBlockState(e.getValue()).is(Blocks.AIR))
-                            .min(Comparator.comparingDouble(e -> e.getValue()
-                                    .distToCenterSqr(
-                                            s.position().x,
-                                            s.position().y,
-                                            s.position().z)));
-            if (nearest.isPresent()) {
-                poseStack.mulPose(Axis.XP.rotationDegrees(90));
+    private void stickToWall() {
+        MyceliumSquirrel s = squirrel.get();
+        Map<Direction, BlockPos> m = Map.of(
+                Direction.NORTH, s.blockPosition().north(),
+                Direction.EAST,  s.blockPosition().east(),
+                Direction.SOUTH, s.blockPosition().south(),
+                Direction.WEST,  s.blockPosition().west()
+        );
 
-                if (nearest.get().getValue().distToCenterSqr(s.position().x, s.position().y, s.position().z) < .1D) {
-                    isClimbing = true;
-                    sticksOnto = nearest;
-                }
+        Optional<Map.Entry<Direction, BlockPos>> nearest =
+                m.entrySet()
+                        .stream()
+                        .filter(e -> !s.level().getBlockState(e.getValue()).is(Blocks.AIR))
+                        .min(Comparator.comparingDouble(e -> e.getValue()
+                                .distToCenterSqr(
+                                        s.position().x,
+                                        s.position().y,
+                                        s.position().z)));
 
-            } else {
-                if (isClimbing) {
-                    isClimbing = false;
-                    poseStack.mulPose(Axis.XP.rotationDegrees(90));
-                }
+        if (nearest.isPresent()) {
+            switch (nearest.get().getKey()) {
+                case WEST, EAST -> s.setPos(Math.round(s.getX()), s.getY(), s.getZ());
+                case NORTH, SOUTH -> s.setPos(s.getX(), s.getY(), Math.round(s.getZ()));
             }
         }
     }

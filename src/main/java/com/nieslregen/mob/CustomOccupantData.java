@@ -21,8 +21,4 @@ public class CustomOccupantData {
     public CustomOccupant toOccupant() {
         return new CustomOccupant(this.occupant.entityData(), this.ticksInContainer, this.occupant.minTicksInContainer());
     }
-
-//    public boolean hasNectar() {
-//        return this.occupant.entityData.getUnsafe().getBooleanOr("HasNectar", false);
-//    }
 }

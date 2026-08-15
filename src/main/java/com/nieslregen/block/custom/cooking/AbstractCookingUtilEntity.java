@@ -1,6 +1,6 @@
-package com.nieslregen.block.custom.tinycauldron;
-
+package com.nieslregen.block.custom.cooking;
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.block.ModBlocks;
 import com.nieslregen.block.container.ImplementedContainer;
 import com.nieslregen.block.custom.cooking.fryingpan.FryingPanEntity;
 import com.nieslregen.block.custom.cooking.stove.StoveBlock;
@@ -228,7 +228,6 @@ public class AbstractCookingUtilEntity extends BlockEntity implements Implemente
 
     private Optional<Integer> findRecipeByBrewingResult(ItemStack itemStack) {
         return recipes.stream()
-                .peek(x -> MyceliumLeatherMod.LOGGER.info("equation: {} eqauls {}", x.resultItem().getItem(), itemStack.getItem()))
                 .filter(r -> r.resultItem().getItem() == itemStack.getItem())
                 .findFirst()
                 .map(CookingRecipe::identifier);

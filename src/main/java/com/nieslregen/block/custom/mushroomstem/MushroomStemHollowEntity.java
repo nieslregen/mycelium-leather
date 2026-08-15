@@ -13,8 +13,4 @@ public class MushroomStemHollowEntity extends MobBlockContainer {
         super(ModBlockEntities.MUSHROOM_STEM_HOLLOW_ENTITY, blockPosition, blockState, ModEntityTypes.SQUIRREL);
     }
 
-    public MushroomStemHollowEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
-        super(type, worldPosition, blockState, ModEntityTypes.SQUIRREL);
-    }
-
 }
