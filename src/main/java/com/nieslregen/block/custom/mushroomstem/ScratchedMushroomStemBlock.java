@@ -35,7 +35,7 @@ public class ScratchedMushroomStemBlock extends BaseEntityBlock {
                 getStateDefinition()
                         .any()
                         .setValue(STAGE, 0)
-//                        .setValue(FACING, Direction.NORTH)
+                        .setValue(FACING, Direction.NORTH)
         );
     }
 

@@ -1,12 +1,10 @@
 package com.nieslregen.mob.myceliumsquirrel;
 
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.HollowUser;
 import com.nieslregen.mob.ModPoiTypes;
-import com.nieslregen.mob.goals.squirrel.DigForTrufflesGoal;
-import com.nieslregen.mob.goals.squirrel.EnterHollowGoal;
-import com.nieslregen.mob.goals.squirrel.GoHomeGoal;
-import com.nieslregen.mob.goals.squirrel.LocateHollowGoal;
+import com.nieslregen.mob.goals.squirrel.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -39,9 +37,10 @@ public class MyceliumSquirrel extends HollowUser {
     boolean isClimbing = false;
 
 
-    private int timeUntilResting;
+    public int timeUntilResting;
     public int digTimer;
     public boolean needsToRest = false;
+    public boolean carriesBaby = false;
 
     // Avoid daylight goal?
     // can glide down from nest then when hitting the ground it rolls
@@ -89,12 +88,6 @@ public class MyceliumSquirrel extends HollowUser {
     public void setClimbing(final boolean value) {
         isClimbing = value;
     }
-
-    @Override
-    public boolean isFood(ItemStack itemStack) {
-        return false;
-    }
-
 
     // ToDo: check if these sounds fit better: SoundEvents.AXOLOTL_DEATH; SoundEvents.AXOLOTL_IDLE_AIR; SoundEvents.AXOLOTL_HURT;
 
@@ -166,15 +159,19 @@ public class MyceliumSquirrel extends HollowUser {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new EnterHollowGoal(this));
-        this.goalSelector.addGoal(2, new PanicGoal(this, (double)1.25F));
+        this.goalSelector.addGoal(2, new PanicGoal(this, 1.25F));
         this.goalSelector.addGoal(3, new LocateHollowGoal(this));
         this.goalSelector.addGoal(4, new GoHomeGoal(this));
-        this.goalSelector.addGoal(5, new DigForTrufflesGoal(this));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this,1));
-        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new SquirrelBreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new TemptGoal(this, 1D, (i) -> i.is(ModItems.MYCELIUM_CHICKEN_EGG), true));
+        this.goalSelector.addGoal(7, new DigForTrufflesGoal(this));
+        this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this,1));
+        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
     }
 
-
-
+    @Override
+    public boolean isFood(ItemStack itemStack) {
+        return itemStack.is(ModItems.MYCELIUM_CHICKEN_EGG);
+    }
 }

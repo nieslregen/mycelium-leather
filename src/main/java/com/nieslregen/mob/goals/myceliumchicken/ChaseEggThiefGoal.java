@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
 import net.minecraft.core.BlockPos;

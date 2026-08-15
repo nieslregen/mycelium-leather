@@ -15,7 +15,6 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.storage.TagValueOutput;
 import org.jspecify.annotations.Nullable;
 
@@ -51,8 +50,8 @@ public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int tick
         return occupant;
     }
 
-    public static BeehiveBlockEntity.Occupant create(final int ticksInHive, EntityType<?> type) {
-        return new BeehiveBlockEntity.Occupant(TypedEntityData.of(type, new CompoundTag()), ticksInHive, 600);
+    public static CustomOccupant create(final int ticksInHive, EntityType<?> type) {
+        return new CustomOccupant(TypedEntityData.of(type, new CompoundTag()), ticksInHive, 600);
     }
 
     public @Nullable Entity createEntity(final Level level, final BlockPos homePos, EntityType<?> type) {

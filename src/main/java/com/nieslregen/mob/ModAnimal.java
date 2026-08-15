@@ -12,10 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Optional;
-
-import static com.nieslregen.datagen.ModEntityLootTableProvider.MYCELIUM_CHICKEN_DROP;
-
 public abstract class ModAnimal extends Animal {
     protected ModAnimal(EntityType<? extends Animal> type, Level level) {
         super(type, level);

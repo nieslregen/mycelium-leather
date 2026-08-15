@@ -104,19 +104,19 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
         output.accept(DEATH_CRAWLER, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Blocks.COBBLESTONE.asItem())
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
                         .setRolls(ConstantValue.exactly(1))));
 
         output.accept(DEATH_MYCELIUM_CHICKEN, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(Items.CHICKEN)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
                         .setRolls(ConstantValue.exactly(1))));
 
         output.accept(DEATH_MYCELIUM_SQUIRREL, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .add(LootItem.lootTableItem(ModItems.TRUFFLE)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
                         .setRolls(ConstantValue.exactly(1))));
 
     }

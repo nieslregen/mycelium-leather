@@ -24,7 +24,7 @@ public class LocateHollowGoal extends Goal {
     @Override
     public boolean canUse() {
         return this.squirrel.getHomePos().isEmpty()
-                && this.squirrel.needsToRest;
+                && (this.squirrel.needsToRest);
     }
 
     @Override

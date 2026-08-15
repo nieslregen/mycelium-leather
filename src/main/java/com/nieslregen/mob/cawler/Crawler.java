@@ -2,10 +2,9 @@ package com.nieslregen.mob.cawler;
 
 import com.mojang.serialization.Codec;
 import com.nieslregen.MyceliumLeatherMod;
-import com.nieslregen.block.ModBlocks;
 import com.nieslregen.datagen.ModEntityLootTableProvider;
-import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.ModAnimal;
+import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.goals.crawler.SleepGoal;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
@@ -36,7 +35,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -136,7 +134,7 @@ public class Crawler extends ModAnimal implements Shearable {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, (double)1.25F));
         this.goalSelector.addGoal(2, new SleepGoal(this));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1f, (i) -> i.is(Blocks.STONE.asItem()), true));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1f, (i) -> i.is(Blocks.STONE.asItem()), false));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this,1));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));

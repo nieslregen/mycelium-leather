@@ -1,8 +1,8 @@
 package com.nieslregen.mob.myceliumchicken;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.ModAnimal;
+import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.goals.myceliumchicken.*;
 import com.nieslregen.mob.goals.myceliumchicken.BreedGoal;
 import com.nieslregen.tags.ModTags;

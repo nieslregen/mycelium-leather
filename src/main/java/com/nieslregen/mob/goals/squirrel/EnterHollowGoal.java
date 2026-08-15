@@ -1,6 +1,8 @@
 package com.nieslregen.mob.goals.squirrel;
 
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
+import com.nieslregen.mob.CustomOccupant;
+import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -15,9 +17,14 @@ public class EnterHollowGoal extends Goal {
     public void start() {
         super.start();
         squirrel.homePos.ifPresent(pos -> {
-            MushroomStemHollowEntity entity = (MushroomStemHollowEntity) squirrel.level().getBlockEntity(pos);
-            if (entity != null) {
-                entity.addOccupant(squirrel);
+            MushroomStemHollowEntity hollow = (MushroomStemHollowEntity) squirrel.level().getBlockEntity(pos);
+            if (hollow != null) {
+                hollow.addOccupant(squirrel);
+
+                if (squirrel.carriesBaby) {
+                    squirrel.carriesBaby = false;
+                    hollow.storeMob(CustomOccupant.create(0, ModEntityTypes.SQUIRREL));
+                }
             }
         });
     }

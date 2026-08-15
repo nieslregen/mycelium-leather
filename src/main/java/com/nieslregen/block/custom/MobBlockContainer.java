@@ -11,7 +11,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -99,7 +98,9 @@ public class MobBlockContainer extends BlockEntity {
     }
 
     private static boolean releaseOccupant(final Level level, final BlockPos blockPos, final BlockState state, final CustomOccupant occupantData, final @Nullable List<Entity> spawned) {
-        Direction facing = (Direction)state.getValue(BeehiveBlock.FACING);
+        // ToDo
+//        Direction facing = (Direction)state.getValue(BeehiveBlock.FACING);
+        Direction facing = Direction.NORTH;
         BlockPos facingPos = blockPos.relative(facing);
         boolean frontBlocked = !level.getBlockState(facingPos).getCollisionShape(level, facingPos).isEmpty();
 
