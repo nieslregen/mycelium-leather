@@ -2,40 +2,42 @@ package com.nieslregen.effect;
 
 
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.phys.Vec3;
+
+import static com.nieslregen.datagen.ModEntityLootTableProvider.ILLNESS_DROP;
 
 public class IllnessEffect extends MobEffect {
-    private final RandomSource random;
-    private Vec3 leanDir = Vec3.ZERO;
+    private int shitEggTimer;
 
     protected IllnessEffect(MobEffectCategory category, int color) {
-        random = RandomSource.create();
-
         super(category, color);
+        resetTimer();
+    }
+
+    private void resetTimer() {
+        shitEggTimer = 20 * 7;
     }
 
     @Override
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity mob, int amplification) {
-        mob.moveRelative(1, leanDir);
-        mob.hurtMarked = true;
+        if (--shitEggTimer <= 0) {
+            if (mob.dropFromGiftLootTable(serverLevel, ILLNESS_DROP, mob::spawnAtLocation)) {
+                mob.playSound(SoundEvents.CHICKEN_EGG);
+                resetTimer();
+            }
+        }
         return true;
     }
 
     @Override
     public void onEffectStarted(LivingEntity mob, int amplifier) {
         mob.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, amplifier, false, false));
-
-        leanDir = new Vec3(
-                random.nextGaussian(),
-                0,
-                random.nextGaussian()
-        ).scale(0.025);
+        mob.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, amplifier, false, false));
 
         super.onEffectStarted(mob, amplifier);
     }

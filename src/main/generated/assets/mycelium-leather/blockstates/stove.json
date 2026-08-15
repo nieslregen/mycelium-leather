@@ -1,0 +1,165 @@
+{
+  "variants": {
+    "log=0,lit=false,facing=east": {
+      "model": "mycelium-leather:block/stove/stove0",
+      "y": 90
+    },
+    "log=0,lit=false,facing=north": {
+      "model": "mycelium-leather:block/stove/stove0"
+    },
+    "log=0,lit=false,facing=south": {
+      "model": "mycelium-leather:block/stove/stove0",
+      "y": 180
+    },
+    "log=0,lit=false,facing=west": {
+      "model": "mycelium-leather:block/stove/stove0",
+      "y": 270
+    },
+
+
+    "log=1,lit=false,facing=east": {
+      "model": "mycelium-leather:block/stove/stove1",
+      "y": 90
+    },
+    "log=1,lit=false,facing=north": {
+      "model": "mycelium-leather:block/stove/stove1"
+    },
+    "log=1,lit=false,facing=south": {
+      "model": "mycelium-leather:block/stove/stove1",
+      "y": 180
+    },
+    "log=1,lit=false,facing=west": {
+      "model": "mycelium-leather:block/stove/stove1",
+      "y": 270
+    },
+
+    "log=2,lit=false,facing=east": {
+      "model": "mycelium-leather:block/stove/stove2",
+      "y": 90
+    },
+    "log=2,lit=false,facing=north": {
+      "model": "mycelium-leather:block/stove/stove2"
+    },
+    "log=2,lit=false,facing=south": {
+      "model": "mycelium-leather:block/stove/stove2",
+      "y": 180
+    },
+    "log=2,lit=false,facing=west": {
+      "model": "mycelium-leather:block/stove/stove2",
+      "y": 270
+    },
+
+    "log=3,lit=false,facing=east": {
+      "model": "mycelium-leather:block/stove/stove3",
+      "y": 90
+    },
+    "log=3,lit=false,facing=north": {
+      "model": "mycelium-leather:block/stove/stove3"
+    },
+    "log=3,lit=false,facing=south": {
+      "model": "mycelium-leather:block/stove/stove3",
+      "y": 180
+    },
+    "log=3,lit=false,facing=west": {
+      "model": "mycelium-leather:block/stove/stove3",
+      "y": 270
+    },
+
+    "log=4,lit=false,facing=east": {
+      "model": "mycelium-leather:block/stove/stove4",
+      "y": 90
+    },
+    "log=4,lit=false,facing=north": {
+      "model": "mycelium-leather:block/stove/stove4"
+    },
+    "log=4,lit=false,facing=south": {
+      "model": "mycelium-leather:block/stove/stove4",
+      "y": 180
+    },
+    "log=4,lit=false,facing=west": {
+      "model": "mycelium-leather:block/stove/stove4",
+      "y": 270
+    },
+
+    "log=0,lit=true,facing=east": {
+      "model": "mycelium-leather:block/stove/stove0_lit",
+      "y": 90
+    },
+    "log=0,lit=true,facing=north": {
+      "model": "mycelium-leather:block/stove/stove0_lit"
+    },
+    "log=0,lit=true,facing=south": {
+      "model": "mycelium-leather:block/stove/stove0_lit",
+      "y": 180
+    },
+    "log=0,lit=true,facing=west": {
+      "model": "mycelium-leather:block/stove/stove0_lit",
+      "y": 270
+    },
+
+
+    "log=1,lit=true,facing=east": {
+      "model": "mycelium-leather:block/stove/stove1_lit",
+      "y": 90
+    },
+    "log=1,lit=true,facing=north": {
+      "model": "mycelium-leather:block/stove/stove1_lit"
+    },
+    "log=1,lit=true,facing=south": {
+      "model": "mycelium-leather:block/stove/stove1_lit",
+      "y": 180
+    },
+    "log=1,lit=true,facing=west": {
+      "model": "mycelium-leather:block/stove/stove1_lit",
+      "y": 270
+    },
+
+    "log=2,lit=true,facing=east": {
+      "model": "mycelium-leather:block/stove/stove2_lit",
+      "y": 90
+    },
+    "log=2,lit=true,facing=north": {
+      "model": "mycelium-leather:block/stove/stove2_lit"
+    },
+    "log=2,lit=true,facing=south": {
+      "model": "mycelium-leather:block/stove/stove2_lit",
+      "y": 180
+    },
+    "log=2,lit=true,facing=west": {
+      "model": "mycelium-leather:block/stove/stove2_lit",
+      "y": 270
+    },
+
+    "log=3,lit=true,facing=east": {
+      "model": "mycelium-leather:block/stove/stove3_lit",
+      "y": 90
+    },
+    "log=3,lit=true,facing=north": {
+      "model": "mycelium-leather:block/stove/stove3_lit"
+    },
+    "log=3,lit=true,facing=south": {
+      "model": "mycelium-leather:block/stove/stove3_lit",
+      "y": 180
+    },
+    "log=3,lit=true,facing=west": {
+      "model": "mycelium-leather:block/stove/stove3_lit",
+      "y": 270
+    },
+
+    "log=4,lit=true,facing=east": {
+      "model": "mycelium-leather:block/stove/stove4_lit",
+      "y": 90
+    },
+    "log=4,lit=true,facing=north": {
+      "model": "mycelium-leather:block/stove/stove4_lit"
+    },
+    "log=4,lit=true,facing=south": {
+      "model": "mycelium-leather:block/stove/stove4_lit",
+      "y": 180
+    },
+    "log=4,lit=true,facing=west": {
+      "model": "mycelium-leather:block/stove/stove4_lit",
+      "y": 270
+    }
+  }
+}

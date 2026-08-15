@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "experience": 0.05,
+  "group": "mycelium_leather_food",
+  "ingredient": "minecraft:bread",
+  "result": {
+    "id": "mycelium-leather:toasted_bread"
+  }
+}

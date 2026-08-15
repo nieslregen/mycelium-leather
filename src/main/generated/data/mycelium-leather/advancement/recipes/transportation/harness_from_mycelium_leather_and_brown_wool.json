@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_brown_wool": {
+    "has_brown_harness": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:brown_wool"
+            "items": "minecraft:brown_harness"
           }
         ]
       },
@@ -42,7 +42,7 @@
     [
       "has_the_recipe",
       "has_mycelium-leather",
-      "has_brown_wool",
+      "has_brown_harness",
       "has_glass"
     ]
   ],

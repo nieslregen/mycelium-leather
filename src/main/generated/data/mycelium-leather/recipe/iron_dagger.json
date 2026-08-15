@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": "#mycelium-leather:feathers",
+    "I": "minecraft:iron_ingot",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "I",
+    "S",
+    "F"
+  ],
+  "result": {
+    "id": "mycelium-leather:iron_dagger"
+  }
+}

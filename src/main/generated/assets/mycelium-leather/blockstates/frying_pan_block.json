@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "mycelium-leather:block/frying_pan_block",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "mycelium-leather:block/frying_pan_block",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "mycelium-leather:block/frying_pan_block"
+    },
+    "facing=west": {
+      "model": "mycelium-leather:block/frying_pan_block",
+      "y": 90
+    }
+  }
+}

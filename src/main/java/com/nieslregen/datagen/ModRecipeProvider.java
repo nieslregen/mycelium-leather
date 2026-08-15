@@ -2,12 +2,14 @@ package com.nieslregen.datagen;
 
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.items.ModItems;
+import com.nieslregen.tags.ModTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.level.ItemLike;
@@ -27,6 +29,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
             public void buildRecipes() {
                 List<ItemLike> MYCELIUM_SMELTABLES = List.of(ModItems.MYCELIUM_PATCH);
                 oreSmelting(MYCELIUM_SMELTABLES, RecipeCategory.MISC, CookingBookCategory.MISC, ModItems.MYCELIUM_PATCH_DRIED, .05f, 100, "mycelium-leather");
+                oreSmelting(List.of(Items.BREAD), RecipeCategory.FOOD, CookingBookCategory.FOOD, ModItems.TOASTED_BREAD, .05f, 200, "mycelium_leather_food");
 
                 shaped(RecipeCategory.MISC, Items.BOOK)
                         .pattern("   ")
@@ -74,138 +77,27 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .group("mycelium-leather")
                         .save(output, "mycelium_patch_from_mushrooms_and_wheat");
 
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.OAK_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.OAK_SLAB), has(Items.OAK_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_oak_slabs");
+                shaped(RecipeCategory.DECORATIONS, Items.MOSS_BLOCK, 2)
+                        .pattern("C")
+                        .pattern("C")
+                        .pattern("C")
+                        .define('C', Items.MOSS_CARPET)
+                        .unlockedBy(getHasName(Items.MOSS_CARPET), has(Items.MOSS_CARPET))
+                        .save(output, "moss_block_from_moss_carpets");
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
                         .pattern("SSS")
                         .pattern("IRI")
                         .pattern("SSS")
-                        .define('S', Items.ACACIA_SLAB)
+                        .define('S', ItemTags.WOODEN_SLABS)
                         .define('I', Items.IRON_NUGGET)
                         .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.ACACIA_SLAB), has(Items.ACACIA_SLAB))
                         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                         .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
                         .group("mycelium-leather")
-                        .save(output, "press_from_acacia_slabs");
+                        .save(output, "herbarium_press");
 
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.BIRCH_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.BIRCH_SLAB), has(Items.BIRCH_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_birch_slabs");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.CHERRY_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.CHERRY_SLAB), has(Items.CHERRY_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_cherry_slabs");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.CRIMSON_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.CRIMSON_SLAB), has(Items.CRIMSON_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_crimson_slabs");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.DARK_OAK_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.DARK_OAK_SLAB), has(Items.DARK_OAK_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_dark_oak_slabs");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.JUNGLE_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.JUNGLE_SLAB), has(Items.JUNGLE_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_jungle_slabs");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.SPRUCE_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.SPRUCE_SLAB), has(Items.SPRUCE_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_spruce_slabs");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.MANGROVE_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.MANGROVE_SLAB), has(Items.MANGROVE_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_mangrove_slabs");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.HERBARIUM_PRESS)
-                        .pattern("SSS")
-                        .pattern("IRI")
-                        .pattern("SSS")
-                        .define('S', Items.PALE_OAK_SLAB)
-                        .define('I', Items.IRON_NUGGET)
-                        .define('R', Items.STRING)
-                        .unlockedBy(getHasName(Items.PALE_OAK_SLAB), has(Items.PALE_OAK_SLAB))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
-                        .group("mycelium-leather")
-                        .save(output, "press_from_pale_oak_slabs");
-
-
-                shaped(RecipeCategory.TOOLS, ModItems.SPADE)
+                shaped(RecipeCategory.TOOLS, ModItems.ITEM_SPADE)
                         .pattern("   ")
                         .pattern(" S ")
                         .pattern("  I")
@@ -216,7 +108,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .group("spade")
                         .save(output, "spade_from_stick_and_iron_ingot_legacy");
 
-                shaped(RecipeCategory.TOOLS, ModItems.SPADE)
+                shaped(RecipeCategory.TOOLS, ModItems.ITEM_SPADE)
                         .pattern("  I")
                         .pattern(" S ")
                         .pattern("   ")
@@ -226,6 +118,28 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
                         .group("spade")
                         .save(output, "spade_from_stick_and_iron_ingot");
+
+                shaped(RecipeCategory.TOOLS, ModItems.WOODEN_SPADE)
+                        .pattern("  I")
+                        .pattern(" S ")
+                        .pattern("   ")
+                        .define('I', ItemTags.WOODEN_TOOL_MATERIALS)
+                        .define('S', Items.STICK)
+                        .unlockedBy("wood", has(ItemTags.WOODEN_TOOL_MATERIALS))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .group("spade")
+                        .save(output, "wooden_spade_legacy");
+
+                shaped(RecipeCategory.TOOLS, ModItems.WOODEN_SPADE)
+                        .pattern("  I")
+                        .pattern(" S ")
+                        .pattern("   ")
+                        .define('I', ItemTags.WOODEN_TOOL_MATERIALS)
+                        .define('S', Items.STICK)
+                        .unlockedBy("wood", has(ItemTags.WOODEN_TOOL_MATERIALS))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .group("spade")
+                        .save(output, "wooden_spade");
 
                 shaped(RecipeCategory.COMBAT, Items.LEATHER_BOOTS)
                         .pattern("   ")
@@ -488,157 +402,15 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy(getHasName(Items.FEATHER), has(Items.FEATHER))
                         .save(output, "writable_book_from_soot_ink");
 
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
+                shaped(RecipeCategory.FOOD, ModBlocks.TINY_CAULDRON)
                         .pattern("I I")
                         .pattern("III")
                         .pattern("SSS")
                         .define('I', Items.IRON_INGOT)
-                        .define('S', Items.OAK_SLAB)
+                        .define('S', ItemTags.WOODEN_SLABS)
                         .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.OAK_SLAB), has(Items.OAK_SLAB))
                         .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_oak_slab");
-
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.ACACIA_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.ACACIA_SLAB), has(Items.ACACIA_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_acacia_slab");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.BIRCH_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.BIRCH_SLAB), has(Items.BIRCH_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_birch_slab");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.CHERRY_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.CHERRY_SLAB), has(Items.CHERRY_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_cherry_slab");
-
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.CRIMSON_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.CRIMSON_SLAB), has(Items.CRIMSON_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_crimson_slab");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.DARK_OAK_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.DARK_OAK_SLAB), has(Items.DARK_OAK_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_dark_oak_slab");
-
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.JUNGLE_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.JUNGLE_SLAB), has(Items.JUNGLE_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_jungle_slab");
-
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.SPRUCE_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.SPRUCE_SLAB), has(Items.SPRUCE_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_spruce_slab");
-
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.MANGROVE_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.MANGROVE_SLAB), has(Items.MANGROVE_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_mangrove_slab");
-
-                shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.TINY_CAULDRON)
-                        .pattern("I I")
-                        .pattern("III")
-                        .pattern("SSS")
-                        .define('I', Items.IRON_INGOT)
-                        .define('S', Items.PALE_OAK_SLAB)
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .unlockedBy(getHasName(Items.PALE_OAK_SLAB), has(Items.PALE_OAK_SLAB))
-                        .group("tiny_cauldron")
-                        .save(output, "tiny_cauldron_from_pale_oak_slab");
-
-
-                //
-
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
-                        .define('S', Items.STICK)
-                        .define('W', Items.OAK_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
-                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.OAK_LOG), has(Items.OAK_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_oak_log");
-
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
-                        .define('S', Items.STICK)
-                        .define('W', Items.ACACIA_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
-                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.ACACIA_LOG), has(Items.ACACIA_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_acacia_log");
+                        .save(output, "tiny_cauldron");
 
 
                 shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
@@ -647,120 +419,116 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern("WFW")
                         .define('D', Items.DIRT)
                         .define('S', Items.STICK)
-                        .define('W', Items.BIRCH_LOG)
+                        .define('W', ItemTags.LOGS_THAT_BURN)
                         .define('G', ModItems.GRASS_PATCH)
                         .define('F', Items.CAMPFIRE)
                         .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
                         .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.BIRCH_LOG), has(Items.BIRCH_LOG))
                         .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
                         .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_birch_log");
+                        .save(output, "charcoal_pile_from_log");
 
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
+                shaped(RecipeCategory.TOOLS, ModItems.COPPER_DAGGER)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.COPPER_INGOT)
                         .define('S', Items.STICK)
-                        .define('W', Items.CHERRY_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
+                        .define('F', ModTags.Items.FEATHERS)
+                        .unlockedBy(getHasName(Items.COPPER_INGOT), has(Items.COPPER_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.CHERRY_LOG), has(Items.CHERRY_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_cherry_log");
+                        .save(output, "copper_dagger");
 
-
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
+                shaped(RecipeCategory.TOOLS, ModItems.IRON_DAGGER)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.IRON_INGOT)
                         .define('S', Items.STICK)
-                        .define('W', Items.DARK_OAK_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
+                        .define('F', ModTags.Items.FEATHERS)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.DARK_OAK_LOG), has(Items.DARK_OAK_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_dark_oak_log");
+                        .save(output, "iron_dagger");
 
-
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
+                shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_DAGGER)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.DIAMOND)
                         .define('S', Items.STICK)
-                        .define('W', Items.JUNGLE_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
+                        .define('F', ModTags.Items.FEATHERS)
+                        .unlockedBy(getHasName(Items.DIAMOND), has(Items.DIAMOND))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.JUNGLE_LOG), has(Items.JUNGLE_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_jungle_log");
+                        .save(output, "diamond_dagger");
 
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_CLASSIC)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
                         .define('S', Items.STICK)
-                        .define('W', Items.SPRUCE_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
+                        .define('F', Items.FEATHER)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.SPRUCE_LOG), has(Items.SPRUCE_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_spruce_log");
+                        .unlockedBy(getHasName(Items.FEATHER), has(Items.FEATHER))
+                        .save(output, "golden_dagger_with_classic_feather");
 
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_WARM)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
                         .define('S', Items.STICK)
-                        .define('W', Items.MANGROVE_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
+                        .define('F', ModItems.FEATHER_VARIANT_WARM)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.MANGROVE_LOG), has(Items.MANGROVE_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_mangrove_log");
+                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_WARM), has(ModItems.FEATHER_VARIANT_WARM))
+                        .save(output, "golden_dagger_with_hot_variant_feather");
 
-                shaped(RecipeCategory.MISC, ModBlocks.CHARCOAL_PILE)
-                        .pattern("DGD")
-                        .pattern("SWS")
-                        .pattern("WFW")
-                        .define('D', Items.DIRT)
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_COLD)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
                         .define('S', Items.STICK)
-                        .define('W', Items.PALE_OAK_LOG)
-                        .define('G', ModItems.GRASS_PATCH)
-                        .define('F', Items.CAMPFIRE)
-                        .unlockedBy(getHasName(ModItems.GRASS_PATCH), has(ModItems.GRASS_PATCH))
-                        .unlockedBy(getHasName(Items.DIRT), has(Items.DIRT))
+                        .define('F', ModItems.FEATHER_VARIANT_COLD)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
                         .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
-                        .unlockedBy(getHasName(Items.PALE_OAK_LOG), has(Items.PALE_OAK_LOG))
-                        .unlockedBy(getHasName(Items.CAMPFIRE), has(Items.CAMPFIRE))
-                        .group("charcoal_pile")
-                        .save(output, "charcoal_pile_from_pale_oak_log");
+                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_COLD), has(ModItems.FEATHER_VARIANT_COLD))
+                        .save(output, "golden_dagger_with_cold_variant_feather");
+
+                shaped(RecipeCategory.TOOLS, ModItems.GOLDEN_DAGGER_MUSHROOM)
+                        .pattern("I")
+                        .pattern("S")
+                        .pattern("F")
+                        .define('I', Items.GOLD_INGOT)
+                        .define('S', Items.STICK)
+                        .define('F', ModItems.FEATHER_VARIANT_MUSHROOM)
+                        .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .unlockedBy(getHasName(ModItems.FEATHER_VARIANT_MUSHROOM), has(ModItems.FEATHER_VARIANT_MUSHROOM))
+                        .save(output, "golden_dagger_with_mushroom_variant_feather");
+
+                shaped(RecipeCategory.MISC, ModBlocks.FRYING_PAN)
+                        .pattern("S  ")
+                        .pattern(" II")
+                        .define('I', Items.IRON_INGOT)
+                        .define('S', Items.STICK)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                        .unlockedBy(getHasName(Items.STICK), has(Items.STICK))
+                        .save(output, "frying_pan");
+
+                shaped(RecipeCategory.MISC, ModBlocks.STOVE)
+                        .pattern("CIC")
+                        .pattern("CCC")
+                        .pattern("C C")
+                        .define('I', Items.IRON_INGOT)
+                        .define('C', Items.COBBLESTONE)
+                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                        .unlockedBy(getHasName(Items.COBBLESTONE), has(Items.COBBLESTONE))
+                        .save(output, "stove");
+
             }
         };
     }

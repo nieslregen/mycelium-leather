@@ -1,0 +1,45 @@
+package com.nieslregen.mob;
+
+import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.mob.cawler.Crawler;
+import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
+import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+
+public class ModEntityTypes {
+
+    public static final EntityType<MyceliumChicken> MYCELIUM_CHICKEN = register(
+            "mycelium_chicken",
+            EntityType.Builder.<MyceliumChicken>of(MyceliumChicken::new, MobCategory.CREATURE)
+                    .eyeHeight(0.8f)
+                    .sized(0.75f, 1.75f)
+    );
+
+    public static final EntityType<Crawler> CRAWLER = register(
+            "crawler",
+            EntityType.Builder.of(Crawler::new, MobCategory.CREATURE)
+                    .eyeHeight(0.8f)
+    );
+
+    public static final EntityType<MyceliumSquirrel> SQUIRREL = register(
+            "mycelium_squirrel",
+            EntityType.Builder.of(MyceliumSquirrel::new, MobCategory.CREATURE)
+                    .eyeHeight(0.8f)
+    );
+
+    private static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {
+        ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name));
+        return Registry.register(BuiltInRegistries.ENTITY_TYPE, key, builder.build(key));
+    }
+
+    public static void registerModEntityTypes() {
+        MyceliumLeatherMod.LOGGER.info("Registering EntityTypes for " + MyceliumLeatherMod.MOD_ID);
+    }
+}
