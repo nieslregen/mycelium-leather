@@ -1,6 +1,7 @@
 package com.nieslregen.mob.myceliumchicken;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.nieslregen.block.ModBlocks;
 import com.nieslregen.mob.ModAnimal;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.goals.myceliumchicken.*;
@@ -26,7 +27,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.animal.chicken.ChickenSoundVariant;
 import net.minecraft.world.entity.animal.chicken.ChickenSoundVariants;
 import net.minecraft.world.entity.player.Player;
@@ -106,7 +106,19 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
 
     static {
         BABY_DIMENSIONS = EntityDimensions.scalable(0.3F, 0.2F).withEyeHeight(0.28125F).withAttachments(EntityAttachments.builder().attach(EntityAttachment.PASSENGER, 0.0F, 0.375F, 0.0F));
-        LAST_POSE_CHANGE_TICK = SynchedEntityData.defineId(Camel.class, EntityDataSerializers.LONG);
+        LAST_POSE_CHANGE_TICK = SynchedEntityData.defineId(MyceliumChicken.class, EntityDataSerializers.LONG);
+    }
+
+    public Optional<BlockPos> getNestPos() {
+        if (nestPos.isPresent()) {
+            BlockState state = this.level().getBlockState(nestPos.get());
+            if (state.is(ModBlocks.MYCELIUM_CHICKEN_NEST)) {
+                return nestPos;
+            } else {
+                nestPos = Optional.empty();
+            }
+        }
+        return Optional.empty();
     }
 
 
@@ -251,11 +263,13 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
             this.setPose(Pose.STANDING);
             this.gameEvent(GameEvent.ENTITY_ACTION);
             this.resetLastPoseChangeTickToFullStand(this.level().getGameTime());
+            this.sitUpAnimationState.start(this.tickCount);
         }
     }
 
     public void sitDown() {
         if (!isSitting()) {
+            this.sitDownAnimationState.start(this.tickCount);
             this.setPose(Pose.SITTING);
             this.gameEvent(GameEvent.ENTITY_ACTION);
             this.resetLastPoseChangeTickToFullStand(this.level().getGameTime());

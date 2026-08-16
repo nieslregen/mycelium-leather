@@ -22,7 +22,7 @@ public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModItemTagsProvider::new);
 		pack.addProvider(ModEntityLootTableProvider::new);
 		pack.addProvider(WorldGenProvider::new);
-//		pack.addProvider(PoiTypesTagsProvider::new);
+		pack.addProvider(ModPOITags::new);
 	}
 
 	@Override

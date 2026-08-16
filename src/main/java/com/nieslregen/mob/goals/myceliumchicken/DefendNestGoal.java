@@ -16,7 +16,7 @@ public class DefendNestGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canUse() {
-        if (!chicken.nestPos.isPresent()) {
+        if (chicken.getNestPos().isEmpty()) {
             return false;
         }
         List<LivingEntity> targets = chicken.getTargets(this.chicken, 3);
@@ -36,7 +36,7 @@ public class DefendNestGoal extends MeleeAttackGoal {
                 && chicken.getTarget().isAlive()
                 && chicken.getTargets(this.chicken, 5).contains(chicken.getTarget())
                 && !chicken.carriesStolenEgg
-                && chicken.nestPos.isPresent()
+                && chicken.getNestPos().isPresent()
                 && super.canContinueToUse();
     }
 

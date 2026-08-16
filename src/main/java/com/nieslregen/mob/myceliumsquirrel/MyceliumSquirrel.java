@@ -51,24 +51,6 @@ public class MyceliumSquirrel extends HollowUser {
         super(type, level);
         resetTimeUntilResting();
         resetDigTimer();
-
-        if (level instanceof ServerLevel) {
-
-            Registry<PoiType> registry = level.registryAccess()
-                    .lookupOrThrow(Registries.POINT_OF_INTEREST_TYPE);
-
-            registry.get(ModPoiTypes.SQUIRREL_HOME)
-                    .ifPresentOrElse(
-                            poi -> System.out.println("POI gefunden: " + poi),
-                            () -> System.out.println("POI NICHT gefunden!")
-                    );
-
-
-            registry.listElements()
-                    .forEach(holder ->
-                            System.out.println(holder.key())
-                    );
-        }
     }
 
     @Override
@@ -157,7 +139,6 @@ public class MyceliumSquirrel extends HollowUser {
         if (!this.level().isClientSide()) {
             this.setClimbing(this.horizontalCollision);
         }
-        MyceliumLeatherMod.LOGGER.info("is climbing: " + this.isClimbing());
     }
 
     @Override

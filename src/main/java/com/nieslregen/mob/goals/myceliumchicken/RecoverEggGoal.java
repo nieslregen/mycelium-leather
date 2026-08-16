@@ -38,7 +38,7 @@ public class RecoverEggGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (chicken.nestPos.isPresent()) {
+        if (chicken.getNestPos().isPresent()) {
             BlockPos nest = this.chicken.nestPos.get();
             BlockEntity entity = chicken.level().getBlockEntity(nest);
 

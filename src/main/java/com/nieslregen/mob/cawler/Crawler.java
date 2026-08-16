@@ -84,20 +84,16 @@ public class Crawler extends ModAnimal implements Shearable {
         return SoundEvents.MAGMA_CUBE_DEATH_SMALL;
     }
 
-//    @Override
-//    protected @Nullable SoundEvent getAmbientSound() {
-//        return SoundEvents.ARMADILLO_BRUSH;
-//    }
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return SoundEvents.ARMADILLO_BRUSH;
+    }
 
     @Override
     protected @Nullable SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ARMADILLO_EAT;
     }
 
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return null;
-    }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockState) {
@@ -201,6 +197,10 @@ public class Crawler extends ModAnimal implements Shearable {
     public static boolean checkCrawlerSpawnRules(EntityType<Crawler> crawlerEntityType, ServerLevelAccessor serverLevelAccessor, EntitySpawnReason entitySpawnReason, BlockPos blockPos, RandomSource randomSource) {
         return isBrightEnoughToSpawn(serverLevelAccessor, blockPos);
     }
+
+
+
+
 
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {

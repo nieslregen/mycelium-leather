@@ -16,7 +16,7 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
     }
 
     private boolean isAngryAtPlayer() {
-        if (chicken.nestPos.isPresent()) {
+        if (chicken.getNestPos().isPresent()) {
             BlockPos p = this.chicken.nestPos.get();
             BlockState state = this.chicken.level().getBlockState(p);
 
@@ -41,7 +41,7 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
     @Override
     public void start() {
         super.start();
-        if  (chicken.nestPos.isPresent()) {
+        if  (chicken.getNestPos().isPresent()) {
             if (chicken.level().getBlockEntity(chicken.nestPos.get()) instanceof MyceliumChickenNestEntity nestEntity && nestEntity.getThief().isPresent()) {
                 chicken.setTarget(nestEntity.getThief().get());
             }

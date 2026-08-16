@@ -2,6 +2,7 @@ package com.nieslregen.block.custom;
 
 import com.nieslregen.mob.CustomOccupant;
 import com.nieslregen.mob.CustomOccupantData;
+import com.nieslregen.mob.HollowUser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -23,6 +24,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class MobBlockContainer extends BlockEntity {
 
@@ -112,6 +114,9 @@ public class MobBlockContainer extends BlockEntity {
 
         if (spawned != null) {
             spawned.add(entity);
+            if (entity instanceof HollowUser h) {
+                h.homePos = Optional.of(blockPos);
+            }
         }
 
         float bbWidth = entity.getBbWidth();
@@ -177,7 +182,7 @@ public class MobBlockContainer extends BlockEntity {
     }
 
     public boolean isFull() {
-        return false;
+        return this.storedOccupants.size() >= 3;
     }
 
     public List<CustomOccupant> getMobs() {

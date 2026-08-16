@@ -21,7 +21,7 @@ public class IncubateGoal extends Goal {
     public void start() {
         super.start();
 
-        if (chicken.nestPos.isPresent()){
+        if (chicken.getNestPos().isPresent()){
             BlockPos pos = chicken.nestPos.get();
             BlockState newState = chicken.level().getBlockState(pos).setValue(MyceliumChickenNestBlock.IS_INCUBATING, true);
             chicken.level().setBlockAndUpdate(pos, newState);
@@ -44,7 +44,7 @@ public class IncubateGoal extends Goal {
     @Override
     public void stop() {
         super.stop();
-        if (chicken.nestPos.isPresent()){
+        if (chicken.getNestPos().isPresent()){
             BlockState newState = chicken.level().getBlockState(chicken.nestPos.get()).setValue(MyceliumChickenNestBlock.IS_INCUBATING, false);
             chicken.level().setBlockAndUpdate(chicken.nestPos.get(), newState);
         }
@@ -53,11 +53,11 @@ public class IncubateGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return super.canContinueToUse() && chicken.nestPos.isPresent() && chicken.nestPos.get().closerToCenterThan(chicken.position(), 1.5f);
+        return super.canContinueToUse() && chicken.getNestPos().isPresent() && chicken.nestPos.get().closerToCenterThan(chicken.position(), 1.5f);
     }
 
     @Override
     public boolean canUse() {
-        return chicken.nestPos.isPresent() && chicken.nestPos.get().closerToCenterThan(chicken.position(), 1.5f);
+        return chicken.getNestPos().isPresent() && chicken.nestPos.get().closerToCenterThan(chicken.position(), 1.5f);
     }
 }

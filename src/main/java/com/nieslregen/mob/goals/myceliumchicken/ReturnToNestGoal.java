@@ -14,7 +14,7 @@ public class ReturnToNestGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return chicken.nestPos.isPresent()
+        return chicken.getNestPos().isPresent()
                 && !chicken.isAngry()
                 && !chicken.nestPos.get()
                 .closerToCenterThan(chicken.position(), 1.75);
@@ -36,7 +36,7 @@ public class ReturnToNestGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return chicken.nestPos.isPresent()
+        return chicken.getNestPos().isPresent()
                 && !chicken.nestPos.get()
                 .closerToCenterThan(chicken.position(), 0.75);
     }
@@ -48,7 +48,7 @@ public class ReturnToNestGoal extends Goal {
 
     @Override
     public void tick() {
-        if (chicken.nestPos.isPresent()) {
+        if (chicken.getNestPos().isPresent()) {
             BlockPos pos = chicken.nestPos.get();
 
             if (chicken.getNavigation().isDone()) {
