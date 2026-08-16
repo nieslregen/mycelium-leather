@@ -75,6 +75,7 @@ public class SleepGoal extends Goal {
     public void start() {
         super.start();
         this.crawler.sleeping = true;
+        this.crawler.setCrawlerState(Crawler.CrawlerState.FALLING_ASLEEP);
 //            this.crawler.getNavigation().stop();
 //            this.crawler.setSitting(false);
 //            this.crawler.setIsCrouching(false);
@@ -89,6 +90,7 @@ public class SleepGoal extends Goal {
     public void stop() {
         super.stop();
         this.crawler.sleeping = false;
+        this.crawler.setCrawlerState(Crawler.CrawlerState.WAKING_UP);
         grow();
     }
 }

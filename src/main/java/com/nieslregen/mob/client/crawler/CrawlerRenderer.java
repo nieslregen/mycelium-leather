@@ -46,5 +46,7 @@ public class CrawlerRenderer extends MobRenderer<Crawler, CrawlerRendererState, 
     public void extractRenderState(Crawler entity, CrawlerRendererState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
         state.variant = entity.getOvergrownSurface();
+        state.fallingAsleepAnimationState.copyFrom(entity.fallingAsleepAnimationState);
+        state.wakingUpAnimationState.copyFrom(entity.wakingUpAnimationState);
     }
 }

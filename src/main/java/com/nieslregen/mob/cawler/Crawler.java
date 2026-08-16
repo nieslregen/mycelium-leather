@@ -50,6 +50,15 @@ import static com.nieslregen.datagen.ModEntityLootTableProvider.DEATH_CRAWLER;
 public class Crawler extends ModAnimal implements Shearable {
 
     private static final EntityDataAccessor<Integer> DATA_TYPE;
+    private static final EntityDataAccessor<Integer> ANIMATION_STATE = SynchedEntityData.defineId(Crawler.class, EntityDataSerializers.INT);
+
+    public final AnimationState fallingAsleepAnimationState = new AnimationState();
+    public final AnimationState wakingUpAnimationState = new AnimationState();
+
+    public enum CrawlerState {
+        NONE, FALLING_ASLEEP, WAKING_UP
+    }
+
     public boolean sleeping;
 
 
@@ -62,7 +71,36 @@ public class Crawler extends ModAnimal implements Shearable {
     protected void defineSynchedData(SynchedEntityData.Builder entityData) {
         super.defineSynchedData(entityData);
         entityData.define(DATA_TYPE, OvergrownType.DEFAULT.id);
+        entityData.define(ANIMATION_STATE, 0);
     }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> accessor) {
+        super.onSyncedDataUpdated(accessor);
+
+        if (accessor == ANIMATION_STATE) {
+            this.fallingAsleepAnimationState.animateWhen(getCrawlerState().equals(CrawlerState.FALLING_ASLEEP), this.tickCount);
+            this.wakingUpAnimationState.animateWhen(getCrawlerState().equals(CrawlerState.WAKING_UP), this.tickCount);
+        }
+    }
+
+    public CrawlerState getCrawlerState() {
+        return switch (entityData.get(ANIMATION_STATE)) {
+            case 1 -> CrawlerState.FALLING_ASLEEP;
+            case 2 -> CrawlerState.WAKING_UP;
+            default -> CrawlerState.NONE;
+        };
+    }
+
+    public void setCrawlerState(CrawlerState crawlerState) {
+        int stateAsInteger = switch (crawlerState) {
+            case FALLING_ASLEEP -> 1;
+            case WAKING_UP -> 2;
+            default -> 0;
+        };
+        entityData.set(ANIMATION_STATE, stateAsInteger);
+    }
+
 
     public void setVariant(final OvergrownType variant) {
         MyceliumLeatherMod.LOGGER.info("setVariant " + variant);
@@ -93,7 +131,6 @@ public class Crawler extends ModAnimal implements Shearable {
     protected @Nullable SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ARMADILLO_EAT;
     }
-
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockState) {
@@ -199,21 +236,22 @@ public class Crawler extends ModAnimal implements Shearable {
     }
 
 
-
-
-
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
-        output.putInt("OvergrownType", this.entityData.get(DATA_TYPE));
         output.putBoolean("isSleeping", sleeping);
+
+        output.putInt("AnimationState", this.entityData.get(ANIMATION_STATE));
+        output.putInt("OvergrownType", this.entityData.get(DATA_TYPE));
     }
 
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
-        this.entityData.set(DATA_TYPE, input.getIntOr("OvergrownType", 0));
         sleeping = input.getBooleanOr("isSleeping", false);
+
+        this.entityData.set(ANIMATION_STATE, input.getIntOr("AnimationState", 0));
+        this.entityData.set(DATA_TYPE, input.getIntOr("OvergrownType", 0));
     }
 
     public enum OvergrownType implements StringRepresentable {

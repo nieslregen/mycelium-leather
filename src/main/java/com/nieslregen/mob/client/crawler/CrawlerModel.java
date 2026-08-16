@@ -19,6 +19,8 @@ public class CrawlerModel extends EntityModel<CrawlerRendererState> {
     private final ModelPart left_front_foot;
 
     private final KeyframeAnimation walkAnimation;
+    private final KeyframeAnimation wakingUpAnimation;
+    private final KeyframeAnimation fallingAsleepAnimation;
 
     protected CrawlerModel(ModelPart root) {
         super(root);
@@ -33,6 +35,8 @@ public class CrawlerModel extends EntityModel<CrawlerRendererState> {
         this.left_front_foot = this.feet.getChild("left_front_foot");
 
         this.walkAnimation = CrawlerAnimation.walking.bake(this.root);
+        this.wakingUpAnimation = CrawlerAnimation.wake_up.bake(this.root);
+        this.fallingAsleepAnimation = CrawlerAnimation.fall_asleep.bake(this.root);
     }
 
 
@@ -74,6 +78,14 @@ public class CrawlerModel extends EntityModel<CrawlerRendererState> {
         super.setupAnim(state);
         this.applyHeadRotation(state, state.yRot, state.xRot);
         this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 7.5F, 8F);
+
+        if (state.fallingAsleepAnimationState.isStarted()) {
+            this.fallingAsleepAnimation.apply(state.fallingAsleepAnimationState, state.ageInTicks);
+        }
+
+        if (state.wakingUpAnimationState.isStarted()) {
+            this.wakingUpAnimation.apply(state.wakingUpAnimationState, state.ageInTicks);
+        }
     }
 
     private void applyHeadRotation(final CrawlerRendererState state, float yRot, float xRot) {
