@@ -9,6 +9,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.Optional;
 
@@ -69,6 +71,10 @@ public class MyceliumChickenNestEntity extends BlockEntity {
         entity.setChanged();
     }
 
+    public void resetThief() {
+        thief = Optional.empty();
+    }
+
     public Optional<LivingEntity> getThief() {
         if (thief.isPresent()) {
             if (thief.get().isAlive()) {
@@ -122,5 +128,27 @@ public class MyceliumChickenNestEntity extends BlockEntity {
             currentTemperature--;
         }
         return true;
+    }
+
+    public static final String EGG_AGE_IDENTIFIER = "eggAgeInTicks";
+    public static final String TEMPERATURE_IDENTIFIER = "temperature";
+    public static final String NEST_AGE_IDENTIFIER = "nestAge";
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+
+        eggAgeInTicks = input.getIntOr(EGG_AGE_IDENTIFIER, 0);
+        currentTemperature = input.getIntOr(TEMPERATURE_IDENTIFIER, MAX_TEMPERATURE);
+        emptyNestAge = input.getIntOr(NEST_AGE_IDENTIFIER, 0);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+
+        output.putInt(EGG_AGE_IDENTIFIER, eggAgeInTicks);
+        output.putInt(TEMPERATURE_IDENTIFIER, currentTemperature);
+        output.putInt(NEST_AGE_IDENTIFIER, emptyNestAge);
     }
 }

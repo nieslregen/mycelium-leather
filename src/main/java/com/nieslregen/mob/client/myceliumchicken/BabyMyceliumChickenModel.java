@@ -32,7 +32,7 @@ public class BabyMyceliumChickenModel extends MyceliumChickenModel {
         this.idleAnimation = MyceliumChickenAnimation.walking.bake(this.root);
     }
 
-    public static LayerDefinition createBodyLayer() {
+    public static LayerDefinition getTexturedModelData() {
 //        MeshDefinition mesh = new MeshDefinition();
 //        PartDefinition root = mesh.getRoot();
 //        root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -2.25F, -0.75F, 4.0F, 4.0F, 4.0F).texOffs(10, 8).addBox(-1.0F, -0.25F, -1.75F, 2.0F, 1.0F, 1.0F), PartPose.offset(0.0F, 20.25F, -1.25F));

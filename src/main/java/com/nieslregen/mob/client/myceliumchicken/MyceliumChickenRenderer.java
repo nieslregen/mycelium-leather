@@ -41,8 +41,6 @@ public class MyceliumChickenRenderer extends AgeableMobRenderer<MyceliumChicken,
         state.flap = Mth.lerp(partialTicks, entity.oFlap, entity.flap);
         state.flapSpeed = Mth.lerp(partialTicks, entity.oFlapSpeed, entity.flapSpeed);
         state.sitDownAnimationState.copyFrom(entity.sitDownAnimationState);
-        state.sitUpAnimationState.copyFrom(entity.sitUpAnimationState);
-//        state.idleAnimationState.copyFrom(entity.idleAnimationState);
-        state.sitPoseAnimationState.copyFrom(entity.sitPoseAnimationState);
+        state.standUpAnimationState.copyFrom(entity.standUpUpAnimationState);
     }
 }

@@ -5,25 +5,24 @@ import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-public class ReturnToNestGoal extends Goal {
+public class ReturnEggToNestGoal extends Goal {
     private final MyceliumChicken chicken;
 
-    public ReturnToNestGoal(MyceliumChicken chicken) {
+    public ReturnEggToNestGoal(MyceliumChicken chicken) {
         this.chicken = chicken;
     }
 
     @Override
     public boolean canUse() {
         return chicken.getNestPos().isPresent()
-                && !chicken.carriesStolenEgg
-                && !chicken.isAngry()
+                && chicken.carriesStolenEgg
                 && !chicken.nestPos.get()
                 .closerToCenterThan(chicken.position(), 1.25);
     }
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("Start ReturnToNestGoal");
+        MyceliumLeatherMod.LOGGER.info("Start Return EGG ToNestGoal");
 
         chicken.nestPos.ifPresent(pos -> chicken
                 .getNavigation()
@@ -38,7 +37,7 @@ public class ReturnToNestGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return chicken.getNestPos().isPresent()
-                && !chicken.carriesStolenEgg
+                && chicken.carriesStolenEgg
                 && !chicken.nestPos.get()
                 .closerToCenterThan(chicken.position(), 0.75);
     }

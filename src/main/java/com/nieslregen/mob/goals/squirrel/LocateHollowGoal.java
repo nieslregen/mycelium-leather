@@ -24,8 +24,8 @@ public class LocateHollowGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.squirrel.getHomePos().isEmpty()
-                && (this.squirrel.needsToRest);
+        return squirrel.bufferFindHollow <= 0
+                && (squirrel.getHomePos().isEmpty() || squirrel.getHomePos().get().closerThan(squirrel.blockPosition(), 128));
     }
 
     @Override
@@ -35,13 +35,19 @@ public class LocateHollowGoal extends Goal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("Search for hollow");
+        MyceliumLeatherMod.LOGGER.info("start LocateHollowGoal");
         squirrel.resetTimeUntilResting();
         Optional<BlockPos> p = findNest();
         MyceliumLeatherMod.LOGGER.error("Found: {}", p);
         squirrel.homePos = p;
     }
 
+    @Override
+    public void stop() {
+        MyceliumLeatherMod.LOGGER.info("stop LocateHollowGoal");
+        super.stop();
+        squirrel.resetBufferFindHollow();
+    }
 
     private Optional<BlockPos> findNest() {
         BlockPos squirrelPos = squirrel.blockPosition();

@@ -9,8 +9,7 @@ import net.minecraft.world.entity.AnimationState;
 public class MyceliumChickenRenderState extends LivingEntityRenderState {
 
     public final AnimationState sitDownAnimationState;
-    public final AnimationState sitPoseAnimationState;
-    public final AnimationState sitUpAnimationState;
+    public final AnimationState standUpAnimationState;
     public final AnimationState idleAnimationState;
 
     public float flap;
@@ -18,8 +17,7 @@ public class MyceliumChickenRenderState extends LivingEntityRenderState {
 
     public MyceliumChickenRenderState() {
         this.sitDownAnimationState = new AnimationState();
-        this.sitPoseAnimationState = new AnimationState();
-        this.sitUpAnimationState = new AnimationState();
+        this.standUpAnimationState = new AnimationState();
         this.idleAnimationState = new AnimationState();
     }
 

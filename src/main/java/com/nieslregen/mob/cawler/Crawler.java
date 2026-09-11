@@ -71,7 +71,7 @@ public class Crawler extends ModAnimal implements Shearable {
     protected void defineSynchedData(SynchedEntityData.Builder entityData) {
         super.defineSynchedData(entityData);
         entityData.define(DATA_TYPE, OvergrownType.DEFAULT.id);
-        entityData.define(ANIMATION_STATE, 0);
+        entityData.define(ANIMATION_STATE, 2);
     }
 
     @Override

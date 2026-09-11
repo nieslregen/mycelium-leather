@@ -1,11 +1,13 @@
 package com.nieslregen.items.customitems;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.datagen.ModDamageTypes;
 import com.nieslregen.effect.ModEffects;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -59,7 +61,7 @@ public class Dagger extends Item {
                 attacker.level().playSound(
                         null,
                         attacker.blockPosition(),
-                        SoundEvents.PIGLIN_DEATH,
+                        SoundEvents.BREEZE_HURT,
                         SoundSource.PLAYERS,
                         1.0F,
                         1.0F
@@ -73,7 +75,13 @@ public class Dagger extends Item {
     }
 
     private boolean doesNotSee(LivingEntity mob, LivingEntity attacker) {
-        return attacker.getDirection() == mob.getDirection();
+        float min = Mth.positiveModulo(Mth.wrapDegrees(mob.yHeadRotO - 60), 360);
+        float max = Mth.positiveModulo(Mth.wrapDegrees(mob.yHeadRotO + 60), 360);
+
+        float attackerHeadRot = Mth.positiveModulo(Mth.wrapDegrees(attacker.yHeadRotO), 360);
+        MyceliumLeatherMod.LOGGER.info("isBehind: {}, min/max ({},{}), attacker {}",(min < attackerHeadRot) && (attackerHeadRot < max), min, max, attackerHeadRot);
+
+        return (min < attackerHeadRot) && (attackerHeadRot < max);
     }
 
     private void applyEffect(LivingEntity entity, MobEffect effect, int duration) {
@@ -86,11 +94,15 @@ public class Dagger extends Item {
 
     @Override
     public @Nullable DamageSource getItemDamageSource(LivingEntity attacker) {
-        return new DamageSource(
-                ModDamageTypes.create(
-                        (ServerLevel)attacker.level(),
-                        ModDamageTypes.STAB).typeHolder(),
-                attacker
-        );
+        if (attacker.level() instanceof ServerLevel serverLevel) {
+            return new DamageSource(
+                    ModDamageTypes.create(
+                            serverLevel,
+                            ModDamageTypes.STAB).typeHolder(),
+                    attacker
+            );
+        }
+        return null;
+
     }
 }

@@ -1,8 +1,11 @@
 package com.nieslregen.block.custom;
 
+import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
 import com.nieslregen.mob.CustomOccupant;
 import com.nieslregen.mob.CustomOccupantData;
 import com.nieslregen.mob.HollowUser;
+import com.nieslregen.mob.ModEntityTypes;
+import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -10,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.VisibleForDebug;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Leashable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FireBlock;
@@ -28,7 +32,7 @@ import java.util.Optional;
 
 public class MobBlockContainer extends BlockEntity {
 
-    private final List<CustomOccupantData> storedOccupants = new ArrayList<>();
+    public final List<CustomOccupantData> storedOccupants = new ArrayList<>();
     public static final int MAX_OCCUPANTS = 3;
     public final EntityType<?> occupantType;
 
@@ -41,7 +45,7 @@ public class MobBlockContainer extends BlockEntity {
         if (this.isFireNearby()) {
             List<Entity> released = new ArrayList<>();
             storedOccupants.forEach(
-                    occupantData -> releaseOccupant(level, worldPosition, getBlockState(), occupantData.toOccupant(), released)
+                    occupantData -> releaseOccupant(level, worldPosition, getBlockState(), occupantData.toOccupant(), released, occupantType)
             );
         }
 
@@ -71,21 +75,15 @@ public class MobBlockContainer extends BlockEntity {
         if (this.storedOccupants.size() < MAX_OCCUPANTS) {
             mob.stopRiding();
             mob.ejectPassengers();
-            // Needs Leashable interface
-//            mob.dropLeash();
+
+            if (mob instanceof Leashable l) {
+                l.dropLeash();
+            }
+
             this.storeMob(CustomOccupant.of(mob));
             if (this.level != null) {
                 BlockPos blockPos = this.getBlockPos();
-                this.level.playSound(
-                        (Entity)null,
-                        (double)blockPos.getX(),
-                        (double)blockPos.getY(),
-                        (double)blockPos.getZ(),
-                        SoundEvents.BEEHIVE_ENTER,
-                        SoundSource.BLOCKS,
-                        1.0F,
-                        1.0F
-                );
+                makeSoundByAnimal(mob, blockPos);
                 this.level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(mob, this.getBlockState()));
             }
 
@@ -94,12 +92,27 @@ public class MobBlockContainer extends BlockEntity {
         }
     }
 
+    public void makeSoundByAnimal(LivingEntity mob, BlockPos blockPos) {
+        if (mob instanceof MyceliumSquirrel) {
+            this.level.playSound(
+                    null,
+                    blockPos.getX(),
+                    blockPos.getY(),
+                    blockPos.getZ(),
+                    SoundEvents.AXOLOTL_IDLE_AIR,
+                    SoundSource.BLOCKS,
+                    1.0F,
+                    1.0F
+            );
+        }
+    }
+
 
     public void storeMob(final CustomOccupant occupant) {
         this.storedOccupants.add(new CustomOccupantData(occupant));
     }
 
-    private static boolean releaseOccupant(final Level level, final BlockPos blockPos, final BlockState state, final CustomOccupant occupantData, final @Nullable List<Entity> spawned) {
+    public boolean releaseOccupant(final Level level, final BlockPos blockPos, final BlockState state, final CustomOccupant occupantData, final @Nullable List<Entity> spawned, EntityType<?> occupantType) {
         // ToDo
 //        Direction facing = (Direction)state.getValue(BeehiveBlock.FACING);
         Direction facing = Direction.NORTH;
@@ -108,8 +121,7 @@ public class MobBlockContainer extends BlockEntity {
 
         if (frontBlocked) { return false; }
 
-        MobBlockContainer container = (MobBlockContainer) level.getBlockEntity(blockPos);
-        Entity entity = occupantData.createEntity(level, blockPos, container.occupantType);
+        Entity entity = occupantData.createEntity(level, blockPos, occupantType);
         if (entity == null ) { return false; }
 
         if (spawned != null) {
@@ -134,7 +146,7 @@ public class MobBlockContainer extends BlockEntity {
 
     }
 
-    private static void tickOccupants(final Level level, final BlockPos pos, final BlockState state, final List<CustomOccupantData> stored) {
+    private void tickOccupants(final Level level, final BlockPos pos, final BlockState state, final List<CustomOccupantData> stored) {
         boolean changed = false;
         Iterator<CustomOccupantData> iterator = stored.iterator();
 
@@ -142,7 +154,7 @@ public class MobBlockContainer extends BlockEntity {
             CustomOccupantData data = (CustomOccupantData)iterator.next();
             if (data.tick()) {
 //                BeehiveBlockEntity.BeeReleaseStatus releaseStatus = data.hasNectar() ? BeehiveBlockEntity.BeeReleaseStatus.HONEY_DELIVERED : BeehiveBlockEntity.BeeReleaseStatus.BEE_RELEASED;
-                if (releaseOccupant(level, pos, state, data.toOccupant(), (List)null)) {
+                if (releaseOccupant(level, pos, state, data.toOccupant(), null, occupantType)) {
                     changed = true;
                     iterator.remove();
                 }
@@ -156,12 +168,26 @@ public class MobBlockContainer extends BlockEntity {
     }
 
     public static void serverTick(final Level level, final BlockPos blockPos, final BlockState state, final MobBlockContainer entity) {
-        tickOccupants(level, blockPos, state, entity.storedOccupants);
+        entity.tickOccupants(level, blockPos, state, entity.storedOccupants);
         if (!entity.storedOccupants.isEmpty() && level.getRandom().nextDouble() < 0.005) {
             double x = (double)blockPos.getX() + (double)0.5F;
             double y = (double)blockPos.getY();
             double z = (double)blockPos.getZ() + (double)0.5F;
-            level.playSound((Entity)null, x, y, z, SoundEvents.BEEHIVE_WORK, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+            if (entity instanceof MushroomStemHollowEntity) {
+                if (ModEntityTypes.SQUIRREL.equals(entity.occupantType)) {
+                    level.playSound(
+                            null,
+                            blockPos.getX(),
+                            blockPos.getY(),
+                            blockPos.getZ(),
+                            SoundEvents.AXOLOTL_IDLE_AIR,
+                            SoundSource.BLOCKS,
+                            1.0F,
+                            1.0F
+                    );
+                }
+            }
         }
 
     }

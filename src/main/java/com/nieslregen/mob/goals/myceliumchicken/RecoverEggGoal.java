@@ -1,5 +1,6 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
@@ -21,9 +22,10 @@ public class RecoverEggGoal extends Goal {
     @Override
     public void start() {
         super.start();
+        MyceliumLeatherMod.LOGGER.info("Recover Egg Goal starting...");
         List<ItemEntity> items = getNearbyItems();
         if (!items.isEmpty()) {
-            chicken.getNavigation().moveTo((Entity) items.getFirst(), (double) 1.2F);
+            chicken.getNavigation().moveTo(items.getFirst(), 1.2F);
         }
     }
 
@@ -38,11 +40,19 @@ public class RecoverEggGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (chicken.getNestPos().isPresent()) {
-            BlockPos nest = this.chicken.nestPos.get();
-            BlockEntity entity = chicken.level().getBlockEntity(nest);
+        return shouldLocateAndPickUpEgg();
+    }
 
-            if (entity instanceof MyceliumChickenNestEntity nestEntity) {
+    @Override
+    public boolean canContinueToUse() {
+        return super.canContinueToUse() && shouldLocateAndPickUpEgg();
+    }
+
+    public boolean shouldLocateAndPickUpEgg() {
+        if (chicken.getNestPos().isPresent()) {
+            BlockPos nest = this.chicken.getNestPos().get();
+
+            if (chicken.level().getBlockEntity(nest) instanceof MyceliumChickenNestEntity nestEntity) {
                 return !nestEntity.hasEgg(chicken.level().getBlockState(nest)) && !chicken.carriesStolenEgg;
             }
         }
@@ -54,8 +64,8 @@ public class RecoverEggGoal extends Goal {
         super.tick();
         List<ItemEntity> items = getNearbyItems();
         if (!items.isEmpty()) {
-            chicken.getNavigation().moveTo((Entity) items.getFirst(), (double) 1.2F);
-            if (chicken.blockPosition().closerToCenterThan(items.getFirst().position(), 1F)) {
+            chicken.getNavigation().moveTo(items.getFirst(), 1.2D);
+            if (chicken.blockPosition().closerToCenterThan(items.getFirst().position(), 1.5F)) {
                 chicken.carriesStolenEgg = true;
 
                 items.getFirst().getItem().shrink(1);

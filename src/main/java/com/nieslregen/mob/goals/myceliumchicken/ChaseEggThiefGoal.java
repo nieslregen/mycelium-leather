@@ -1,5 +1,6 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
 import net.minecraft.core.BlockPos;
@@ -11,13 +12,13 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
     MyceliumChicken chicken;
 
     public ChaseEggThiefGoal(MyceliumChicken chicken) {
-        super(chicken, 2.0f, true);
+        super(chicken, 1.5f, true);
         this.chicken = chicken;
     }
 
     private boolean isAngryAtPlayer() {
         if (chicken.getNestPos().isPresent()) {
-            BlockPos p = this.chicken.nestPos.get();
+            BlockPos p = this.chicken.getNestPos().get();
             BlockState state = this.chicken.level().getBlockState(p);
 
             return chicken.level().getBlockEntity(p) instanceof MyceliumChickenNestEntity nestEntity
@@ -30,7 +31,8 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canUse() {
-        return isAngryAtPlayer() && super.canUse();
+        // is not allowed to call super.canUse because the target is not set in this case hence the goal will never start.
+        return isAngryAtPlayer(); //&& super.canUse();
     }
 
     @Override
@@ -40,6 +42,7 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
 
     @Override
     public void start() {
+        MyceliumLeatherMod.LOGGER.info("ChaseEggThiefGoal starting...");
         super.start();
         if  (chicken.getNestPos().isPresent()) {
             if (chicken.level().getBlockEntity(chicken.nestPos.get()) instanceof MyceliumChickenNestEntity nestEntity && nestEntity.getThief().isPresent()) {

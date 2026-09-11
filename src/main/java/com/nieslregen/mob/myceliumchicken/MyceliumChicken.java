@@ -1,7 +1,7 @@
 package com.nieslregen.mob.myceliumchicken;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.nieslregen.block.ModBlocks;
+import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModAnimal;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.goals.myceliumchicken.*;
@@ -22,17 +22,17 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.chicken.ChickenSoundVariant;
 import net.minecraft.world.entity.animal.chicken.ChickenSoundVariants;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
@@ -42,6 +42,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,15 +53,9 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
 
     private static final EntityDimensions BABY_DIMENSIONS;
     public final AnimationState sitDownAnimationState = new AnimationState();
-    public final AnimationState sitPoseAnimationState = new AnimationState();
-    public final AnimationState sitUpAnimationState = new AnimationState();
-    public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState standUpUpAnimationState = new AnimationState();
 
-    public static final EntityDataAccessor<Long> LAST_POSE_CHANGE_TICK;
-    private static final long DEFAULT_LAST_POSE_CHANGE_TICK = 0L;
-
-    private static final int SITDOWN_DURATION_TICKS = 20;
-    private static final int STANDUP_DURATION_TICKS = 20;
+    public static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(MyceliumChicken.class, EntityDataSerializers.BOOLEAN);
 
     public Optional<BlockPos> nestPos = Optional.empty();
 
@@ -78,11 +73,28 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
 
     public int trollCooldown;
 
+    public List<LivingEntity> nearbyMobs = new ArrayList<>(); // do not save
+
     public MyceliumChicken(EntityType<? extends Animal> type, Level level) {
         super(type, level);
-        this.moveControl = new MyceliumChickenMoveControl(this);
         resetFeatherTime();
         resetTrollCooldown();
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(SITTING, false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> accessor) {
+        super.onSyncedDataUpdated(accessor);
+        if (accessor.equals(SITTING)) {
+            boolean sits = isSitting();
+            sitDownAnimationState.animateWhen(sits, this.tickCount);
+            standUpUpAnimationState.animateWhen(!sits, this.tickCount);
+        }
     }
 
     @Override
@@ -106,7 +118,6 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
 
     static {
         BABY_DIMENSIONS = EntityDimensions.scalable(0.3F, 0.2F).withEyeHeight(0.28125F).withAttachments(EntityAttachments.builder().attach(EntityAttachment.PASSENGER, 0.0F, 0.375F, 0.0F));
-        LAST_POSE_CHANGE_TICK = SynchedEntityData.defineId(MyceliumChicken.class, EntityDataSerializers.LONG);
     }
 
     public Optional<BlockPos> getNestPos() {
@@ -125,8 +136,9 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RecoverEggGoal(this));
-        this.goalSelector.addGoal(2, new ChaseEggThiefGoal(this));
+        this.goalSelector.addGoal(0, new ReturnEggToNestGoal(this));
+        this.goalSelector.addGoal(1, new ChaseEggThiefGoal(this));
+        this.goalSelector.addGoal(2, new RecoverEggGoal(this));
         this.goalSelector.addGoal(3, new DefendNestGoal(this));
         this.goalSelector.addGoal(4, new ReturnToNestGoal(this));
         this.goalSelector.addGoal(5, new IncubateGoal(this));
@@ -140,9 +152,9 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
         this.goalSelector.addGoal(13, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(14, new RandomLookAroundGoal(this));
 
-        this.targetSelector.addGoal(1, new DefendNestGoal(this));
+//        this.targetSelector.addGoal(1, new DefendNestGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, 10, true, false, this::isAngryAt));
-        this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal(this, false));
+//        this.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal(this, false));
     }
 
     public boolean carriesEgg() {
@@ -183,6 +195,20 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
                 .add(Attributes.SCALE, 1.25);
     }
 
+    public boolean isNestThreatened(int radius) {
+        if (getNestPos().isPresent()) {
+            BlockPos nestPos = getNestPos().get();
+
+            if (level().getBlockEntity(nestPos) instanceof MyceliumChickenNestEntity nestEntity) {
+                this.nearbyMobs = getLivingEntitiesNearby(this, radius);
+                return nestEntity.getThief().isEmpty() // equivalent to nest has egg
+                        && !nearbyMobs.isEmpty()
+                        && !carriesStolenEgg;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void aiStep() {
         super.aiStep();
@@ -219,91 +245,19 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
     @Override
     public void tick() {
         super.tick();
-
-        if (this.level().isClientSide()) {
-            this.setupAnimationStates();
-        }
-
-        if (this.isVisuallySitting() && this.isInWater()) {
-            this.standUp();
+        if (this.isSitting() && this.isInWater()) {
+            setSitting(false);
         }
     }
 
     //// Animation
 
-    private void setupAnimationStates() {
-        // idle
-        if (this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = 40;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeout;
-        }
-
-
-        if (this.isVisuallySitting()) {
-            this.sitUpAnimationState.stop();
-            if (this.isVisuallySittingDown()) {
-                this.sitDownAnimationState.startIfStopped(this.tickCount);
-                this.sitPoseAnimationState.stop();
-            } else {
-                this.sitDownAnimationState.stop();
-                this.sitPoseAnimationState.startIfStopped(this.tickCount);
-            }
-        } else {
-            this.sitDownAnimationState.stop();
-            this.sitPoseAnimationState.stop();
-            this.sitUpAnimationState.animateWhen(this.isInPoseTransition() && this.getPoseTime() >= 0L, this.tickCount);
-        }
-
+    public boolean isSitting() {
+        return entityData.get(SITTING);
     }
 
-    public void standUp() {
-        if (isSitting()) {
-            this.setPose(Pose.STANDING);
-            this.gameEvent(GameEvent.ENTITY_ACTION);
-            this.resetLastPoseChangeTickToFullStand(this.level().getGameTime());
-            this.sitUpAnimationState.start(this.tickCount);
-        }
-    }
-
-    public void sitDown() {
-        if (!isSitting()) {
-            this.sitDownAnimationState.start(this.tickCount);
-            this.setPose(Pose.SITTING);
-            this.gameEvent(GameEvent.ENTITY_ACTION);
-            this.resetLastPoseChangeTickToFullStand(this.level().getGameTime());
-        }
-    }
-
-    private boolean isSitting() {
-        return this.entityData.get(LAST_POSE_CHANGE_TICK) < 0;
-    }
-
-    private boolean isVisuallySitting() {
-        return this.getPoseTime() < 0L != this.isSitting();
-    }
-
-    public long getPoseTime() {
-        return this.level().getGameTime() - Math.abs((Long)this.entityData.get(LAST_POSE_CHANGE_TICK));
-    }
-
-    public boolean isInPoseTransition() {
-        long poseTime = this.getPoseTime();
-        return poseTime < (this.isSitting() ? SITDOWN_DURATION_TICKS : STANDUP_DURATION_TICKS);
-    }
-
-    private void resetLastPoseChangeTickToFullStand(final long currentTime) {
-        this.resetLastPoseChangeTick(Math.max(0L, currentTime - STANDUP_DURATION_TICKS - 1L));
-    }
-
-    private boolean isVisuallySittingDown() {
-        return this.isSitting() && this.getPoseTime() < SITDOWN_DURATION_TICKS && this.getPoseTime() >= 0L;
-    }
-
-    @VisibleForTesting
-    public void resetLastPoseChangeTick(final long syncedPoseTickTime) {
-        this.entityData.set(LAST_POSE_CHANGE_TICK, syncedPoseTickTime);
+    public void setSitting(boolean state) {
+        entityData.set(SITTING, state);
     }
 
     protected boolean isFlapping() {
@@ -314,9 +268,9 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
-    public List<LivingEntity> getTargets(MyceliumChicken chicken, int radius) {
+    public List<LivingEntity> getLivingEntitiesNearby(MyceliumChicken chicken, int radius) {
 
-        BlockPos pos = nestPos.orElseGet(chicken::getOnPos);
+        BlockPos pos = getNestPos().orElseGet(chicken::getOnPos);
 
         AABB area = new AABB(pos).inflate(radius);
 
@@ -328,34 +282,6 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
                         && !(entity instanceof MyceliumChicken)
         );
     }
-
-    public boolean canChickenChangePose() {
-        return this.wouldNotSuffocateAtTargetPose(this.isSitting() ? Pose.STANDING : Pose.SITTING);
-    }
-
-    private static class MyceliumChickenMoveControl<T extends MyceliumChicken> extends MoveControl {
-
-        public MyceliumChickenMoveControl(Mob mob) {
-            super(mob);
-        }
-
-        @Override
-        public void tick() {
-            MyceliumChicken chicken = (MyceliumChicken) mob;
-            if (this.operation == Operation.MOVE_TO
-                    && chicken.isSitting()
-                    && chicken.canChickenChangePose()
-                    && !chicken.isLeashed()
-                    && !chicken.isInPoseTransition()
-            ) {
-                chicken.standUp();
-            }
-
-            super.tick();
-        }
-    }
-
-
 
     //// Sound:
 
@@ -408,17 +334,13 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
     public void startPersistentAngerTimer() { }
 
 
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder entityData) {
-        super.defineSynchedData(entityData);
-        entityData.define(LAST_POSE_CHANGE_TICK, 0L);
-    }
+
 
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
 
-        output.putLong("LastPoseTick", this.entityData.get(LAST_POSE_CHANGE_TICK));
+        output.putBoolean("sitting", this.entityData.get(SITTING));
 
         output.putBoolean("carriesEgg", this.carriesEgg);
         output.putBoolean("carriesStolenEgg", this.carriesStolenEgg);
@@ -463,7 +385,7 @@ public class MyceliumChicken extends ModAnimal implements NeutralMob {
             this.setPose(Pose.SITTING);
         }
 
-        this.resetLastPoseChangeTick(poseTick);
+        setSitting(input.getBooleanOr("sitting", false));
     }
 
 }

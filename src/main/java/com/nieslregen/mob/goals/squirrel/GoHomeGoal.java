@@ -36,7 +36,7 @@ public class GoHomeGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return super.canContinueToUse()
-                && squirrel.needsToRest
+                && squirrel.wantsToGoHome
                 && squirrel.homePos.isPresent()
                 && !squirrel.homePos.get()
                 .closerToCenterThan(squirrel.position(), 0.75);
@@ -45,6 +45,6 @@ public class GoHomeGoal extends Goal {
     @Override
     public boolean canUse() {
         return squirrel.homePos.isPresent()
-                && squirrel.needsToRest;
+                && squirrel.wantsToGoHome;
     }
 }

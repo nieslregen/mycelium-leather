@@ -63,7 +63,7 @@ public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int tick
             if (entity.is(type)) {
                 HollowUser occupant = (HollowUser) entity;
                 occupant.homePos = Optional.of(homePos);
-                setOccuoantReleaseData(this.ticksInContainer, occupant);
+                setOccupantReleaseData(this.ticksInContainer, occupant);
             }
 
             return entity;
@@ -72,7 +72,7 @@ public record CustomOccupant(TypedEntityData<EntityType<?>> entityData, int tick
         }
     }
 
-    private static void setOccuoantReleaseData(final int ticksInHive, final HollowUser hollowUser) {
+    private static void setOccupantReleaseData(final int ticksInHive, final HollowUser hollowUser) {
         updateOccupantAge(ticksInHive, hollowUser);
         hollowUser.setInLoveTime(Math.max(0, hollowUser.getInLoveTime() - ticksInHive));
     }

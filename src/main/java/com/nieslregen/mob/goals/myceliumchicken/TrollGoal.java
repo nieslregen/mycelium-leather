@@ -38,7 +38,7 @@ public class TrollGoal extends Goal {
     }
 
     private void throwEgg() {
-        List<LivingEntity> entities = this.chicken.getTargets(this.chicken, 15);
+        List<LivingEntity> entities = this.chicken.getLivingEntitiesNearby(this.chicken, 15);
 
         for (LivingEntity entity : entities) {
             MyceliumLeatherMod.LOGGER.info("entity: {}", entity);

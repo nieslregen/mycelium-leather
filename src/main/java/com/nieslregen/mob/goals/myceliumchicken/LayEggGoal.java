@@ -1,5 +1,6 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock;
@@ -22,6 +23,12 @@ public class LayEggGoal extends MoveToBlockGoal {
     public LayEggGoal(final MyceliumChicken chicken, double speedModifier) {
         super(chicken, speedModifier, 16);
         this.chicken = chicken;
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        MyceliumLeatherMod.LOGGER.info("LayEgg starting...");
     }
 
     @Override

@@ -21,7 +21,7 @@ public class SquirrelBreedGoal extends net.minecraft.world.entity.ai.goal.BreedG
     @Override
     public void start() {
         super.start();
-        this.squirrel.needsToRest = true;
+        this.squirrel.wantsToGoHome = true;
     }
 
     @Override
@@ -83,10 +83,10 @@ public class SquirrelBreedGoal extends net.minecraft.world.entity.ai.goal.BreedG
     }
 
     private void createBaby(MyceliumSquirrel p, MushroomStemHollowEntity hollow) {
-        squirrel.needsToRest = true;
+        squirrel.wantsToGoHome = true;
         squirrel.carriesBaby = true;
         squirrel.timeUntilResting = 0;
         p.timeUntilResting = 0;
-        p.needsToRest = true;
+        p.wantsToGoHome = true;
     }
 }

@@ -15,9 +15,7 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
 
     private final KeyframeAnimation walkAnimation;
     private final KeyframeAnimation sitDownAnimation;
-    private final KeyframeAnimation sitPoseAnimation;
     private final KeyframeAnimation standupAnimation;
-    private final KeyframeAnimation idleAnimation;
 
     public MyceliumChickenModel(ModelPart root) {
         super(root);
@@ -28,9 +26,7 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
 
         this.walkAnimation = MyceliumChickenAnimation.walking.bake(this.root);
         this.sitDownAnimation = MyceliumChickenAnimation.take_a_seat.bake(this.root);
-        this.sitPoseAnimation = MyceliumChickenAnimation.take_a_seat.bake(this.root);
         this.standupAnimation = MyceliumChickenAnimation.stand_up.bake(this.root);
-        this.idleAnimation = MyceliumChickenAnimation.walking.bake(this.root);
     }
     public static LayerDefinition getTexturedModelData() {
         MeshDefinition modelData = new MeshDefinition();
@@ -148,10 +144,15 @@ public class MyceliumChickenModel extends EntityModel<MyceliumChickenRenderState
         super.setupAnim(state);
         this.applyHeadRotation(state, state.yRot, state.xRot);
         this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
-        this.sitDownAnimation.apply(state.sitDownAnimationState, state.ageInTicks);
-        this.sitPoseAnimation.apply(state.sitPoseAnimationState, state.ageInTicks);
-        this.standupAnimation.apply(state.sitUpAnimationState, state.ageInTicks);
-        this.idleAnimation.apply(state.idleAnimationState, state.ageInTicks);
+
+
+        if (state.sitDownAnimationState.isStarted()) {
+            this.sitDownAnimation.apply(state.sitDownAnimationState, state.ageInTicks);
+        }
+
+        if (state.standUpAnimationState.isStarted()) {
+            this.standupAnimation.apply(state.standUpAnimationState, state.ageInTicks);
+        }
 
         float flapAngle = (Mth.sin((double)state.flap) + 1.0F) * state.flapSpeed;
         this.rightWing.zRot = flapAngle;

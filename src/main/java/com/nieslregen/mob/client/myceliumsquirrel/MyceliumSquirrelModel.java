@@ -1,5 +1,6 @@
-package com.nieslregen.mob.client.mycelium_squirrel;
+package com.nieslregen.mob.client.myceliumsquirrel;
 
+import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -19,8 +20,10 @@ public class MyceliumSquirrelModel extends EntityModel<MyceliumSquirrelRenderSta
 	private final ModelPart leg_back_right;
 	private final ModelPart leg_front_right;
 
-//	private final KeyframeAnimation walkAnimation;
-	
+	private final KeyframeAnimation walkAnimation;
+	private final KeyframeAnimation diggingAnimation;
+	private final KeyframeAnimation climbingAnimation;
+
 	public MyceliumSquirrelModel(ModelPart root) {
         super(root);
         this.root = root.getChild("root");
@@ -34,6 +37,11 @@ public class MyceliumSquirrelModel extends EntityModel<MyceliumSquirrelRenderSta
 		this.leg_back_left = this.body.getChild("leg_back_left");
 		this.leg_back_right = this.body.getChild("leg_back_right");
 		this.leg_front_right = this.body.getChild("leg_front_right");
+
+		this.walkAnimation = MyceliumSquirrelAnimation.walking.bake(this.root);
+		this.diggingAnimation = MyceliumSquirrelAnimation.diggin.bake(this.root);
+		this.climbingAnimation = MyceliumSquirrelAnimation.climbing.bake(this.root);
+
 	}
 	public static LayerDefinition getTexturedModelData() {
 		MeshDefinition modelData = new MeshDefinition();
@@ -64,14 +72,22 @@ public class MyceliumSquirrelModel extends EntityModel<MyceliumSquirrelRenderSta
 	public void setupAnim(final MyceliumSquirrelRenderState state) {
 		super.setupAnim(state);
 		this.applyHeadRotation(state, state.yRot, state.xRot);
-//		this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
+		this.walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
+
+		if (state.diggingAnimationState.isStarted()) {
+			this.diggingAnimation.apply(state.diggingAnimationState, state.ageInTicks);
+		}
+
+		if (state.climbingAnimationState.isStarted()) {
+			this.climbingAnimation.apply(state.climbingAnimationState, state.ageInTicks);
+		}
 	}
 
 	private void applyHeadRotation(final MyceliumSquirrelRenderState state, float yRot, float xRot) {
 		yRot = Mth.clamp(yRot, -30.0F, 30.0F);
 		xRot = Mth.clamp(xRot, -25.0F, 45.0F);
 
-		this.body.yRot = yRot * ((float)Math.PI / 180F);
-		this.body.xRot = xRot * ((float)Math.PI / 180F);
+		this.head.yRot = yRot * ((float)Math.PI / 180F);
+		this.head.xRot = xRot * ((float)Math.PI / 180F);
 	}
 }

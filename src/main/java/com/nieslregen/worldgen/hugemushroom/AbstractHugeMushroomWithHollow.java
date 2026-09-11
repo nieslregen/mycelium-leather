@@ -23,6 +23,9 @@ public abstract class AbstractHugeMushroomWithHollow extends AbstractHugeMushroo
     @Override
     protected void placeTrunk(WorldGenLevel level, RandomSource random, BlockPos origin, HugeMushroomFeatureConfiguration config, int treeHeight, BlockPos.MutableBlockPos blockPos) {
         Direction randomDir = Direction.getRandom(random);
+        if (randomDir.equals(Direction.UP) || randomDir.equals(Direction.DOWN)) {
+            randomDir = Direction.NORTH;
+        }
         for (int dy = 0; dy < treeHeight; ++dy) {
             blockPos.set(origin).move(Direction.UP, dy);
             if (dy != treeHeight - 2) {
