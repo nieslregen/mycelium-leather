@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
 import net.minecraft.core.BlockPos;
@@ -42,7 +41,6 @@ public class ChaseEggThiefGoal extends MeleeAttackGoal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("ChaseEggThiefGoal starting...");
         super.start();
         if  (chicken.getNestPos().isPresent()) {
             if (chicken.level().getBlockEntity(chicken.nestPos.get()) instanceof MyceliumChickenNestEntity nestEntity && nestEntity.getThief().isPresent()) {

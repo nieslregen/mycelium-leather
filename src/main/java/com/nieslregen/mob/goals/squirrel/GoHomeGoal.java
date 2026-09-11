@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.squirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -13,7 +12,6 @@ public class GoHomeGoal extends Goal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("start go home");
         squirrel.homePos.ifPresent(pos -> squirrel
                 .getNavigation()
                 .moveTo(
@@ -29,7 +27,6 @@ public class GoHomeGoal extends Goal {
         super.stop();
         squirrel.resetTimeUntilResting();
         squirrel.getNavigation().stop();
-        MyceliumLeatherMod.LOGGER.info("end go home");
     }
 
 

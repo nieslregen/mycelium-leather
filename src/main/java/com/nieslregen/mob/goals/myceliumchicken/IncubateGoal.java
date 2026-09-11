@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
@@ -22,8 +21,6 @@ public class IncubateGoal extends Goal {
     @Override
     public void start() {
         super.start();
-
-        MyceliumLeatherMod.LOGGER.info("IncubateGoal starting...");
 
         if (chicken.getNestPos().isPresent()){
             BlockPos pos = chicken.nestPos.get();
@@ -56,7 +53,6 @@ public class IncubateGoal extends Goal {
     @Override
     public void stop() {
         super.stop();
-        MyceliumLeatherMod.LOGGER.info("IncubateGoal stop...");
         if (chicken.getNestPos().isPresent()){
             BlockState newState = chicken.level().getBlockState(chicken.nestPos.get()).setValue(MyceliumChickenNestBlock.IS_INCUBATING, false);
             chicken.level().setBlockAndUpdate(chicken.nestPos.get(), newState);

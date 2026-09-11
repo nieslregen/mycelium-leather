@@ -1,6 +1,5 @@
 package com.nieslregen.mob.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.mob.ModEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -42,7 +41,6 @@ public class MyceliumChickenNestEntity extends BlockEntity {
         if (level.isClientSide()) { return; }
 
         if (entity.hasEgg(blockState)) {
-            MyceliumLeatherMod.LOGGER.info("Age: {}", entity.eggAgeInTicks);
             boolean isEggAlive = entity.regulateEggTemperature(
                     blockState.getValue(MyceliumChickenNestBlock.IS_INCUBATING)
             );

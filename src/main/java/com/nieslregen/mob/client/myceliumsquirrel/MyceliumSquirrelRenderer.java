@@ -1,7 +1,6 @@
 package com.nieslregen.mob.client.myceliumsquirrel;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.client.ModEntityModelLayers;
 import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
@@ -9,16 +8,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.Vec3;
-
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class MyceliumSquirrelRenderer extends AgeableMobRenderer<MyceliumSquirrel, MyceliumSquirrelRenderState, MyceliumSquirrelModel> {

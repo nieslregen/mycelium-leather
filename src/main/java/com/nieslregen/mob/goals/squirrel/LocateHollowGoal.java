@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.squirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
 import com.nieslregen.mob.ModPoiTypes;
@@ -35,16 +34,13 @@ public class LocateHollowGoal extends Goal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("start LocateHollowGoal");
         squirrel.resetTimeUntilResting();
         Optional<BlockPos> p = findNest();
-        MyceliumLeatherMod.LOGGER.error("Found: {}", p);
         squirrel.homePos = p;
     }
 
     @Override
     public void stop() {
-        MyceliumLeatherMod.LOGGER.info("stop LocateHollowGoal");
         super.stop();
         squirrel.resetBufferFindHollow();
     }
@@ -59,7 +55,6 @@ public class LocateHollowGoal extends Goal {
                         30,
                         PoiManager.Occupancy.ANY)
                 .map(PoiRecord::getPos)
-                .peek(poiPos -> MyceliumLeatherMod.LOGGER.info("pos found" + poiPos))
 //                .filter(this::doesHollowHaveSpace)
                 .min(Comparator.comparingDouble((pos) -> pos.distSqr(squirrelPos)));
     }

@@ -1,6 +1,5 @@
 package com.nieslregen.items.customitems;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowBlock;
 import com.nieslregen.items.ModItems;

@@ -1,6 +1,5 @@
 package com.nieslregen.items.customitems;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.datagen.ModDamageTypes;
 import com.nieslregen.effect.ModEffects;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -79,7 +78,6 @@ public class Dagger extends Item {
         float max = Mth.positiveModulo(Mth.wrapDegrees(mob.yHeadRotO + 60), 360);
 
         float attackerHeadRot = Mth.positiveModulo(Mth.wrapDegrees(attacker.yHeadRotO), 360);
-        MyceliumLeatherMod.LOGGER.info("isBehind: {}, min/max ({},{}), attacker {}",(min < attackerHeadRot) && (attackerHeadRot < max), min, max, attackerHeadRot);
 
         return (min < attackerHeadRot) && (attackerHeadRot < max);
     }

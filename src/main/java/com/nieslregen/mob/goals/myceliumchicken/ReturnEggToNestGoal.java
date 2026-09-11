@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -22,8 +21,6 @@ public class ReturnEggToNestGoal extends Goal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("Start Return EGG ToNestGoal");
-
         chicken.nestPos.ifPresent(pos -> chicken
                 .getNavigation()
                 .moveTo(

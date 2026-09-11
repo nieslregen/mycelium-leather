@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.squirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 

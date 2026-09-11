@@ -2,10 +2,10 @@ package com.nieslregen.mob.client;
 
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.client.crawler.CrawlerModel;
-import com.nieslregen.mob.client.myceliumsquirrel.BabyMyceliumSquirrelModel;
-import com.nieslregen.mob.client.myceliumsquirrel.MyceliumSquirrelModel;
 import com.nieslregen.mob.client.myceliumchicken.BabyMyceliumChickenModel;
 import com.nieslregen.mob.client.myceliumchicken.MyceliumChickenModel;
+import com.nieslregen.mob.client.myceliumsquirrel.BabyMyceliumSquirrelModel;
+import com.nieslregen.mob.client.myceliumsquirrel.MyceliumSquirrelModel;
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.Identifier;

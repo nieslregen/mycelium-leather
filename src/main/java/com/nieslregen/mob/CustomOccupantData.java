@@ -1,8 +1,6 @@
 package com.nieslregen.mob;
 
 
-import com.nieslregen.MyceliumLeatherMod;
-
 public class CustomOccupantData {
 
     private final CustomOccupant occupant;
@@ -14,7 +12,6 @@ public class CustomOccupantData {
     }
 
     public boolean tick() {
-        MyceliumLeatherMod.LOGGER.info("ticks in container " + this.ticksInContainer);
         return this.ticksInContainer++ > this.occupant.minTicksInContainer();
     }
 

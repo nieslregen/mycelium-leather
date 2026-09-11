@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.ThrownSuspiciousEgg;
@@ -39,10 +38,6 @@ public class TrollGoal extends Goal {
 
     private void throwEgg() {
         List<LivingEntity> entities = this.chicken.getLivingEntitiesNearby(this.chicken, 15);
-
-        for (LivingEntity entity : entities) {
-            MyceliumLeatherMod.LOGGER.info("entity: {}", entity);
-        }
 
         entities.stream()
                 .filter(entity -> entity instanceof Player)

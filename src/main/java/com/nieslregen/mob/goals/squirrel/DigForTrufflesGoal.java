@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.squirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.core.Direction;
@@ -25,7 +24,6 @@ public class DigForTrufflesGoal extends Goal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("diggin start");
         super.start();
         diggingCounter = 40;
         this.squirrel.setDigging(true);
@@ -42,7 +40,6 @@ public class DigForTrufflesGoal extends Goal {
 
     @Override
     public void stop() {
-        MyceliumLeatherMod.LOGGER.info("diggin stop");
         super.stop();
         diggingCounter = 40;
         squirrel.setDigging(false);

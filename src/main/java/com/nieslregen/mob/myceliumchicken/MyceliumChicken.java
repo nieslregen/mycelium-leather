@@ -1,7 +1,6 @@
 package com.nieslregen.mob.myceliumchicken;
 
 import com.nieslregen.block.ModBlocks;
-import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModAnimal;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.goals.myceliumchicken.*;
@@ -27,12 +26,10 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.chicken.ChickenSoundVariant;
 import net.minecraft.world.entity.animal.chicken.ChickenSoundVariants;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;

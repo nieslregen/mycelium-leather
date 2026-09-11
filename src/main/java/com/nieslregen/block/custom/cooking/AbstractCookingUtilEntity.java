@@ -1,5 +1,5 @@
 package com.nieslregen.block.custom.cooking;
-import com.nieslregen.MyceliumLeatherMod;
+
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.block.container.ImplementedContainer;
 import com.nieslregen.block.custom.cooking.fryingpan.FryingPanEntity;

@@ -1,6 +1,5 @@
 package com.nieslregen.mob.myceliumsquirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.HollowUser;
 import com.nieslregen.mob.ModEntityTypes;
@@ -29,7 +28,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jspecify.annotations.Nullable;
-
 
 import static com.nieslregen.datagen.ModEntityLootTableProvider.DEATH_MYCELIUM_SQUIRREL;
 
@@ -175,7 +173,6 @@ public class MyceliumSquirrel extends HollowUser {
         if (this.level() instanceof ServerLevel serverLevel && !wantsToGoHome) {
             if (this.isAlive() && --timeUntilResting <= 0) {
                 wantsToGoHome = true;
-                MyceliumLeatherMod.LOGGER.info("Squirrel wants to rest");
             }
         }
         digTimer--;

@@ -1,7 +1,6 @@
 package com.nieslregen.mob.cawler;
 
 import com.mojang.serialization.Codec;
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.datagen.ModEntityLootTableProvider;
 import com.nieslregen.mob.ModAnimal;
 import com.nieslregen.mob.ModEntityTypes;
@@ -103,7 +102,6 @@ public class Crawler extends ModAnimal implements Shearable {
 
 
     public void setVariant(final OvergrownType variant) {
-        MyceliumLeatherMod.LOGGER.info("setVariant " + variant);
         this.entityData.set(DATA_TYPE, variant.id);
     }
 

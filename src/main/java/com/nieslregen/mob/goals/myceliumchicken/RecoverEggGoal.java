@@ -1,14 +1,11 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
 import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.List;
 
@@ -22,7 +19,6 @@ public class RecoverEggGoal extends Goal {
     @Override
     public void start() {
         super.start();
-        MyceliumLeatherMod.LOGGER.info("Recover Egg Goal starting...");
         List<ItemEntity> items = getNearbyItems();
         if (!items.isEmpty()) {
             chicken.getNavigation().moveTo(items.getFirst(), 1.2F);

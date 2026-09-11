@@ -3,8 +3,8 @@ package com.nieslregen.mob.client;
 import com.nieslregen.mob.ModEntityAttributes;
 import com.nieslregen.mob.ModEntityTypes;
 import com.nieslregen.mob.client.crawler.CrawlerRenderer;
-import com.nieslregen.mob.client.myceliumsquirrel.MyceliumSquirrelRenderer;
 import com.nieslregen.mob.client.myceliumchicken.MyceliumChickenRenderer;
+import com.nieslregen.mob.client.myceliumsquirrel.MyceliumSquirrelRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 

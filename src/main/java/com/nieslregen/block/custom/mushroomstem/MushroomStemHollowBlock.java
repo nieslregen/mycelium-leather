@@ -1,17 +1,14 @@
 package com.nieslregen.block.custom.mushroomstem;
 
 import com.mojang.serialization.MapCodec;
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.mob.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
@@ -40,9 +37,7 @@ public class MushroomStemHollowBlock extends BaseEntityBlock {
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
         super.playerDestroy(level, player, pos, state, blockEntity, destroyedWith);
-        MyceliumLeatherMod.LOGGER.info("Here 1");
         if (blockEntity instanceof MushroomStemHollowEntity e) {
-            MyceliumLeatherMod.LOGGER.info("Here 2");
 
             e.storedOccupants.forEach(
                     occupantData ->

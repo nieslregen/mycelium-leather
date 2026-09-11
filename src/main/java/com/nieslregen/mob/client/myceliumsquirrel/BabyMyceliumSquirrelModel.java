@@ -1,11 +1,9 @@
 package com.nieslregen.mob.client.myceliumsquirrel;
 
 import net.minecraft.client.animation.KeyframeAnimation;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.util.Mth;
 
 public class BabyMyceliumSquirrelModel extends MyceliumSquirrelModel {
 	private final ModelPart root;

@@ -1,11 +1,8 @@
 package com.nieslregen.mob.goals.squirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
-
-import java.util.Optional;
 
 public class StayCloseToHollowGoal extends Goal {
 
@@ -30,7 +27,6 @@ public class StayCloseToHollowGoal extends Goal {
     @Override
     public void stop() {
         super.stop();
-        MyceliumLeatherMod.LOGGER.info("StayCloseToHollowGoal stopped");
         squirrel.getNavigation().stop();
         squirrel.getMoveControl().setWantedPosition(
                 squirrel.getX() + 0.5,
@@ -41,7 +37,6 @@ public class StayCloseToHollowGoal extends Goal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("StayCloseToHollowGoal starting");
         BlockPos pos = this.squirrel.getHomePos().get();
         squirrel.getNavigation().moveTo(
                 pos.getX() + 0.5,

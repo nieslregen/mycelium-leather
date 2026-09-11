@@ -1,17 +1,7 @@
 package com.nieslregen.mob.goals.myceliumchicken;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.mob.myceliumchicken.MyceliumChicken;
-import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class DefendNestGoal extends MeleeAttackGoal {
     private final MyceliumChicken chicken;
@@ -29,7 +19,6 @@ public class DefendNestGoal extends MeleeAttackGoal {
     @Override
     public void start() {
         super.start();
-        MyceliumLeatherMod.LOGGER.info("DefendNestGoal starting...");
         chicken.setTarget(chicken.nearbyMobs.getFirst());
     }
 
@@ -46,7 +35,6 @@ public class DefendNestGoal extends MeleeAttackGoal {
     @Override
     public void stop() {
         super.stop();
-        MyceliumLeatherMod.LOGGER.info("DefendNestGoal stop...");
         chicken.setTarget(null);
         chicken.stopBeingAngry();
     }

@@ -3,17 +3,10 @@ package com.nieslregen.mob;
 import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.ModBlocks;
 import net.fabricmc.fabric.api.object.builder.v1.world.poi.PoiHelper;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Set;
 
 public class ModPoiTypes {
 

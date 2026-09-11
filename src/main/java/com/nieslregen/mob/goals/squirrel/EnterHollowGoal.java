@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.squirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
 import com.nieslregen.mob.CustomOccupant;
 import com.nieslregen.mob.ModEntityTypes;
@@ -16,7 +15,6 @@ public class EnterHollowGoal extends Goal {
 
     @Override
     public void start() {
-        MyceliumLeatherMod.LOGGER.info("Enterhollow Goal started");
         super.start();
         squirrel.wantsToGoHome = false;
         squirrel.homePos.ifPresent(pos -> {
@@ -34,7 +32,6 @@ public class EnterHollowGoal extends Goal {
 
     @Override
     public void stop() {
-        MyceliumLeatherMod.LOGGER.info("Enterhollow Goal stopped");
         super.stop();
     }
 
