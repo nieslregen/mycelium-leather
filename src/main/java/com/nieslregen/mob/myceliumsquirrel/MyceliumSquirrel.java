@@ -1,5 +1,6 @@
 package com.nieslregen.mob.myceliumsquirrel;
 
+import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.HollowUser;
 import com.nieslregen.mob.ModEntityTypes;
@@ -50,7 +51,7 @@ public class MyceliumSquirrel extends HollowUser {
     public MyceliumSquirrel(EntityType<? extends Animal> type, Level level) {
         super(type, level);
         resetTimeUntilResting();
-        resetDigTimer();
+        digTimer = 80;
         resetBufferFindHollow();
     }
 
@@ -174,16 +175,18 @@ public class MyceliumSquirrel extends HollowUser {
             if (this.isAlive() && --timeUntilResting <= 0) {
                 wantsToGoHome = true;
             }
-        }
-        digTimer--;
 
-        if (level().isDarkOutside()) {
-            wantsToGoHome = true;
+            digTimer--;
+
+            if (level().isDarkOutside()) {
+                wantsToGoHome = true;
+            }
+
+            if (getHomePos().isEmpty()){
+                bufferFindHollow--;
+            }
         }
 
-        if (getHomePos().isEmpty()){
-            bufferFindHollow--;
-        }
     }
 
     @Override
@@ -196,7 +199,7 @@ public class MyceliumSquirrel extends HollowUser {
         this.goalSelector.addGoal(4, new HollowUserPanicGoal(this, 1.25F));
         this.goalSelector.addGoal(5, new StayCloseToHollowGoal(this));
         this.goalSelector.addGoal(6, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(7, new TemptGoal(this, 1D, (i) -> i.is(ModItems.MYCELIUM_CHICKEN_EGG), true));
+        this.goalSelector.addGoal(7, new TemptGoal(this, 1D, (i) -> i.is(ModItems.MYCELIUM_CHICKEN_EGG), false));
         this.goalSelector.addGoal(8, new DigForTrufflesGoal(this));
         this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this,1));
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 6.0F));

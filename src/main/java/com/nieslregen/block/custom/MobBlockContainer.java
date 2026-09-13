@@ -1,5 +1,6 @@
 package com.nieslregen.block.custom;
 
+import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowBlock;
 import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowEntity;
 import com.nieslregen.mob.CustomOccupant;
 import com.nieslregen.mob.CustomOccupantData;
@@ -113,9 +114,7 @@ public class MobBlockContainer extends BlockEntity {
     }
 
     public boolean releaseOccupant(final Level level, final BlockPos blockPos, final BlockState state, final CustomOccupant occupantData, final @Nullable List<Entity> spawned, EntityType<?> occupantType) {
-        // ToDo
-//        Direction facing = (Direction)state.getValue(BeehiveBlock.FACING);
-        Direction facing = Direction.NORTH;
+        Direction facing = state.getValue(MushroomStemHollowBlock.FACING);
         BlockPos facingPos = blockPos.relative(facing);
         boolean frontBlocked = !level.getBlockState(facingPos).getCollisionShape(level, facingPos).isEmpty();
 

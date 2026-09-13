@@ -85,10 +85,11 @@ public class StoveBlock extends BaseEntityBlock {
         }
 
         if (itemStack.is(ItemTags.LOGS)) {
-            addLog(level, pos, state);
-            itemStack.consume(1, player);
-            player.playSound(SoundEvents.WOOD_PLACE, 1.0F, 1.0F);
-            return InteractionResult.SUCCESS;
+            if (addLog(level, pos, state)) {
+                itemStack.consume(1, player);
+                player.playSound(SoundEvents.WOOD_PLACE, 1.0F, 1.0F);
+                return InteractionResult.SUCCESS;
+            }
         }
         return InteractionResult.FAIL;
     }

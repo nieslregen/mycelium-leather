@@ -79,7 +79,11 @@ public class Dagger extends Item {
 
         float attackerHeadRot = Mth.positiveModulo(Mth.wrapDegrees(attacker.yHeadRotO), 360);
 
-        return (min < attackerHeadRot) && (attackerHeadRot < max);
+        if (min < max) {
+            return (min < attackerHeadRot) && (attackerHeadRot < max);
+        }
+        return (min < attackerHeadRot) || (attackerHeadRot < max);
+
     }
 
     private void applyEffect(LivingEntity entity, MobEffect effect, int duration) {

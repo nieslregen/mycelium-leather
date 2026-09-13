@@ -36,7 +36,7 @@ public class HugeBlueMushroomWithHollowFeature extends AbstractHugeMushroomWithH
                         blockPos.setWithOffset(origin, dx, dy, dz);
                         BlockState state = config.capProvider().getState(level, random, origin);
                         if (state.hasProperty(HugeMushroomBlock.WEST) && state.hasProperty(HugeMushroomBlock.EAST) && state.hasProperty(HugeMushroomBlock.NORTH) && state.hasProperty(HugeMushroomBlock.SOUTH) && state.hasProperty(HugeMushroomBlock.UP)) {
-                            state = (BlockState)((BlockState)((BlockState)((BlockState)((BlockState)state.setValue(HugeMushroomBlock.UP, dy >= treeHeight - 1)).setValue(HugeMushroomBlock.WEST, dx < -center)).setValue(HugeMushroomBlock.EAST, dx > center)).setValue(HugeMushroomBlock.NORTH, dz < -center)).setValue(HugeMushroomBlock.SOUTH, dz > center);
+                            state = ((((state.setValue(HugeMushroomBlock.UP, dy >= treeHeight - 1)).setValue(HugeMushroomBlock.WEST, dx < -center)).setValue(HugeMushroomBlock.EAST, dx > center)).setValue(HugeMushroomBlock.NORTH, dz < -center)).setValue(HugeMushroomBlock.SOUTH, dz > center);
                         }
 
                         this.placeMushroomBlock(level, blockPos, state);

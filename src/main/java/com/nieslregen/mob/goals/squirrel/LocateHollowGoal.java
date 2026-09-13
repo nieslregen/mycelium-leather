@@ -23,8 +23,7 @@ public class LocateHollowGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return squirrel.bufferFindHollow <= 0
-                && (squirrel.getHomePos().isEmpty() || squirrel.getHomePos().get().closerThan(squirrel.blockPosition(), 128));
+        return squirrel.bufferFindHollow <= 0;
     }
 
     @Override
