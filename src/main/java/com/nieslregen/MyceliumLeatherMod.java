@@ -4,6 +4,7 @@ import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.block.ModBlocks;
 import com.nieslregen.block.ModMenuType;
 import com.nieslregen.block.ModScreens;
+import com.nieslregen.datagen.ModFeatureTypes;
 import com.nieslregen.effect.ModEffects;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.ModEntityTypes;
@@ -26,6 +27,7 @@ public class MyceliumLeatherMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModFeatureTypes.init();
 		ModFeatures.init();
 		ModCreativeTabs.registerModCreativeTabs();
 		ModItems.registerModItems();
@@ -41,7 +43,7 @@ public class MyceliumLeatherMod implements ModInitializer {
 		BiomeModifications.addFeature(
 				BiomeSelectors.includeByKey(Biomes.MUSHROOM_FIELDS),
 				GenerationStep.Decoration.VEGETAL_DECORATION,
-				ModPlacedFeatures.HUGE_BLUE_MUSHROOM_WITH_HOLLOW_PLACED_KEY
+				ModPlacedFeatures.HUGE_BLUE_MUSHROOM_WITH_HOLLOW_PLACED
 		);
 	}
 }

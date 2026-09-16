@@ -1,6 +1,5 @@
 package com.nieslregen.mob.myceliumchicken;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
@@ -45,11 +44,6 @@ public class MyceliumChickenNestBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HAS_EGG,  IS_INCUBATING);
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock::new);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.nieslregen.block.custom.charcoalpile;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
@@ -50,11 +49,6 @@ public class CharCoalPileBlock extends BaseEntityBlock {
                         .setValue(STAGE, 0)
                         .setValue(LIT, false)
         );
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(CharCoalPileBlock::new);
     }
 
     @Override

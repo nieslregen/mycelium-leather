@@ -1,6 +1,5 @@
 package com.nieslregen.block.custom.mushroomstem;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -59,11 +58,6 @@ public class ScratchedMushroomStemBlock extends BaseEntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(STAGE);
         builder.add(FACING);
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(ScratchedMushroomStemBlock::new);
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.nieslregen.block.custom.mushroomstem;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.mob.ModEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -33,9 +33,8 @@ public class MushroomStemHollowBlock extends BaseEntityBlock {
         );
     }
 
-
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
+    public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack destroyedWith) {
         super.playerDestroy(level, player, pos, state, blockEntity, destroyedWith);
         if (blockEntity instanceof MushroomStemHollowEntity e) {
 
@@ -44,11 +43,6 @@ public class MushroomStemHollowBlock extends BaseEntityBlock {
                     e.releaseOccupant(level, pos, state, occupantData.toOccupant(), null, ModEntityTypes.SQUIRREL)
             );
         }
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(MushroomStemHollowBlock::new);
     }
 
     @Override

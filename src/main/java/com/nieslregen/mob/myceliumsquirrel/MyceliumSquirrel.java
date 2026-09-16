@@ -1,6 +1,5 @@
 package com.nieslregen.mob.myceliumsquirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.HollowUser;
 import com.nieslregen.mob.ModEntityTypes;

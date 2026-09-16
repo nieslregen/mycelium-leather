@@ -1,6 +1,5 @@
 package com.nieslregen.block.custom.cooking;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.custom.RotationalEntityBlock;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
@@ -16,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -76,9 +74,6 @@ public abstract class AbstractCookingUtilBlock extends RotationalEntityBlock {
                         .setValue(BREWING, false)
         );
     }
-
-    @Override
-    protected abstract MapCodec<? extends BaseEntityBlock> codec();
 
     @Override
     public abstract @Nullable BlockEntity newBlockEntity(BlockPos worldPosition, BlockState blockState);

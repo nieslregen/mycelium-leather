@@ -15,7 +15,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ConstantValue;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
@@ -55,69 +55,74 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableSubProvider
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
-        output.accept(ILLNESS_DROP, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(ModItems.SUSPICIOUS_EGG)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
+//        output.accept(ILLNESS_DROP, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(ModItems.SUSPICIOUS_EGG)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//        output.accept(MYCELIUM_CHICKEN_DROP, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(ModItems.FEATHER_VARIANT_MUSHROOM)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//        output.accept(CRAWLER_SALT_DROP, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(ModItems.SALT)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//
+//        output.accept(CRAWLER_MOSS_DROP, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(Items.MOSS_CARPET)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0f))))
+//                        .add(LootItem.lootTableItem(Items.SHORT_GRASS)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0f))))
+//                        .add(LootItem.lootTableItem(Items.TALL_GRASS)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//        output.accept(CRAWLER_PODZOL_DROP, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(Items.IRON_NUGGET)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//        output.accept(CRAWLER_MUSHROOM_DROP, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(ModItems.MYCELIUM_PATCH)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .add(LootItem.lootTableItem(Items.RED_MUSHROOM)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .add(LootItem.lootTableItem(Items.BROWN_MUSHROOM)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//
+//        output.accept(DEATH_CRAWLER, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(Blocks.COBBLESTONE.asItem())
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//        output.accept(DEATH_MYCELIUM_CHICKEN, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(Items.CHICKEN)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
+//
+//        output.accept(DEATH_MYCELIUM_SQUIRREL, LootTable.lootTable()
+//                .withPool(LootPool.lootPool()
+//                        .add(LootItem.lootTableItem(ModItems.TRUFFLE)
+//                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
+//                        .setRolls(ConstantValue.exactly(1))));
 
-        output.accept(MYCELIUM_CHICKEN_DROP, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(ModItems.FEATHER_VARIANT_MUSHROOM)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
+    }
 
-        output.accept(CRAWLER_SALT_DROP, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(ModItems.SALT)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
-
-
-        output.accept(CRAWLER_MOSS_DROP, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.MOSS_CARPET)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0f))))
-                        .add(LootItem.lootTableItem(Items.SHORT_GRASS)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0f))))
-                        .add(LootItem.lootTableItem(Items.TALL_GRASS)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
-
-        output.accept(CRAWLER_PODZOL_DROP, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.IRON_NUGGET)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
-
-        output.accept(CRAWLER_MUSHROOM_DROP, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(ModItems.MYCELIUM_PATCH)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .add(LootItem.lootTableItem(Items.RED_MUSHROOM)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .add(LootItem.lootTableItem(Items.BROWN_MUSHROOM)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
-
-
-        output.accept(DEATH_CRAWLER, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Blocks.COBBLESTONE.asItem())
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
-
-        output.accept(DEATH_MYCELIUM_CHICKEN, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Items.CHICKEN)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
-
-        output.accept(DEATH_MYCELIUM_SQUIRREL, LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .add(LootItem.lootTableItem(ModItems.TRUFFLE)
-                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f))))
-                        .setRolls(ConstantValue.exactly(1))));
+    @Override
+    public void run() {
 
     }
 }

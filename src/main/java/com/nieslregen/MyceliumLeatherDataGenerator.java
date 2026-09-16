@@ -1,7 +1,7 @@
 package com.nieslregen;
 
 import com.nieslregen.datagen.*;
-import com.nieslregen.worldgen.ModConfiguredFeatures;
+import com.nieslregen.worldgen.ModFeatures;
 import com.nieslregen.worldgen.ModPlacedFeatures;
 import com.nieslregen.worldgen.WorldGenProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -27,8 +27,25 @@ public class MyceliumLeatherDataGenerator implements DataGeneratorEntrypoint {
 
 	@Override
 	public void buildRegistry(RegistrySetBuilder registryBuilder) {
-		registryBuilder.add(Registries.CONFIGURED_FEATURE,  ModConfiguredFeatures::configure);
-		registryBuilder.add(Registries.PLACED_FEATURE, ModPlacedFeatures::configure);
-		registryBuilder.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);
+//
+//		registryBuilder.add(
+//				Registries.FEATURE_TYPE,
+//				ModFeatureTypes::bootstrap
+//		);
+
+		registryBuilder.add(
+				Registries.FEATURE,
+				ModFeatures::bootstrap
+		);
+
+		registryBuilder.add(
+				Registries.PLACED_FEATURE,
+				ModPlacedFeatures::bootstrap
+		);
+
+		registryBuilder.add(
+				Registries.DAMAGE_TYPE,
+				ModDamageTypes::bootstrap
+		);
 	}
 }

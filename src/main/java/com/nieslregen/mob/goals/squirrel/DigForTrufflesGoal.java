@@ -1,6 +1,5 @@
 package com.nieslregen.mob.goals.squirrel;
 
-import com.nieslregen.MyceliumLeatherMod;
 import com.nieslregen.items.ModItems;
 import com.nieslregen.mob.myceliumsquirrel.MyceliumSquirrel;
 import net.minecraft.core.Direction;

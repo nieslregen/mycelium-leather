@@ -1,6 +1,5 @@
 package com.nieslregen.block.custom.cooking.stove;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -42,11 +41,6 @@ public class StoveBlock extends BaseEntityBlock {
                         .setValue(LOG, 0)
                         .setValue(FACING, Direction.NORTH)
         );
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(StoveBlock::new);
     }
 
     @Override
