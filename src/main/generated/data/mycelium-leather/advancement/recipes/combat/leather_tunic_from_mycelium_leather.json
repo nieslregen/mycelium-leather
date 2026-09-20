@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:leather_tunic_from_mycelium_leather"
+        "recipes": "mycelium-leather:leather_tunic_from_mycelium_leather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

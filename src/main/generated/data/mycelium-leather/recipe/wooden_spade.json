@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "spade",
+  "key": {
+    "I": "#minecraft:wooden_tool_materials",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "  I",
+    " S ",
+    "   "
+  ],
+  "result": {
+    "id": "mycelium-leather:wooden_spade"
+  }
+}

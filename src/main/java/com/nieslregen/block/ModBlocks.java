@@ -1,9 +1,15 @@
 package com.nieslregen.block;
 
 import com.nieslregen.MyceliumLeatherMod;
+import com.nieslregen.block.custom.FeastOfTheMushroomFields;
 import com.nieslregen.block.custom.charcoalpile.CharCoalPileBlock;
+import com.nieslregen.block.custom.cooking.fryingpan.FryingPanBlock;
+import com.nieslregen.block.custom.cooking.stove.StoveBlock;
+import com.nieslregen.block.custom.cooking.tinycauldron.TinyCauldronBlock;
 import com.nieslregen.block.custom.herbariumpress.HerbariumPressBlock;
-import com.nieslregen.block.custom.tinycauldron.TinyCauldronBlock;
+import com.nieslregen.block.custom.mushroomstem.MushroomStemHollowBlock;
+import com.nieslregen.block.custom.mushroomstem.ScratchedMushroomStemBlock;
+import com.nieslregen.mob.myceliumchicken.MyceliumChickenNestBlock;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -14,8 +20,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Function;
 
@@ -38,11 +47,35 @@ public class ModBlocks {
             properties
                     .strength(1.5f)
                     .sound(SoundType.IRON)
+                    .instabreak()
     ));
 
+    public static final Block FRYING_PAN = registerBlock("frying_pan_block", properties -> new FryingPanBlock(
+            properties
+                    .instabreak()
+                    .strength(1.5f)
+                    .sound(SoundType.IRON)
+    ));
 
-    private static Block registerBLock(String name, Block block) {
-        return Registry.register(BuiltInRegistries.BLOCK, Identifier.fromNamespaceAndPath(MyceliumLeatherMod.MOD_ID, name), block);
+    public static final Block MYCELIUM_CHICKEN_NEST = registerBlock("mycelium_chicken_nest_block", MyceliumChickenNestBlock::new);
+
+    public static final Block SCRATCHED_MUSHROOM_STEM = registerBlock("scratched_mushroom_stem", properties -> new ScratchedMushroomStemBlock(
+            properties
+                    .randomTicks()
+    ));
+
+    public static final Block STOVE = registerBlock("stove", properties -> new StoveBlock(properties.instabreak()));
+
+    public static final Block MUSHROOM_STEM_HOLLOW = registerBlock("mushroom_stem_hollow", MushroomStemHollowBlock::new);
+    public static final Block FEAST_OF_THE_MUSHROOM_FIELDS = registerBlock("feast_of_the_mushroom_fields", FeastOfTheMushroomFields::new);
+
+    public static final Block BLUE_MUSHROOM_BLOCK = registerBlock(
+            "blue_mushroom_block",
+            properties -> new HugeMushroomBlock(properties.mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD).ignitedByLava()));
+
+
+    public static ResourceKey<Block> getResourceKey(Block block) {
+        return BuiltInRegistries.BLOCK.getResourceKey(block).get();
     }
 
     private static Block registerBlock(String name, Function<BlockBehaviour.Properties, Block> function) {
@@ -71,5 +104,12 @@ public class ModBlocks {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(HERBARIUM_PRESS));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(CHARCOAL_PILE));
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(TINY_CAULDRON));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(FRYING_PAN));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(SCRATCHED_MUSHROOM_STEM));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MUSHROOM_STEM_HOLLOW));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(MYCELIUM_CHICKEN_NEST));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> output.accept(STOVE));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(output -> output.accept(FEAST_OF_THE_MUSHROOM_FIELDS));
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(output -> output.accept(BLUE_MUSHROOM_BLOCK));
     }
 }

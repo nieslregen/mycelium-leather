@@ -1,0 +1,33 @@
+package com.nieslregen.items.customitems;
+
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+
+
+public class AbstractPatchItem extends Item {
+
+    private final Block block;
+
+    public AbstractPatchItem(Properties properties, Block convertInto) {
+        super(properties);
+        block = convertInto;
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+
+        Level level = context.getLevel();
+        Block clickedBlock = level.getBlockState(context.getClickedPos()).getBlock();
+
+        if (!level.isClientSide() && Blocks.DIRT.equals(clickedBlock)) {
+            level.setBlockAndUpdate(context.getClickedPos(), block.defaultBlockState());
+            context.getItemInHand().consume(1, context.getPlayer());
+            return InteractionResult.SUCCESS;
+        }
+    return InteractionResult.FAIL;
+    }
+}

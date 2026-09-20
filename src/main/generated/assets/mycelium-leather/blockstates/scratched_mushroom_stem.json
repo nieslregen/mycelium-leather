@@ -1,0 +1,51 @@
+{
+  "variants": {
+    "stage=0,facing=east": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_0",
+      "y": 90
+    },
+    "stage=0,facing=north": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_0"
+    },
+    "stage=0,facing=south": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_0" ,
+      "y": 180
+    },
+    "stage=0,facing=west": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_0",
+      "y": 270
+    },
+
+    "stage=1,facing=east": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_1",
+      "y": 90
+    },
+    "stage=1,facing=north": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_1"
+    },
+    "stage=1,facing=south": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_1" ,
+      "y": 180
+    },
+    "stage=1,facing=west": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_1",
+      "y": 270
+    },
+
+    "stage=2,facing=east": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_2",
+      "y": 90
+    },
+    "stage=2,facing=north": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_2"
+    },
+    "stage=2,facing=south": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_2" ,
+      "y": 180
+    },
+    "stage=2,facing=west": {
+      "model": "mycelium-leather:block/scratchedmushroomstem/scratched_mushroom_stem_2",
+      "y": 270
+    }
+  }
+}

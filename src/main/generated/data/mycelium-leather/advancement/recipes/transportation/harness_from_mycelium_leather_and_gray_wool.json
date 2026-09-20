@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:harness_from_mycelium_leather_and_gray_wool"
+        "recipes": "mycelium-leather:harness_from_mycelium_leather_and_gray_wool"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

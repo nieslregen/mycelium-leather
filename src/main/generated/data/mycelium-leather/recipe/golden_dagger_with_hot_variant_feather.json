@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": "mycelium-leather:feather_warm",
+    "I": "minecraft:gold_ingot",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "I",
+    "S",
+    "F"
+  ],
+  "result": {
+    "id": "mycelium-leather:golden_dagger_warm"
+  }
+}

@@ -18,6 +18,9 @@
 		"main": [
           "com.nieslregen.MyceliumLeatherMod"
 		],
+		"client": [
+			"com.nieslregen.mob.client.ModCustomEntityClient"
+		],
 		"fabric-datagen": [
 			"com.nieslregen.MyceliumLeatherDataGenerator"
 		]
@@ -26,8 +29,8 @@
 		"mycelium-leather.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.19.3",
-		"minecraft": "~26.2",
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*"
 	}

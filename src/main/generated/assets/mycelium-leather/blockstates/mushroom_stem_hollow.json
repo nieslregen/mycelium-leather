@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "mycelium-leather:block/mushroom_stem_hollow",
+      "y": 90
+    },
+
+    "facing=north": {
+      "model": "mycelium-leather:block/mushroom_stem_hollow"
+    },
+
+    "facing=south": {
+      "model": "mycelium-leather:block/mushroom_stem_hollow",
+      "y": 180
+    },
+
+    "facing=west": {
+      "model": "mycelium-leather:block/mushroom_stem_hollow",
+      "y": 270
+    }
+  }
+}

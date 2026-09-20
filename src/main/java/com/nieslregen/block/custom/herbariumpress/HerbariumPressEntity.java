@@ -81,9 +81,7 @@ public class HerbariumPressEntity extends BlockEntity implements ImplementedCont
     }
 
     public static void serverTick(final Level level, final BlockPos blockPos, final BlockState blockState, final HerbariumPressEntity entity) {
-        if(level.isClientSide()) {
-            return;
-        }
+        if(level.isClientSide()) { return; }
 
         if (isPressable(entity.getItem(0).getItem())) {
             entity.pressProgress = entity.pressProgress + 1;

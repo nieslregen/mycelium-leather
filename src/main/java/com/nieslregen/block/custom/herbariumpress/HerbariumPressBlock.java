@@ -1,6 +1,5 @@
 package com.nieslregen.block.custom.herbariumpress;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,11 +28,6 @@ public class HerbariumPressBlock extends BaseEntityBlock {
 
     public HerbariumPressBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(HerbariumPressBlock::new);
     }
 
     @Override

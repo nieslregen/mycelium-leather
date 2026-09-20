@@ -1,6 +1,5 @@
 package com.nieslregen.block.custom.charcoalpile;
 
-import com.mojang.serialization.MapCodec;
 import com.nieslregen.block.ModBlockEntities;
 import com.nieslregen.items.ModItems;
 import net.minecraft.core.BlockPos;
@@ -38,6 +37,10 @@ public class CharCoalPileBlock extends BaseEntityBlock {
 
     private static final VoxelShape SHAPE;
 
+    public static final int MAX_STAGE = 2;
+    public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, MAX_STAGE);
+    public static final BooleanProperty LIT = BooleanProperty.create("lit");
+
     public CharCoalPileBlock(Properties properties) {
         super(properties);
         registerDefaultState(
@@ -46,15 +49,6 @@ public class CharCoalPileBlock extends BaseEntityBlock {
                         .setValue(STAGE, 0)
                         .setValue(LIT, false)
         );
-    }
-
-    public static final int MAX_STAGE = 2;
-    public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, MAX_STAGE);
-    public static final BooleanProperty LIT = BooleanProperty.create("lit");
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(CharCoalPileBlock::new);
     }
 
     @Override

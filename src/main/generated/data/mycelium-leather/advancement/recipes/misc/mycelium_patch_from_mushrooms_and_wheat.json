@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:mycelium_patch_from_mushrooms_and_wheat"
+        "recipes": "mycelium-leather:mycelium_patch_from_mushrooms_and_wheat"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

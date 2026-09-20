@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:mycelium-patch-dried_from_smelting_mycelium-patch"
+        "recipes": "mycelium-leather:mycelium-patch-dried_from_smelting_mycelium-patch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:book_from_mycelium_leather_and_paper"
+        "recipes": "mycelium-leather:book_from_mycelium_leather_and_paper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
