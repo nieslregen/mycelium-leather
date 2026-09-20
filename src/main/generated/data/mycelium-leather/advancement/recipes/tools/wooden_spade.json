@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:wooden_spade"
+        "recipes": "mycelium-leather:wooden_spade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

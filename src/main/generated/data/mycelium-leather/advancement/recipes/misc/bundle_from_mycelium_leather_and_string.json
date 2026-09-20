@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:bundle_from_mycelium_leather_and_string"
+        "recipes": "mycelium-leather:bundle_from_mycelium_leather_and_string"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

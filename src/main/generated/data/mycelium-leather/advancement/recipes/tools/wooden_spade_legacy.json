@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:wooden_spade_legacy"
+        "recipes": "mycelium-leather:wooden_spade_legacy"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

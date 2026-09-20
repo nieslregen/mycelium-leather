@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:golden_dagger_with_mushroom_variant_feather"
+        "recipes": "mycelium-leather:golden_dagger_with_mushroom_variant_feather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

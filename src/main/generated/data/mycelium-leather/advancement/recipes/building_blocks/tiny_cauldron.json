@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:tiny_cauldron"
+        "recipes": "mycelium-leather:tiny_cauldron"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:stove"
+        "recipes": "mycelium-leather:stove"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

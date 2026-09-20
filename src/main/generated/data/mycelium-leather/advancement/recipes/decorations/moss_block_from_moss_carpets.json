@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:moss_block_from_moss_carpets"
+        "recipes": "mycelium-leather:moss_block_from_moss_carpets"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:black_dye_from_soot_ink"
+        "recipes": "mycelium-leather:black_dye_from_soot_ink"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

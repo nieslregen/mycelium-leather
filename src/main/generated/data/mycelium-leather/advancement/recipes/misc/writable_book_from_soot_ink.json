@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "mycelium-leather:writable_book_from_soot_ink"
+        "recipes": "mycelium-leather:writable_book_from_soot_ink"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

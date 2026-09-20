@@ -1,5 +1,6 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
   "category": "food",
   "experience": 0.05,
   "group": "mycelium_leather_food",
