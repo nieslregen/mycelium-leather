@@ -8,53 +8,47 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:chicken/variant": "minecraft:temperate"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:chicken/variant": "minecraft:temperate"
                   }
                 }
-              ],
+              },
               "name": "minecraft:egg"
             },
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:chicken/variant": "minecraft:warm"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:chicken/variant": "minecraft:warm"
                   }
                 }
-              ],
+              },
               "name": "minecraft:brown_egg"
             },
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:chicken/variant": "minecraft:cold"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:chicken/variant": "minecraft:cold"
                   }
                 }
-              ],
+              },
               "name": "minecraft:blue_egg"
             }
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     },
     {
       "entries": [
@@ -63,65 +57,47 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:chicken/variant": "minecraft:temperate"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:chicken/variant": "minecraft:temperate"
                   }
-                },
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.33
                 }
-              ],
+              },
               "name": "minecraft:feather"
             },
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:chicken/variant": "minecraft:warm"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:chicken/variant": "minecraft:warm"
                   }
-                },
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.33
                 }
-              ],
+              },
               "name": "mycelium-leather:feather_warm"
             },
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:components": {
-                      "minecraft:chicken/variant": "minecraft:cold"
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:components": {
+                    "minecraft:chicken/variant": "minecraft:cold"
                   }
-                },
-                {
-                  "condition": "minecraft:random_chance",
-                  "chance": 0.33
                 }
-              ],
+              },
               "name": "mycelium-leather:feather_cold"
             }
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "minecraft:gameplay/chicken_lay"
